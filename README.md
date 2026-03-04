@@ -32,3 +32,6 @@ The portfolio focuses on modern UI interactions, performance optimization, and r
 ## 🛠 Installation
 
 Clone the repository
+
+```bash
+git clone https://github.com/Ruh29/rahil-dev-portfolio.git
