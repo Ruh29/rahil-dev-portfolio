@@ -12,6 +12,12 @@
   initial-value: rgba(79, 70, 229, 0.4);
 }
 
+@property --accent-contrast {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ffffff;
+}
+
 @theme {
   --color-background: #030014;
   /* Deep Night Violet */
@@ -19,6 +25,7 @@
   --color-secondary: #06b6d4;
   /* Exact Cyan */
   --color-accent: var(--accent-color);
+  --color-contrast: var(--accent-contrast);
   --color-card-glass: rgba(13, 11, 35, 0.85);
   /* Dense Purple Glass */
   --color-border-glow: var(--accent-glow);
@@ -99,6 +106,7 @@
   :root {
     --accent-color: #4f46e5;
     --accent-glow: rgba(79, 70, 229, 0.4);
+    --accent-contrast: #ffffff;
     --transition-speed: 600ms;
   }
 
@@ -153,7 +161,7 @@
   }
 
   .btn-primary {
-    @apply px-8 py-3 bg-[var(--accent-color)] text-white rounded-full font-semibold transition-all duration-300 hover:scale-105 active:scale-95;
+    @apply px-8 py-3 bg-[var(--accent-color)] text-[var(--accent-contrast)] rounded-full font-semibold transition-all duration-300 hover:scale-105 active:scale-95;
     box-shadow: 0 0 20px var(--accent-glow);
   }
 

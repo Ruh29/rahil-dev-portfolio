@@ -30,7 +30,7 @@ const Hero = () => {
 
           <div className="flex flex-wrap justify-center lg:justify-start gap-6">
             <Magnetic strength={0.2}>
-              <button className="px-10 py-4 bg-gradient-to-r from-[var(--accent-color)] to-[var(--accent-color)] brightness-110 text-white rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95 shadow-[0_15px_30px_var(--accent-glow)] cursor-pointer">
+              <button className="px-10 py-4 bg-gradient-to-r from-[var(--accent-color)] to-[var(--accent-color)] brightness-110 text-[var(--accent-contrast)] rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95 shadow-[0_15px_30px_var(--accent-glow)] cursor-pointer">
                 View Projects
               </button>
             </Magnetic>

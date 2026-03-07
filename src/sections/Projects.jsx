@@ -50,19 +50,18 @@ const projects = [
     description: 'A high-fidelity Netflix replica featuring dynamic hero banners, category sliders, and a fully integrated video player streaming content from TMDB.',
   },
   {
-    title: 'E-Learning Platform',
-    image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=800',
+    title: 'ShopEasy (E-commerce)',
+    image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=80&w=800',
     video: 'https://cdn.pixabay.com/vimeo/327334707/medics-23366.mp4?width=1280&hash=07f0f6c2f1c8e1a6',
-    tags: ['React', 'Firebase', 'Tailwind'],
-    live: '#',
+    tags: ['React', 'Node.js', 'MongoDB', 'Tailwind'],
+    live: 'https://shopeasyecommerce0.netlify.app/',
     github: '#',
-    accent: '#7C3AED',
-    code: `export const useCourseStatus = (cid) => {
-  return useQuery(['course', cid], () => 
-    fetchCourse(cid)
-  );
-};`,
-    description: 'LMS solution featuring course management, progress tracking, and interactive quiz modules.',
+    accent: '#FFFFFF',
+    code: `const shop = await ShopEasy.init({
+  payment: 'Stripe',
+  auth: 'OAuth'
+});`,
+    description: 'A modern e-commerce platform with a focus on ease of use, featuring seamless checkout and product management.',
   },
 ];
 
@@ -102,6 +101,7 @@ const ProjectCard = ({ project }) => {
     if (!isModalOpen) {
       document.documentElement.style.setProperty('--accent-color', '#4f46e5');
       document.documentElement.style.setProperty('--accent-glow', 'rgba(79, 70, 229, 0.4)');
+      document.documentElement.style.setProperty('--accent-contrast', '#ffffff');
     }
   };
 
@@ -110,6 +110,8 @@ const ProjectCard = ({ project }) => {
     // Dynamic Accent Color Pulse
     document.documentElement.style.setProperty('--accent-color', project.accent);
     document.documentElement.style.setProperty('--accent-glow', `${project.accent}66`);
+    const isWhite = project.accent.toUpperCase() === '#FFFFFF';
+    document.documentElement.style.setProperty('--accent-contrast', isWhite ? '#030014' : '#ffffff');
 
     setTimeout(() => {
       // Show code only if still hovered after 1s
@@ -125,6 +127,7 @@ const ProjectCard = ({ project }) => {
     setIsModalOpen(false);
     document.documentElement.style.setProperty('--accent-color', '#4f46e5');
     document.documentElement.style.setProperty('--accent-glow', 'rgba(79, 70, 229, 0.4)');
+    document.documentElement.style.setProperty('--accent-contrast', '#ffffff');
   };
 
   const openModal = () => {
@@ -132,7 +135,12 @@ const ProjectCard = ({ project }) => {
     // Ensure accent is applied on open
     document.documentElement.style.setProperty('--accent-color', project.accent);
     document.documentElement.style.setProperty('--accent-glow', `${project.accent}66`);
+    const isWhite = project.accent.toUpperCase() === '#FFFFFF';
+    document.documentElement.style.setProperty('--accent-contrast', isWhite ? '#030014' : '#ffffff');
   }
+
+  const isWhiteAccent = project.accent.toUpperCase() === '#FFFFFF';
+  const buttonTextColor = isWhiteAccent ? 'text-[#030014]' : 'text-white';
 
   return (
     <>
@@ -235,7 +243,7 @@ const ProjectCard = ({ project }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="px-4 py-1.5 bg-gradient-to-r from-[var(--accent-color)] to-[var(--accent-color)] brightness-90 text-white rounded-lg text-[10px] font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_20px_var(--accent-glow)] transition-all"
+                  className={`px-4 py-1.5 bg-gradient-to-r from-[var(--accent-color)] to-[var(--accent-color)] brightness-90 ${buttonTextColor} rounded-lg text-[10px] font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_20px_var(--accent-glow)] transition-all`}
                 >
                   <PlayCircle size={12} /> Live Demo
                 </a>
@@ -290,7 +298,7 @@ const ProjectCard = ({ project }) => {
 
                   <div className="flex gap-4">
                     {project.live && (
-                      <a href={project.live} target="_blank" className="flex-1 py-3 bg-[var(--accent-color)] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-[var(--accent-glow)]">
+                      <a href={project.live} target="_blank" className={`flex-1 py-3 bg-[var(--accent-color)] ${buttonTextColor} rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-[var(--accent-glow)]`}>
                         <PlayCircle size={16} /> Live Demo
                       </a>
                     )}

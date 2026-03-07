@@ -50,8 +50,18 @@ function App() {
         </Suspense>
       </main>
 
-      <footer className="py-12 mt-24 border-t border-white/10 text-center text-text-muted">
-        <p>© {new Date().getFullYear()} Rahil. Built with React + Three.js</p>
+      <footer className="py-16 mt-24 border-t border-white/5 text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--accent-glow)]/5 pointer-events-none"></div>
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
+          <p className="text-text-muted text-sm mb-4 font-medium tracking-wide">
+            Designed & Developed with Passion by <span className="text-white font-bold">Rahil</span>
+          </p>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-[11px] text-[#8E91B3]/60 font-stats uppercase tracking-[0.2em]">
+            <p>© {new Date().getFullYear()} All Rights Reserved</p>
+            <div className="hidden md:block w-1 h-1 rounded-full bg-white/10"></div>
+            <p>Built with React • Three.js • Tailwind</p>
+          </div>
+        </div>
       </footer>
     </div>
   );
