@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 
 export default function ScatterText({ children, delay = 0, speed = 1 }) {
   const { themeId } = useTheme();
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
   const [animKey, setAnimKey] = useState(0);
 
   useEffect(() => {
@@ -28,11 +30,12 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                   display: "inline-block",
                   marginRight: "0.28em",
                   whiteSpace: "nowrap",
+                  verticalAlign: "baseline",
                 }}
               >
                 {letters.map((letter, lIdx) => {
-                  const randomX = (Math.random() - 0.5) * 1200;
-                  const randomY = (Math.random() - 0.5) * 800;
+                  const randomX = (Math.random() - 0.5) * 1000;
+                  const randomY = (Math.random() - 0.5) * 700;
                   const randomRotate = (Math.random() - 0.5) * 180;
                   const randomScale = 0.2 + Math.random() * 0.5;
                   const letterDelay =
@@ -66,11 +69,11 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                       key={lIdx}
                       style={{
                         display: "inline-block",
-                        willChange: "transform, opacity",
+                        verticalAlign: "baseline",
                       }}
                       variants={letterVariants}
                       initial="scatterHidden"
-                      animate="scatterVisible"
+                      animate={inView ? "scatterVisible" : "scatterHidden"}
                     >
                       {letter}
                     </motion.span>
@@ -95,8 +98,8 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
       }
       const iconVariants = {
         scatterHidden: {
-          x: (Math.random() - 0.5) * 900,
-          y: (Math.random() - 0.5) * 600,
+          x: (Math.random() - 0.5) * 800,
+          y: (Math.random() - 0.5) * 500,
           rotate: (Math.random() - 0.5) * 120,
           scale: 0.4,
           opacity: 0,
@@ -119,10 +122,10 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
       return (
         <motion.span
           key={index}
-          style={{ display: "inline-block" }}
+          style={{ display: "inline-block", verticalAlign: "middle" }}
           variants={iconVariants}
           initial="scatterHidden"
-          animate="scatterVisible"
+          animate={inView ? "scatterVisible" : "scatterHidden"}
         >
           {child}
         </motion.span>
@@ -133,7 +136,7 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
   };
 
   return (
-    <span key={`${themeId}-${animKey}`} style={{ display: "inline-block" }}>
+    <span ref={ref} key={`${themeId}-${animKey}`} style={{ display: "inline-block" }}>
       {Array.isArray(children)
         ? children.map((c, i) => renderChild(c, i))
         : renderChild(children, 0)}
