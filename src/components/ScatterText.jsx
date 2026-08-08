@@ -9,7 +9,7 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
     if (typeof child === "string") {
       const normalized = child.replace(/\s+/g, " ");
       if (normalized === "" || normalized === " ") {
-        return <span key={index} style={{ marginRight: "0.25em" }} />;
+        return <span key={index} style={{ marginRight: "0.28em" }} />;
       }
       const words = normalized.split(" ").filter((w) => w !== "");
       return (
@@ -21,17 +21,17 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                 key={wIdx}
                 style={{
                   display: "inline-block",
-                  marginRight: "0.25em",
+                  marginRight: "0.28em",
                   whiteSpace: "nowrap",
                 }}
               >
                 {letters.map((letter, lIdx) => {
-                  const randomX = (Math.random() - 0.5) * 400;
-                  const randomY = (Math.random() - 0.5) * 300;
-                  const randomRotate = (Math.random() - 0.5) * 90;
-                  const randomScale = 0.4 + Math.random() * 0.4;
+                  const randomX = (Math.random() - 0.5) * 1000;
+                  const randomY = (Math.random() - 0.5) * 700;
+                  const randomRotate = (Math.random() - 0.5) * 180;
+                  const randomScale = 0.2 + Math.random() * 0.5;
                   const letterDelay =
-                    delay + wIdx * 0.02 + lIdx * 0.008 + Math.random() * 0.03;
+                    delay + wIdx * 0.025 + lIdx * 0.01 + Math.random() * 0.04;
 
                   return (
                     <motion.span
@@ -56,7 +56,7 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                       }}
                       transition={{
                         type: "spring",
-                        stiffness: 110 * speed,
+                        stiffness: 95 * speed,
                         damping: 14,
                         delay: letterDelay,
                       }}
@@ -82,14 +82,32 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
           </ScatterText>
         );
       }
-      return React.cloneElement(child, { key: index });
+      const randomX = (Math.random() - 0.5) * 800;
+      const randomY = (Math.random() - 0.5) * 500;
+      const randomRotate = (Math.random() - 0.5) * 120;
+      return (
+        <motion.span
+          key={index}
+          style={{ display: "inline-block" }}
+          initial={{ x: randomX, y: randomY, rotate: randomRotate, opacity: 0, scale: 0.5 }}
+          animate={{ x: 0, y: 0, rotate: 0, opacity: 1, scale: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 95 * speed,
+            damping: 14,
+            delay: delay + 0.05,
+          }}
+        >
+          {child}
+        </motion.span>
+      );
     }
 
     return child;
   };
 
   return (
-    <span key={themeId} style={{ display: "inline" }}>
+    <span key={themeId} style={{ display: "inline-block" }}>
       {Array.isArray(children)
         ? children.map((c, i) => renderChild(c, i))
         : renderChild(children, 0)}
