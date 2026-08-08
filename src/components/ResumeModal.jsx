@@ -54,7 +54,7 @@ const enhancvResumeData = {
   ],
   education: [
     {
-      title: "Bachelor of Technology (B.Tech)",
+      title: "Bachelor of Information Technology",
       institute: "VIT Institute",
       period: "08/2021 – 05/2025",
       location: "Barwani"

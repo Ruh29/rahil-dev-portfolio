@@ -224,7 +224,7 @@ export default function Timeline() {
                 { year: "2025", label: "Paid Internship at LogiQlink", color: theme.secondary },
                 { year: "2024", label: "Advanced React & Backend Learning", color: theme.accent },
                 { year: "2023", label: "Projects & Skill Building", color: theme.primary },
-                { year: "2021", label: "Started B.Tech Journey", color: theme.secondary },
+                { year: "2021", label: "Started B.IT Journey", color: theme.secondary },
               ].map(({ year, label, color }, i) => (
                 <div key={year} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                   <div style={{
