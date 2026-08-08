@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 
 export default function ScatterText({ children, delay = 0, speed = 1 }) {
   const { themeId } = useTheme();
-  const [animCount, setAnimCount] = useState(0);
-
-  // Force re-trigger animation whenever theme changes
-  useEffect(() => {
-    setAnimCount((prev) => prev + 1);
-  }, [themeId]);
 
   const renderChild = (child, index) => {
     if (typeof child === "string") {
@@ -116,7 +110,7 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
   };
 
   return (
-    <span key={`${themeId}-${animCount}`} style={{ display: "inline-block" }}>
+    <span key={themeId} style={{ display: "inline-block" }}>
       {Array.isArray(children)
         ? children.map((c, i) => renderChild(c, i))
         : renderChild(children, 0)}
