@@ -51,10 +51,11 @@ export default function Navbar({ onOpenResume }) {
         right: 0,
         zIndex: 100,
         transition: "all 0.4s ease",
-        backgroundColor: scrolled ? "var(--bg-nav)" : "transparent",
-        backdropFilter: scrolled ? "blur(20px)" : "none",
-        borderBottom: scrolled ? "1px solid var(--border-main)" : "none",
-        boxShadow: scrolled ? "0 4px 40px rgba(0,0,0,0.3)" : "none",
+        backgroundColor: scrolled ? "rgba(5, 5, 8, 0.8)" : "rgba(5, 5, 8, 0.4)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+        borderBottom: scrolled ? "1px solid var(--border-main)" : "1px solid rgba(255, 255, 255, 0.04)",
+        boxShadow: scrolled ? "0 8px 32px rgba(0, 0, 0, 0.35)" : "none",
       }}
     >
       <div className="container" style={{ padding: "0 24px" }}>

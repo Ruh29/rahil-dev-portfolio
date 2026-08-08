@@ -9,20 +9,20 @@ import ScatterText from "./ScatterText";
 
 const TECH_ORBIT = [
   { label: "React", color: "#61DAFB" },
+  { label: "Next.js", color: "#ffffff" },
+  { label: "TS", color: "#3178C6" },
   { label: "Node", color: "#339933" },
-  { label: "Express", color: "#828282" },
-  { label: "Mongo", color: "#47A248" },
-  { label: "Docker", color: "#2496ED" },
-  { label: "AWS", color: "#FF9900" },
-  { label: "K8s", color: "#326CE5" },
+  { label: "Postgres", color: "#4169E1" },
   { label: "Redis", color: "#DC382D" },
+  { label: "Tailwind", color: "#06B6D4" },
+  { label: "Docker", color: "#2496ED" },
 ];
 
 const TYPING_ROLES = [
-  "MERN Stack Developer",
   "Full Stack Developer",
-  "React.js Specialist",
-  "Node.js Backend Dev",
+  "React & Next.js Specialist",
+  "Node.js & PostgreSQL Engineer",
+  "TypeScript & AI Systems Dev",
 ];
 
 function TypeWriter({ texts }) {
@@ -77,11 +77,11 @@ export default function Hero() {
   const heroRef = useRef(null);
   const { scrollY } = useScroll();
 
-  // Scroll-linked parallax
-  const blobY1 = useTransform(scrollY, [0, 600], [0, -80]);
-  const blobY2 = useTransform(scrollY, [0, 600], [0, -120]);
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
-  const heroY = useTransform(scrollY, [0, 400], [0, 80]);
+  // Scroll-linked parallax (kept subtle & visible so scrolling doesn't leave blank gaps)
+  const blobY1 = useTransform(scrollY, [0, 600], [0, -40]);
+  const blobY2 = useTransform(scrollY, [0, 600], [0, -60]);
+  const heroOpacity = useTransform(scrollY, [0, 600], [1, 0.6]);
+  const heroY = useTransform(scrollY, [0, 600], [0, 30]);
 
   const { personalInfo } = portfolioData;
   const { theme } = useTheme();
@@ -288,7 +288,7 @@ export default function Hero() {
                 {[
                   { value: "1+", label: "Year Exp" },
                   { value: "20+", label: "Projects" },
-                  { value: "MERN", label: "Primary Stack" },
+                  { value: "Full Stack", label: "Primary Focus" },
                 ].map((stat, i) => (
                   <div key={i} style={{
                     display: "flex",
@@ -410,6 +410,7 @@ export default function Hero() {
 
             {/* Right — Avatar + Orbit */}
             <motion.div
+              className="hero-avatar-orbit"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ type: "spring", stiffness: 80, damping: 12, delay: 0.4 }}
@@ -542,6 +543,7 @@ export default function Hero() {
 
               {/* Floating code snippets */}
               <motion.div
+                className="floating-code-tag"
                 style={{
                   position: "absolute",
                   top: "10%",
@@ -562,6 +564,7 @@ export default function Hero() {
               </motion.div>
 
               <motion.div
+                className="floating-code-tag"
                 style={{
                   position: "absolute",
                   bottom: "15%",
@@ -578,13 +581,14 @@ export default function Hero() {
                 animate={{ y: [0, 8, 0], rotate: [1, -1, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
               >
-                &lt;<span style={{ color: theme.accent }}>MernStack</span> /&gt;
+                &lt;<span style={{ color: theme.accent }}>FullStackDev</span> /&gt;
               </motion.div>
             </motion.div>
           </div>
 
           {/* Tech pills row */}
           <motion.div
+            className="tech-pills-row"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 80, damping: 12, delay: 1.2 }}
@@ -596,7 +600,7 @@ export default function Hero() {
               gap: "10px",
             }}
           >
-            {["React.js", "Node.js", "Express.js", "MongoDB", "TypeScript", "Next.js", "Docker", "Kubernetes", "AWS", "Terraform", "Tailwind CSS", "Redis"].map((tech, i) => (
+            {["React.js", "Next.js", "TypeScript", "Node.js", "Express.js", "PostgreSQL", "TypeORM", "Redis", "Socket.IO", "React Native", "Tailwind CSS", "Docker"].map((tech, i) => (
               <motion.span
                 key={tech}
                 className="tech-badge"
@@ -619,6 +623,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <motion.div
+        className="hero-scroll-indicator"
         style={{
           position: "absolute",
           bottom: "32px",
@@ -630,6 +635,7 @@ export default function Hero() {
           gap: "8px",
           cursor: "pointer",
           color: "var(--text-muted)",
+          opacity: heroOpacity,
         }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -652,6 +658,24 @@ export default function Hero() {
           .hero-grid {
             grid-template-columns: 1fr !important;
             gap: 40px !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .floating-code-tag {
+            display: none !important;
+          }
+          .hero-avatar-orbit {
+            height: 340px !important;
+            transform: scale(0.78) !important;
+            margin: 0 auto !important;
+          }
+          .tech-pills-row {
+            margin-top: 16px !important;
+            margin-bottom: 56px !important;
+            padding-bottom: 10px !important;
+          }
+          .hero-scroll-indicator {
+            bottom: 12px !important;
           }
         }
       `}</style>

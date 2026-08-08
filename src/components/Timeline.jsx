@@ -19,6 +19,7 @@ function TimelineItem({ item, index, isLast }) {
       initial={{ opacity: 0, x: index % 2 === 0 ? -60 : 60 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ type: "spring", stiffness: 80, damping: 12, delay: index * 0.12 }}
+      className="timeline-item"
       style={{
         position: "relative",
         paddingLeft: "80px",
@@ -26,20 +27,23 @@ function TimelineItem({ item, index, isLast }) {
       }}
     >
       {/* Timeline dot */}
-      <div style={{
-        position: "absolute",
-        left: "12px",
-        top: "20px",
-        width: "24px",
-        height: "24px",
-        borderRadius: "50%",
-        background: item.color,
-        boxShadow: `0 0 20px ${item.color}60, 0 0 40px ${item.color}30`,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 1,
-      }}>
+      <div
+        className="timeline-dot"
+        style={{
+          position: "absolute",
+          left: "12px",
+          top: "20px",
+          width: "24px",
+          height: "24px",
+          borderRadius: "50%",
+          background: item.color,
+          boxShadow: `0 0 20px ${item.color}60, 0 0 40px ${item.color}30`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 1,
+        }}
+      >
         <motion.div
           style={{
             width: "8px",
@@ -55,6 +59,7 @@ function TimelineItem({ item, index, isLast }) {
       {/* Connector line segment */}
       {!isLast && (
         <motion.div
+          className="timeline-connector"
           initial={{ scaleY: 0 }}
           animate={inView ? { scaleY: 1 } : {}}
           transition={{ duration: 0.6, delay: index * 0.12 + 0.3 }}
@@ -72,6 +77,7 @@ function TimelineItem({ item, index, isLast }) {
 
       {/* Card */}
       <motion.div
+        className="timeline-card"
         whileHover={{ x: 6, borderColor: `${item.color}40` }}
         transition={{ type: "spring", stiffness: 300, damping: 15 }}
         style={{
@@ -83,7 +89,7 @@ function TimelineItem({ item, index, isLast }) {
           transition: "border-color 0.3s ease",
         }}
       >
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "10px", gap: "12px" }}>
+        <div className="timeline-card-header" style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "10px", gap: "12px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <div style={{
               width: "36px",
@@ -99,7 +105,7 @@ function TimelineItem({ item, index, isLast }) {
               <Icon size={16} style={{ color: item.color }} />
             </div>
             <div>
-              <div style={{ fontWeight: 700, fontSize: "1rem", color: "var(--text-heading)", lineHeight: 1.2 }}>
+              <div className="timeline-card-title" style={{ fontWeight: 700, fontSize: "1rem", color: "var(--text-heading)", lineHeight: 1.2 }}>
                 {item.title}
               </div>
               <div style={{ fontSize: "0.82rem", color: item.color, fontWeight: 600, marginTop: "2px" }}>
@@ -107,7 +113,7 @@ function TimelineItem({ item, index, isLast }) {
               </div>
             </div>
           </div>
-          <div style={{
+          <div className="timeline-card-period" style={{
             background: `${item.color}12`,
             border: `1px solid ${item.color}25`,
             borderRadius: "8px",
@@ -123,7 +129,7 @@ function TimelineItem({ item, index, isLast }) {
           </div>
         </div>
 
-        <p style={{ fontSize: "0.87rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "12px" }}>
+        <p className="timeline-card-desc" style={{ fontSize: "0.87rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "12px" }}>
           {item.description}
         </p>
 
@@ -214,9 +220,11 @@ export default function Timeline() {
               style={{ display: "flex", flexDirection: "column", gap: "12px" }}
             >
               {[
-                { year: "2024", label: "Current — Freelance & OSS", color: theme.primary },
-                { year: "2023", label: "Bootcamp + Internship", color: theme.secondary },
-                { year: "Jan 2023", label: "First line of code", color: theme.accent },
+                { year: "2026", label: "Full Stack Developer at PurpleSky", color: theme.primary },
+                { year: "2025", label: "Paid Internship at LogiQlink", color: theme.secondary },
+                { year: "2024", label: "Advanced React & Backend Learning", color: theme.accent },
+                { year: "2023", label: "Projects & Skill Building", color: theme.primary },
+                { year: "2021", label: "Started BCA Journey", color: theme.secondary },
               ].map(({ year, label, color }, i) => (
                 <div key={year} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                   <div style={{
@@ -256,10 +264,10 @@ export default function Timeline() {
             >
               <div style={{ fontSize: "1.5rem", marginBottom: "8px" }}>💪</div>
               <div style={{ fontWeight: 600, fontSize: "0.95rem", color: "var(--text-heading)", marginBottom: "6px" }}>
-                Self-Taught Developer
+                Self-Taught & Production-Driven Developer
               </div>
               <div style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
-                100% self-taught through online resources, projects, and perseverance. Proof that passion beats pedigree!
+                Built real-world applications through continuous learning, internships, client projects, and production deployments. Strong believer that consistency, problem solving, and hands-on development create real engineering skills.
               </div>
             </motion.div>
           </div>
@@ -268,6 +276,7 @@ export default function Timeline() {
           <div style={{ position: "relative", paddingLeft: "0" }}>
             {/* Vertical line */}
             <motion.div
+              className="timeline-main-line"
               initial={{ scaleY: 0 }}
               animate={inView ? { scaleY: 1 } : {}}
               transition={{ duration: 1.5, ease: "easeOut" }}
@@ -293,9 +302,48 @@ export default function Timeline() {
         @media (max-width: 900px) {
           .timeline-layout {
             grid-template-columns: 1fr !important;
+            gap: 40px !important;
           }
           .timeline-layout > div:first-child {
             position: static !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .timeline-item {
+            padding-left: 32px !important;
+            margin-bottom: 24px !important;
+          }
+          .timeline-dot {
+            left: 0px !important;
+            width: 18px !important;
+            height: 18px !important;
+            top: 16px !important;
+          }
+          .timeline-connector {
+            left: 8px !important;
+            top: 34px !important;
+          }
+          .timeline-main-line {
+            left: 8px !important;
+          }
+          .timeline-card {
+            padding: 14px 16px !important;
+            border-radius: 14px !important;
+          }
+          .timeline-card-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 8px !important;
+          }
+          .timeline-card-period {
+            align-self: flex-start !important;
+          }
+          .timeline-card-title {
+            font-size: 0.95rem !important;
+          }
+          .timeline-card-desc {
+            font-size: 0.82rem !important;
+            line-height: 1.55 !important;
           }
         }
       `}</style>

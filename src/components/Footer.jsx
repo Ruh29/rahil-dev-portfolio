@@ -73,7 +73,7 @@ export default function Footer() {
               </span>
             </div>
             <p style={{ fontSize: "0.87rem", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: "280px", marginBottom: "18px" }}>
-              Full Stack MERN Developer building high-performance scalable systems and robust database architectures.
+              Full Stack Developer building high-performance scalable products, AI applications, and robust web/mobile experiences.
             </p>
             <div style={{ display: "flex", gap: "10px" }}>
               {[

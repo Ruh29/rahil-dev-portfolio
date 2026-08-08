@@ -139,11 +139,11 @@ export default function Skills() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2 }}
           >
-            Focused on MERN Stack & Cloud Engineering with 1+ year of experience building enterprise-grade applications.
+            Focused on Full Stack Engineering (React, Next.js, Node.js, PostgreSQL, TypeScript) with 1+ year of experience building scalable applications.
           </motion.p>
         </div>
 
-        {/* React.js featured skill */}
+        {/* React & Next.js featured skill */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
@@ -194,7 +194,7 @@ export default function Skills() {
           <div style={{ flex: 1 }}>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
               <h3 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "1.3rem", color: "var(--text-heading)" }}>
-                React.js — Primary Stack
+                React & Next.js — Primary Ecosystem
               </h3>
               <span style={{
                 background: "rgba(97,218,251,0.1)",
@@ -210,7 +210,7 @@ export default function Skills() {
               </span>
             </div>
             <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "12px" }}>
-              1+ year of professional experience building highly scalable, component-based UIs and robust backend architectures. Expert in custom state machines, performance profiling, and server deployments.
+              1+ year of professional experience building highly scalable full-stack applications with React, Next.js, Node.js, Express, PostgreSQL, and TypeScript. Expert in state management, real-time WebSockets, database design, and API integrations.
             </p>
             <div className="skill-bar" style={{ maxWidth: "400px" }}>
               <motion.div

@@ -36,7 +36,7 @@ export default function About() {
   const { theme } = useTheme();
 
   const traits = [
-    { icon: Code2, text: "MERN Stack Specialist", color: "#61DAFB" },
+    { icon: Code2, text: "Full Stack Specialist", color: "#61DAFB" },
     { icon: Heart, text: "System Architect", color: "#ec4899" },
     { icon: BookOpen, text: "Always Learning", color: "#8b5cf6" },
     { icon: Coffee, text: "Coffee Powered Dev ☕", color: "#f59e0b" },
@@ -129,9 +129,9 @@ export default function About() {
 
               {/* Floating badges around avatar */}
               {[
-                { text: "MERN Stack", color: "#61DAFB", x: -90, y: -60 },
+                { text: "Full Stack", color: "#61DAFB", x: -90, y: -60 },
                 { text: "1+ Yr Exp", color: "#8b5cf6", x: 80, y: -40 },
-                { text: "Cloud & DevOps", color: "#ec4899", x: -80, y: 80 },
+                { text: "AI & Web Apps", color: "#ec4899", x: -80, y: 80 },
               ].map((badge, i) => (
                 <motion.div
                   key={i}

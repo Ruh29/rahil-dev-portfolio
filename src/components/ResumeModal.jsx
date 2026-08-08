@@ -1,11 +1,694 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Printer, Phone, Mail, MapPin, Globe, Award, Star } from "lucide-react";
+import { X, Printer, Phone, Mail, MapPin, Globe, Star, Layout, Check } from "lucide-react";
 import portfolioData from "../data/portfolioData";
 import { useTheme } from "../context/ThemeContext";
 
+// Configurable Enhancv Resume Template Data
+const enhancvResumeData = {
+  header: {
+    name: "RAHIL SHEIKH",
+    role: "Full Stack Developer",
+    phone: "+919993995502",
+    email: "rahilsheikh73308@gmail.com",
+    linkedin: "linkedin.com/in/rahilsheikh",
+    github: "github.com/rahilsheikh",
+    location: "Barwani / Indore, India"
+  },
+  summary:
+    "Full Stack Developer specializing in React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, and Redis. Experienced in developing enterprise applications, project management systems, event management platforms, and real-time web solutions. Strong understanding of software architecture, API development, database design, authentication, and performance optimization with a focus on delivering scalable and maintainable applications.",
+  experience: [
+    {
+      title: "Frontend Developer Intern (Paid Internship)",
+      company: "LogiQlink Technology",
+      period: "06/2025 – 11/2025",
+      location: "Indore",
+      intro:
+        "Completed a 6-month paid internship focused on frontend development and modern web technologies. Gained practical industry experience by working on real-world projects under the guidance of senior developers.",
+      bullets: [
+        "Developed responsive user interfaces using React.js, JavaScript, HTML5, CSS3, and Tailwind CSS",
+        "Implemented reusable UI components and optimized application performance",
+        "Integrated REST APIs and collaborated with backend developers for seamless functionality",
+        "Learned industry-standard development practices including Git, GitHub, code reviews, and agile workflows",
+        "Participated in debugging, testing, and feature implementation for client projects",
+        "Strengthened problem-solving skills and understanding of scalable frontend architecture"
+      ]
+    },
+    {
+      title: "Full Stack Developer",
+      company: "Purplesky Infotech",
+      period: "12/2025 – Present",
+      location: "Barwani",
+      intro:
+        "Working as a Full Stack Developer responsible for designing, developing, and maintaining web applications across frontend and backend systems. Collaborating with cross-functional teams to build scalable solutions and improve user experience.",
+      bullets: [
+        "Developed and maintained full-stack applications using React.js, Next.js, Node.js, Express.js, PostgreSQL, and Redis",
+        "Built secure REST APIs, authentication systems, and role-based access control mechanisms",
+        "Designed and optimized database structures for high-performance applications",
+        "Developed ticket management, project management, and analytics modules for enterprise platforms",
+        "Integrated third-party services, real-time communication, and caching mechanisms",
+        "Participated in requirement analysis, code reviews, debugging, testing, and deployment processes",
+        "Worked closely with clients and team members to deliver business-focused solutions"
+      ]
+    }
+  ],
+  education: [
+    {
+      title: "Bachelor of Computer Applications (BCA)",
+      institute: "VIT Institute",
+      period: "08/2021 – 05/2025",
+      location: "Barwani"
+    }
+  ],
+  skills: {
+    frontend: [
+      "React.js", "Next.js", "JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3",
+      "Tailwind CSS", "Redux Toolkit", "React Router DOM", "Responsive Web Design"
+    ],
+    backend: [
+      "Node.js", "Express.js", "REST APIs", "JWT Authentication",
+      "Role-Based Access Control (RBAC)", "Socket.IO", "API Development"
+    ],
+    database: [
+      "PostgreSQL", "MongoDB", "Redis", "TypeORM"
+    ]
+  },
+  languages: [
+    { name: "Hindi", level: "Native" },
+    { name: "English", level: "Native" }
+  ],
+  projects: [
+    {
+      title: "AI Auditor Platform",
+      period: "05/2026",
+      location: "Barwani",
+      tech: "Next.js | TypeScript | Node.js | PostgreSQL | Redis | AI",
+      description:
+        "Developed AI Auditor Platform, an intelligent auditing solution that automates document analysis, compliance verification, risk assessment, and audit report generation. Built secure role-based access control, analytics dashboards, and scalable backend services to streamline auditing workflows and improve operational efficiency.",
+      bullets: [
+        "Built scalable PostgreSQL database architecture and REST APIs for enterprise-level usage.",
+        "Implemented Redis caching to improve report generation speed and system performance.",
+        "Designed secure role-based access control for Auditors, Managers, and ADMIN."
+      ]
+    }
+  ]
+};
+
+// Component rendering the Exact Enhancv PDF Template
+function EnhancvWhiteTemplate({ data }) {
+  const { header, summary, experience, education, skills, languages, projects } = data;
+
+  return (
+    <div 
+      className="resume-print-area"
+      style={{
+        width: "100%",
+        maxWidth: "800px",
+        margin: "0 auto",
+        background: "#ffffff",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
+        padding: "36px 40px",
+        color: "#1e293b",
+        fontFamily: "'Inter', sans-serif",
+        boxSizing: "border-box",
+        WebkitPrintColorAdjust: "exact",
+        printColorAdjust: "exact",
+      }}
+    >
+      {/* Header */}
+      <div style={{ marginBottom: "16px" }}>
+        <h1 style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: "2.4rem",
+          fontWeight: 800,
+          letterSpacing: "0.02em",
+          color: "#0f172a",
+          margin: 0,
+          lineHeight: 1.1,
+        }}>
+          {header.name}
+        </h1>
+        <div style={{
+          fontSize: "1.1rem",
+          fontWeight: 600,
+          color: "#0284c7",
+          marginTop: "4px",
+          marginBottom: "10px",
+        }}>
+          {header.role}
+        </div>
+        <div style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "16px",
+          fontSize: "0.78rem",
+          color: "#475569",
+          fontWeight: 500,
+        }}>
+          <span>📞 {header.phone}</span>
+          <span>✉️ {header.email}</span>
+        </div>
+        <div style={{
+          width: "100%",
+          height: "1.5px",
+          background: "#334155",
+          marginTop: "14px",
+        }} />
+      </div>
+
+      {/* Main 2-Column Grid */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "1.65fr 1fr",
+        gap: "28px",
+        alignItems: "start",
+      }}>
+        {/* Left Column (Main Content) */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          {/* Summary */}
+          <div>
+            <h2 style={{
+              fontSize: "0.85rem",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#0f172a",
+              borderBottom: "1.5px solid #0f172a",
+              paddingBottom: "3px",
+              marginBottom: "8px",
+            }}>
+              SUMMARY
+            </h2>
+            <p style={{
+              fontSize: "0.75rem",
+              color: "#334155",
+              lineHeight: 1.55,
+              margin: 0,
+              textAlign: "justify",
+            }}>
+              {summary}
+            </p>
+          </div>
+
+          {/* Experience */}
+          <div>
+            <h2 style={{
+              fontSize: "0.85rem",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#0f172a",
+              borderBottom: "1.5px solid #0f172a",
+              paddingBottom: "3px",
+              marginBottom: "12px",
+            }}>
+              EXPERIENCE
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              {experience.map((exp, idx) => (
+                <div key={idx}>
+                  <div style={{ fontSize: "0.88rem", fontWeight: 700, color: "#0f172a" }}>
+                    {exp.title}
+                  </div>
+                  <div style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: "0.76rem",
+                    color: "#0284c7",
+                    fontWeight: 600,
+                    marginTop: "2px",
+                    marginBottom: "4px",
+                  }}>
+                    <span>{exp.company}</span>
+                    <span>📅 {exp.period} &nbsp; 📍 {exp.location}</span>
+                  </div>
+                  <p style={{ fontSize: "0.73rem", color: "#475569", lineHeight: 1.45, margin: "0 0 6px 0" }}>
+                    {exp.intro}
+                  </p>
+                  <ul style={{
+                    margin: 0,
+                    paddingLeft: "14px",
+                    fontSize: "0.72rem",
+                    color: "#334155",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "4px",
+                    lineHeight: 1.4,
+                  }}>
+                    {exp.bullets.map((b, bIdx) => (
+                      <li key={bIdx}>{b}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Education */}
+          <div>
+            <h2 style={{
+              fontSize: "0.85rem",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#0f172a",
+              borderBottom: "1.5px solid #0f172a",
+              paddingBottom: "3px",
+              marginBottom: "10px",
+            }}>
+              EDUCATION
+            </h2>
+            {education.map((edu, idx) => (
+              <div key={idx}>
+                <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#0f172a" }}>
+                  {edu.title}
+                </div>
+                <div style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  fontSize: "0.76rem",
+                  color: "#0284c7",
+                  fontWeight: 600,
+                  marginTop: "2px",
+                }}>
+                  <span>{edu.institute}</span>
+                  <span>📅 {edu.period} &nbsp; 📍 {edu.location}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Column (Sidebar) */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          {/* Skills */}
+          <div>
+            <h2 style={{
+              fontSize: "0.85rem",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#0f172a",
+              borderBottom: "1.5px solid #0f172a",
+              paddingBottom: "3px",
+              marginBottom: "10px",
+            }}>
+              SKILLS
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div>
+                <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "#0284c7", marginBottom: "4px" }}>
+                  Frontend
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
+                  {skills.frontend.map(s => (
+                    <span key={s} style={{
+                      fontSize: "0.68rem",
+                      fontWeight: 600,
+                      background: "#f1f5f9",
+                      padding: "2px 6px",
+                      borderRadius: "4px",
+                      color: "#334155",
+                    }}>
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "#0284c7", marginBottom: "4px" }}>
+                  Backend
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
+                  {skills.backend.map(s => (
+                    <span key={s} style={{
+                      fontSize: "0.68rem",
+                      fontWeight: 600,
+                      background: "#f1f5f9",
+                      padding: "2px 6px",
+                      borderRadius: "4px",
+                      color: "#334155",
+                    }}>
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "#0284c7", marginBottom: "4px" }}>
+                  Database
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
+                  {skills.database.map(s => (
+                    <span key={s} style={{
+                      fontSize: "0.68rem",
+                      fontWeight: 600,
+                      background: "#f1f5f9",
+                      padding: "2px 6px",
+                      borderRadius: "4px",
+                      color: "#334155",
+                    }}>
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Languages */}
+          <div>
+            <h2 style={{
+              fontSize: "0.85rem",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#0f172a",
+              borderBottom: "1.5px solid #0f172a",
+              paddingBottom: "3px",
+              marginBottom: "8px",
+            }}>
+              LANGUAGES
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+              {languages.map(lang => (
+                <div key={lang.name} style={{ display: "flex", justifyContent: "space-between", fontSize: "0.74rem" }}>
+                  <span style={{ fontWeight: 600, color: "#334155" }}>{lang.name}</span>
+                  <span style={{ color: "#64748b" }}>{lang.level}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Projects */}
+          <div>
+            <h2 style={{
+              fontSize: "0.85rem",
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#0f172a",
+              borderBottom: "1.5px solid #0f172a",
+              paddingBottom: "3px",
+              marginBottom: "10px",
+            }}>
+              PROJECTS
+            </h2>
+            {projects.map((proj, idx) => (
+              <div key={idx}>
+                <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#0f172a" }}>
+                  {proj.title}
+                </div>
+                <div style={{ fontSize: "0.72rem", color: "#64748b", margin: "2px 0" }}>
+                  📅 {proj.period} &nbsp; 📍 {proj.location}
+                </div>
+                <div style={{ fontSize: "0.7rem", color: "#0284c7", fontWeight: 600, marginBottom: "4px" }}>
+                  {proj.tech}
+                </div>
+                <p style={{ fontSize: "0.71rem", color: "#334155", lineHeight: 1.4, margin: "0 0 6px 0" }}>
+                  {proj.description}
+                </p>
+                <ul style={{
+                  margin: 0,
+                  paddingLeft: "14px",
+                  fontSize: "0.7rem",
+                  color: "#334155",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "3px",
+                  lineHeight: 1.4,
+                }}>
+                  {proj.bullets.map((b, bIdx) => (
+                    <li key={bIdx}>{b}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Enhancv Footer Branding */}
+      <div style={{
+        marginTop: "28px",
+        paddingTop: "12px",
+        borderTop: "1px solid #e2e8f0",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        fontSize: "0.65rem",
+        color: "#94a3b8",
+      }}>
+        <span>www.enhancv.com</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+          <span>Powered by</span>
+          <span style={{ fontWeight: 800, color: "#0f172a", letterSpacing: "0.05em" }}>enhancv</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Split Teal Sidebar Template Component
+function TealSplitTemplate({ data }) {
+  const { header, summary, experience, education, skills, languages, projects } = data;
+
+  return (
+    <div 
+      className="resume-print-area"
+      style={{
+        width: "100%",
+        maxWidth: "800px",
+        margin: "0 auto",
+        background: "#ffffff",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.1)",
+        borderRadius: "4px",
+        overflow: "hidden",
+        display: "grid",
+        gridTemplateColumns: "270px 1fr",
+        minHeight: "1050px",
+        color: "#1e293b",
+        fontFamily: "'Inter', sans-serif",
+        WebkitPrintColorAdjust: "exact",
+        printColorAdjust: "exact",
+      }}
+    >
+      {/* Left Teal Sidebar */}
+      <div style={{
+        background: "#005c53",
+        color: "#ffffff",
+        padding: "36px 24px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "24px",
+        height: "100%",
+        boxSizing: "border-box",
+      }}>
+        <div>
+          <h1 style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: "2.1rem",
+            fontWeight: 800,
+            letterSpacing: "0.03em",
+            margin: 0,
+            lineHeight: 1.1,
+          }}>
+            {header.name}
+          </h1>
+          <div style={{
+            width: "100%",
+            height: "1px",
+            background: "rgba(255,255,255,0.25)",
+            marginTop: "16px",
+          }} />
+        </div>
+
+        {/* Education Sidebar */}
+        <div>
+          <h3 style={{
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "#ffffff",
+            borderBottom: "1.5px solid rgba(255,255,255,0.25)",
+            paddingBottom: "4px",
+            marginBottom: "12px",
+          }}>
+            Education
+          </h3>
+          {education.map((edu, i) => (
+            <div key={i}>
+              <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#ffffff", margin: 0 }}>
+                {edu.title}
+              </h4>
+              <div style={{ fontSize: "0.75rem", color: "#ffffff", fontWeight: 600, marginTop: "2px" }}>
+                {edu.institute}
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.7rem", color: "#cbd5e1", marginTop: "4px" }}>
+                <span>{edu.period}</span>
+                <span>{edu.location}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Languages */}
+        <div>
+          <h3 style={{
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "#ffffff",
+            borderBottom: "1.5px solid rgba(255,255,255,0.25)",
+            paddingBottom: "4px",
+            marginBottom: "12px",
+          }}>
+            Languages
+          </h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            {languages.map((lang) => (
+              <div key={lang.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.75rem" }}>
+                <span style={{ fontWeight: 700 }}>{lang.name}</span>
+                <span style={{ color: "#cbd5e1", fontSize: "0.68rem" }}>{lang.level}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Experience Sidebar */}
+        <div>
+          <h3 style={{
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "#ffffff",
+            borderBottom: "1.5px solid rgba(255,255,255,0.25)",
+            paddingBottom: "4px",
+            marginBottom: "12px",
+          }}>
+            Recent Roles
+          </h3>
+          {experience.map((exp, i) => (
+            <div key={i} style={{ marginBottom: "14px" }}>
+              <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#ffffff", margin: 0 }}>
+                {exp.title}
+              </h4>
+              <div style={{ fontSize: "0.75rem", color: "#e2e8f0", fontWeight: 600, marginTop: "2px" }}>
+                {exp.company}
+              </div>
+              <div style={{ fontSize: "0.7rem", color: "#cbd5e1", marginTop: "2px" }}>
+                {exp.period}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Enhancv Branding */}
+        <div style={{
+          marginTop: "auto",
+          paddingTop: "24px",
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
+          fontSize: "0.62rem",
+          color: "rgba(255,255,255,0.45)",
+          borderTop: "1px solid rgba(255,255,255,0.1)",
+        }}>
+          <span>Powered by</span>
+          <span style={{ fontWeight: 800, letterSpacing: "0.05em", color: "#ffffff" }}>enhancv</span>
+        </div>
+      </div>
+
+      {/* Right Column */}
+      <div style={{
+        padding: "36px 30px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+        background: "#ffffff",
+        height: "100%",
+        boxSizing: "border-box",
+      }}>
+        <div>
+          <h2 style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: "1.15rem",
+            fontWeight: 700,
+            color: "#005c53",
+            margin: 0,
+          }}>
+            {header.role}
+          </h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 16px", marginTop: "8px", fontSize: "0.75rem", color: "#475569" }}>
+            <span>📞 {header.phone}</span>
+            <span>✉️ {header.email}</span>
+          </div>
+        </div>
+
+        {/* Summary */}
+        <div>
+          <h3 style={{
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "#005c53",
+            borderBottom: "1.5px solid #005c53",
+            paddingBottom: "4px",
+            marginBottom: "8px",
+          }}>
+            Summary
+          </h3>
+          <p style={{ fontSize: "0.75rem", color: "#334155", lineHeight: 1.5, margin: 0 }}>
+            {summary}
+          </p>
+        </div>
+
+        {/* Experience */}
+        <div>
+          <h3 style={{
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "#005c53",
+            borderBottom: "1.5px solid #005c53",
+            paddingBottom: "4px",
+            marginBottom: "10px",
+          }}>
+            Experience Details
+          </h3>
+          {experience.map((exp, idx) => (
+            <div key={idx} style={{ marginBottom: "12px" }}>
+              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#0f172a" }}>{exp.title}</div>
+              <div style={{ fontSize: "0.73rem", color: "#005c53", fontWeight: 600, marginBottom: "4px" }}>
+                {exp.company} ({exp.period})
+              </div>
+              <ul style={{ margin: 0, paddingLeft: "14px", fontSize: "0.7rem", color: "#334155", lineHeight: 1.4 }}>
+                {exp.bullets.slice(0, 4).map((b, bIdx) => (
+                  <li key={bIdx}>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div style={{ marginTop: "auto", paddingTop: "12px", display: "flex", justifyContent: "flex-end", fontSize: "0.62rem", color: "#94a3b8" }}>
+          <span>www.enhancv.com</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ResumeModal({ isOpen, onClose }) {
-  const { personalInfo, skills, projects, timeline } = portfolioData;
+  const [activeTemplate, setActiveTemplate] = useState("enhancvWhite");
   const { theme } = useTheme();
 
   if (!isOpen) return null;
@@ -39,7 +722,7 @@ export default function ResumeModal({ isOpen, onClose }) {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(0,0,0,0.7)",
+            background: "rgba(0,0,0,0.75)",
             backdropFilter: "blur(8px)",
             WebkitBackdropFilter: "blur(8px)",
           }}
@@ -64,7 +747,7 @@ export default function ResumeModal({ isOpen, onClose }) {
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
-            maxHeight: "90vh",
+            maxHeight: "92vh",
           }}
         >
           {/* Controls Header */}
@@ -76,17 +759,76 @@ export default function ResumeModal({ isOpen, onClose }) {
             justifyContent: "space-between",
             background: "var(--bg-darker)",
             flexShrink: 0,
+            flexWrap: "wrap",
+            gap: "12px",
           }} className="no-print">
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            {/* Title & Template Switcher */}
+            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               <span style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontWeight: 700,
                 fontSize: "1rem",
                 color: "var(--text-heading)",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
               }}>
-                Resume Template Preview
+                <Layout size={16} style={{ color: "var(--color-cyan)" }} />
+                Resume Preview:
               </span>
+
+              {/* Template selection tabs */}
+              <div style={{
+                display: "flex",
+                background: "var(--bg-card)",
+                padding: "3px",
+                borderRadius: "8px",
+                border: "1px solid var(--border-main)",
+              }}>
+                <button
+                  onClick={() => setActiveTemplate("enhancvWhite")}
+                  style={{
+                    padding: "5px 12px",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: activeTemplate === "enhancvWhite" ? "rgba(var(--color-cyan-rgb), 0.15)" : "transparent",
+                    color: activeTemplate === "enhancvWhite" ? "var(--color-cyan)" : "var(--text-secondary)",
+                    fontSize: "0.78rem",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
+                  {activeTemplate === "enhancvWhite" && <Check size={12} />}
+                  Enhancv PDF Format
+                </button>
+                <button
+                  onClick={() => setActiveTemplate("tealSplit")}
+                  style={{
+                    padding: "5px 12px",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: activeTemplate === "tealSplit" ? "rgba(var(--color-cyan-rgb), 0.15)" : "transparent",
+                    color: activeTemplate === "tealSplit" ? "var(--color-cyan)" : "var(--text-secondary)",
+                    fontSize: "0.78rem",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
+                  {activeTemplate === "tealSplit" && <Check size={12} />}
+                  Teal Split Format
+                </button>
+              </div>
             </div>
+
+            {/* Print & Close Action Buttons */}
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <button
                 onClick={handlePrint}
@@ -127,442 +869,13 @@ export default function ResumeModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* Resume Frame */}
-          <div className="resume-frame-wrapper" style={{ flex: 1, overflowY: "auto", padding: "24px", background: "rgba(0,0,0,0.15)" }}>
-            <div 
-              className="resume-print-area"
-              style={{
-                width: "100%",
-                maxWidth: "800px",
-                margin: "0 auto",
-                background: "#ffffff",
-                boxShadow: "0 4px 24px rgba(0,0,0,0.1)",
-                borderRadius: "4px",
-                overflow: "hidden",
-                display: "grid",
-                gridTemplateColumns: "270px 1fr",
-                minHeight: "1050px",
-                color: "#1e293b",
-                fontFamily: "'Inter', sans-serif",
-                WebkitPrintColorAdjust: "exact",
-                printColorAdjust: "exact",
-              }}
-            >
-              {/* Left Sidebar (Teal background) */}
-              <div style={{
-                background: "#005c53",
-                color: "#ffffff",
-                padding: "36px 24px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "24px",
-                height: "100%",
-                boxSizing: "border-box",
-              }}>
-                {/* Header Name */}
-                <div>
-                  <h1 style={{
-                    fontFamily: "'Outfit', sans-serif",
-                    fontSize: "2.1rem",
-                    fontWeight: 800,
-                    letterSpacing: "0.03em",
-                    margin: 0,
-                    lineHeight: 1.1,
-                  }}>
-                    RAHIL SHEIKH
-                  </h1>
-                  <div style={{
-                    width: "100%",
-                    height: "1px",
-                    background: "rgba(255,255,255,0.25)",
-                    marginTop: "16px",
-                  }} />
-                </div>
-
-                {/* Key Achievements */}
-                <div>
-                  <h3 style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "#ffffff",
-                    borderBottom: "1.5px solid rgba(255,255,255,0.25)",
-                    paddingBottom: "4px",
-                    marginBottom: "12px",
-                  }}>
-                    Key Achievements
-                  </h3>
-                  <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
-                    <Star size={14} style={{ color: "#ffffff", marginTop: "2px", flexShrink: 0 }} />
-                    <div>
-                      <h4 style={{ fontSize: "0.78rem", fontWeight: 700, color: "#ffffff", marginBottom: "4px" }}>
-                        Web Application Development
-                      </h4>
-                      <p style={{ fontSize: "0.72rem", color: "#cbd5e1", lineHeight: 1.4, margin: 0 }}>
-                        Successfully designed and developed an e-Commerce platform and a Meetly Interview Portal, implementing key features like email verification, JWT authentication, and real-time communication.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Languages */}
-                <div>
-                  <h3 style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "#ffffff",
-                    borderBottom: "1.5px solid rgba(255,255,255,0.25)",
-                    paddingBottom: "4px",
-                    marginBottom: "12px",
-                  }}>
-                    Languages
-                  </h3>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                    {[
-                      { name: "English", level: "Proficient" },
-                      { name: "Hindi", level: "Proficient" },
-                    ].map((lang) => (
-                      <div key={lang.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.75rem" }}>
-                        <span style={{ fontWeight: 700 }}>{lang.name}</span>
-                        <span style={{ color: "#cbd5e1", marginRight: "auto", marginLeft: "20px", fontSize: "0.68rem" }}>{lang.level}</span>
-                        <div style={{ display: "flex", gap: "4px" }}>
-                          {[...Array(5)].map((_, i) => (
-                            <div 
-                              key={i}
-                              style={{
-                                width: "7px",
-                                height: "7px",
-                                borderRadius: "50%",
-                                background: "#ffffff",
-                              }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Education */}
-                <div>
-                  <h3 style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "#ffffff",
-                    borderBottom: "1.5px solid rgba(255,255,255,0.25)",
-                    paddingBottom: "4px",
-                    marginBottom: "12px",
-                  }}>
-                    Education
-                  </h3>
-                  <div>
-                    <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#ffffff", margin: 0 }}>
-                      B.TECH
-                    </h4>
-                    <div style={{ fontSize: "0.75rem", color: "#ffffff", fontWeight: 600, marginTop: "2px" }}>
-                      LNCT UNIVERSITY
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.7rem", color: "#cbd5e1", marginTop: "4px" }}>
-                      <span>08/2023 - 05/2027</span>
-                      <span>Indore, MP</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Experience Sidebar */}
-                <div>
-                  <h3 style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "#ffffff",
-                    borderBottom: "1.5px solid rgba(255,255,255,0.25)",
-                    paddingBottom: "4px",
-                    marginBottom: "12px",
-                  }}>
-                    Experience
-                  </h3>
-                  <div>
-                    <h4 style={{ fontSize: "0.82rem", fontWeight: 700, color: "#ffffff", margin: 0 }}>
-                      FRONTEND DEVELOPER INTERN
-                    </h4>
-                    <div style={{ fontSize: "0.75rem", color: "#ffffff", fontWeight: 600, marginTop: "2px" }}>
-                      LogiQlink Technologies INDORE
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.7rem", color: "#cbd5e1", marginTop: "4px" }}>
-                      <span>08/2022 - 06/2023</span>
-                      <span>Barwani</span>
-                    </div>
-                    <div style={{ fontSize: "0.72rem", color: "#cbd5e1", fontStyle: "italic", marginTop: "4px", marginBottom: "8px" }}>
-                      Technical internship focusing on frontend development
-                    </div>
-                    <ul style={{
-                      margin: 0,
-                      paddingLeft: "14px",
-                      fontSize: "0.7rem",
-                      color: "#cbd5e1",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "6px",
-                      lineHeight: 1.45,
-                    }}>
-                      <li>Worked on real-world live projects focusing on React.js, Redux Toolkit, Tailwind CSS, and JavaScript (ES6+).</li>
-                      <li>Hands-on experience with Git/GitHub (branching, version control), Jira (task tracking), and deployments on Netlify & Vercel.</li>
-                      <li>Improved debugging skills by solving issues like CORS, token expiry, and network request handling authentication and authorization.</li>
-                      <li>Worked On Native App development and QA testing for web/app.</li>
-                      <li>Worked on modern technologies and libs for web/app.</li>
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Enhancv Branding left column */}
-                <div style={{
-                  marginTop: "auto",
-                  paddingTop: "24px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  fontSize: "0.62rem",
-                  color: "rgba(255,255,255,0.45)",
-                  borderTop: "1px solid rgba(255,255,255,0.1)",
-                }}>
-                  <span>Powered by</span>
-                  <span style={{ fontWeight: 800, letterSpacing: "0.05em", color: "#ffffff" }}>enhancv</span>
-                </div>
-              </div>
-
-              {/* Right Content Column (White background) */}
-              <div style={{
-                padding: "36px 30px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "24px",
-                background: "#ffffff",
-                height: "100%",
-                boxSizing: "border-box",
-              }}>
-                {/* Header Subtitles / Contact */}
-                <div>
-                  <h2 style={{
-                    fontFamily: "'Outfit', sans-serif",
-                    fontSize: "1.25rem",
-                    fontWeight: 700,
-                    color: "#005c53",
-                    margin: 0,
-                  }}>
-                    Frontend Developer (REACT)
-                  </h2>
-                  
-                  {/* Contacts */}
-                  <div style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "8px 20px",
-                    marginTop: "12px",
-                    fontSize: "0.75rem",
-                    color: "#475569",
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                      <Phone size={12} style={{ color: "#005c53" }} />
-                      <span>+919993995502</span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                      <Mail size={12} style={{ color: "#005c53" }} />
-                      <a href={`mailto:${personalInfo.email}`} style={{ color: "inherit", textDecoration: "none" }}>
-                        {personalInfo.email}
-                      </a>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                      <Globe size={12} style={{ color: "#005c53" }} />
-                      <span>
-                        <a href={personalInfo.linkedin} target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "none" }}>LinkedIn</a>
-                        {" | "}
-                        <a href={personalInfo.github} target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "none" }}>GitHub</a>
-                      </span>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px", width: "100%" }}>
-                      <MapPin size={12} style={{ color: "#005c53" }} />
-                      <span>Indore, India</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Summary */}
-                <div>
-                  <h3 style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "#005c53",
-                    borderBottom: "1.5px solid #005c53",
-                    paddingBottom: "4px",
-                    marginBottom: "8px",
-                  }}>
-                    Summary
-                  </h3>
-                  <p style={{
-                    fontSize: "0.75rem",
-                    color: "#334155",
-                    lineHeight: 1.5,
-                    margin: 0,
-                    textAlign: "justify",
-                  }}>
-                    I am a passionate Frontend-Focused Full Stack Developer with expertise in React.js, Redux Toolkit, Tailwind CSS, and JavaScript (ES6+). My practical experience extends to Node.js, Express, and MongoDB. I am committed to honing my skills in problem-solving, backend integration, and authentication systems. I aim to contribute to projects that merge creativity with technical proficiency.
-                  </p>
-                </div>
-
-                {/* Skills */}
-                <div>
-                  <h3 style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "#005c53",
-                    borderBottom: "1.5px solid #005c53",
-                    paddingBottom: "4px",
-                    marginBottom: "8px",
-                  }}>
-                    Skills
-                  </h3>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                    <div>
-                      <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#1e293b", display: "block", marginBottom: "2px" }}>Frontend</span>
-                      <span style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.45 }}>
-                        React-Native · ReactJs · Redux Toolkit · Tailwind · JavaScript · ES6+ · Bit-Bucket · GitHub · Redux · HTML · CSS · JIRA · Netlify · Vercel · SPA · ECommerce · TypeScript · Axios · JSON · Javascript ES6 · REST · Socket.IO · WebSockets · QA testing.
-                      </span>
-                    </div>
-                    <div style={{ marginTop: "4px" }}>
-                      <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#1e293b", display: "block", marginBottom: "2px" }}>Backend</span>
-                      <span style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.45 }}>
-                        MongoDB · Node.js · Routing · Express.js · JWT authentication/authorization · multer · Mongoose · Middleware · schema designing · File uploading.
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Projects */}
-                <div>
-                  <h3 style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "#005c53",
-                    borderBottom: "1.5px solid #005c53",
-                    paddingBottom: "4px",
-                    marginBottom: "10px",
-                  }}>
-                    Projects
-                  </h3>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-                    {/* TradAstra */}
-                    <div>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <h4 style={{ fontSize: "0.78rem", fontWeight: 700, color: "#0f172a", margin: 0 }}>
-                          TradAstra App for Trading
-                        </h4>
-                        <span style={{ fontSize: "0.7rem", color: "#64748b" }}>01/2023 - 04/2023</span>
-                      </div>
-                      <div style={{ fontSize: "0.72rem", color: "#475569", fontStyle: "italic", marginTop: "2px", marginBottom: "4px" }}>
-                        Build its full frontend according to the wireframe.
-                      </div>
-                      <ul style={{
-                        margin: 0,
-                        paddingLeft: "14px",
-                        fontSize: "0.7rem",
-                        color: "#334155",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "4px",
-                        lineHeight: 1.4,
-                      }}>
-                        <li>Architected a modular and scalable structure using <strong>React Native</strong>, <strong>TypeScript</strong>, and <strong>NativeWind</strong> ensuring maintainable components.</li>
-                        <li>Implemented core functionalities: Added <strong>email verification</strong> and refresh token.</li>
-                        <li>Implemented <strong>centralized data fetching</strong> with error boundaries, fallback UIs, and retry logic to improve app stability.</li>
-                        <li><strong>Perfomance optimization</strong> avoide unnessasry <strong>re-render,cahing/on-loading</strong> and more modern tech.</li>
-                        <li>Developed core authentication features, including , and secure API communication with Axios interceptors.</li>
-                      </ul>
-                    </div>
-
-                    {/* Meet */}
-                    <div>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <h4 style={{ fontSize: "0.78rem", fontWeight: 700, color: "#0f172a", margin: 0 }}>
-                          Meet web/App (Meetly Interview Portal)
-                        </h4>
-                        <span style={{ fontSize: "0.7rem", color: "#64748b" }}>05/2023 - 08/2023</span>
-                      </div>
-                      <div style={{ fontSize: "0.72rem", color: "#475569", fontStyle: "italic", marginTop: "2px", marginBottom: "4px" }}>
-                        Meetly Interview Portal (Full Stack Project)
-                      </div>
-                      <ul style={{
-                        margin: 0,
-                        paddingLeft: "14px",
-                        fontSize: "0.7rem",
-                        color: "#334155",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "4px",
-                        lineHeight: 1.4,
-                      }}>
-                        <li>Full Stack Project built with <strong>React</strong> (frontend) and <strong>Express.js + MongoDB</strong> (backend).</li>
-                        <li>Create Interview (<strong>schedule & invite candidates</strong>), Added email <strong>verification</strong> and refresh token support, Dynamic Navbar with <strong>Redux</strong> slices for Admin & Candidate login states.</li>
-                        <li>Implemented <strong>JWT authentication</strong> with <strong>refresh tokens</strong>, Role-based login system for <strong>Admin</strong> & <strong>user</strong> with dynamic Navbar, Integrated <strong>Socket</strong>.IO for video calls and <strong>screen sharing</strong>.</li>
-                        <li>Added <strong>real-time</strong> chat and <strong>video calling</strong> systems using <strong>websockets</strong> and <strong>socket.io</strong>.</li>
-                      </ul>
-                    </div>
-
-                    {/* Fleet Management */}
-                    <div>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <h4 style={{ fontSize: "0.78rem", fontWeight: 700, color: "#0f172a", margin: 0 }}>
-                          Fleet Management (Doctor Appointment Management)
-                        </h4>
-                        <span style={{ fontSize: "0.7rem", color: "#64748b" }}>09/2023</span>
-                      </div>
-                      <div style={{ fontSize: "0.72rem", color: "#475569", fontStyle: "italic", marginTop: "2px", marginBottom: "4px" }}>
-                        Doctor Appointment Management System
-                      </div>
-                      <ul style={{
-                        margin: 0,
-                        paddingLeft: "14px",
-                        fontSize: "0.7rem",
-                        color: "#334155",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "4px",
-                        lineHeight: 1.4,
-                      }}>
-                        <li>Architected a scalable <strong>web-based Fleet Management System</strong> using <strong>ReactJS (JavaScript)</strong> for the frontend and <strong>Node.js/Express</strong> backend.</li>
-                        <li>Delivered core fleet features: <strong>vehicle CRUD, driver assignment, trip logs, alerts, and live GPS tracking</strong>.</li>
-                        <li>Built secure authentication using <strong>JWT + refresh token rotation</strong> and implemented role-based access controls.</li>
-                        <li>Designed responsive UI components, integrated interactive maps, and developed operational dashboards.</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Enhancv Branding right column */}
-                <div style={{
-                  marginTop: "auto",
-                  paddingTop: "20px",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  fontSize: "0.62rem",
-                  color: "#94a3b8",
-                }}>
-                  <span>www.enhancv.com</span>
-                </div>
-              </div>
-            </div>
+          {/* Resume Frame Container */}
+          <div className="resume-frame-wrapper" style={{ flex: 1, overflowY: "auto", padding: "24px", background: "rgba(0,0,0,0.2)" }}>
+            {activeTemplate === "enhancvWhite" ? (
+              <EnhancvWhiteTemplate data={enhancvResumeData} />
+            ) : (
+              <TealSplitTemplate data={enhancvResumeData} />
+            )}
           </div>
         </motion.div>
       </div>
@@ -570,7 +883,7 @@ export default function ResumeModal({ isOpen, onClose }) {
       {/* Global Print Styling CSS */}
       <style>{`
         @media print {
-          /* Hide main website components */
+          /* Hide website chrome */
           nav, main, footer, .no-print, [style*="radial-gradient"] {
             display: none !important;
           }
@@ -593,12 +906,12 @@ export default function ResumeModal({ isOpen, onClose }) {
             z-index: auto !important;
           }
 
-          /* Hide modal backdrop overlay */
+          /* Hide backdrop */
           .resume-modal-backdrop {
             display: none !important;
           }
 
-          /* Reset modal content box for full layout printing */
+          /* Reset modal content box for full page print */
           .resume-modal-content {
             position: static !important;
             width: 100% !important;
@@ -620,7 +933,7 @@ export default function ResumeModal({ isOpen, onClose }) {
             display: block !important;
           }
 
-          /* Format the print area to take full page space */
+          /* Format the print area */
           .resume-print-area {
             width: 100% !important;
             max-width: 800px !important;
@@ -630,8 +943,6 @@ export default function ResumeModal({ isOpen, onClose }) {
             border-radius: 0 !important;
             overflow: visible !important;
             min-height: 0 !important;
-            display: grid !important;
-            grid-template-columns: 270px 1fr !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
@@ -640,3 +951,4 @@ export default function ResumeModal({ isOpen, onClose }) {
     </AnimatePresence>
   );
 }
+

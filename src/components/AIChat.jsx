@@ -9,27 +9,27 @@ export default function AIChat() {
   const { personalInfo } = portfolioData;
   const { theme } = useTheme();
 
-  // Dedicated responses for Rahil with 1+ year MERN stack experience
+  // Dedicated responses for Rahil with Full Stack (React, Next.js, Node.js, PostgreSQL, TypeScript) experience
   const chatbotConfig = {
-    welcomeMessage: "Hi! I'm Rahil's AI assistant. I can answer questions about his MERN stack experience, frontend/backend skills, projects, certifications, and career journey. What would you like to know?",
+    welcomeMessage: "Hi! I'm Rahil's AI assistant. I can answer questions about his Full Stack experience (React, Next.js, Node.js, PostgreSQL, TypeScript), featured projects (Purple Learning, AI Product Auditor, Seek-N-Hire), and technical contributions. What would you like to know?",
     quickQuestions: [
-      "Tell me about your MERN tech stack?",
-      "What are your featured MERN projects?",
-      "What certifications do you have?",
-      "What is your experience with Docker & AWS?",
+      "Tell me about your full stack tech stack?",
+      "What are your featured AI & Web projects?",
+      "What is Purple Learning and Seek-N-Hire?",
+      "How do you approach real-time & database architecture?",
       "How can I hire you?"
     ],
     responses: {
-      experience: "Rahil has 1+ year of experience building scalable applications with the MERN stack (MongoDB, Express, React, Node.js) and orchestrating DevOps pipelines.",
-      skills: "His technical stack comprises React, Next.js, Redux, and TypeScript on the frontend, and Node.js, Express, Socket.io, NestJS on the backend. For database & storage, he utilizes MongoDB, PostgreSQL, and Redis. DevOps-wise, he works with Docker, Kubernetes, AWS, and Terraform.",
-      projects: "Rahil's notable projects include: 1) DevSync - a real-time collaborative workspace utilizing React, Node.js, Socket.io, and Redis. 2) ShopSphere - a distributed event-driven microservices setup using RabbitMQ and Docker. 3) InsightCore - an AI analytics engine translating natural language to MongoDB aggregates.",
-      certifications: "He holds several cloud & database certifications: MongoDB Certified Developer Associate, AWS Certified Solutions Architect, AWS Certified Developer, and Certified Kubernetes Administrator (CKA).",
-      devops: "Rahil is highly proficient in DevOps. He uses Terraform to manage infrastructure on AWS (EC2/ECS), package components using multi-stage Dockerfiles, orchestrate nodes using Kubernetes, and automate workflows via GitHub Actions.",
-      education: "He holds a strong background in Computer Science and software engineering, continually advancing his cloud credentials with first-class certifications from MongoDB, AWS, and the Cloud Native Computing Foundation.",
-      career: "His career roadmap is focused on modern MERN stack development: starting with intense coding bootcamps and certifications in early 2023, stepping into full-stack internships, and now designing scalable solutions as an active freelance and open-source developer.",
-      contact: "You can easily contact Rahil by using the interactive form at the bottom of this website, or by emailing him at rahil.sheikh@example.com. You can also connect with him on LinkedIn or view his repositories on GitHub.",
-      mongodb: "As a MongoDB Certified Developer, Rahil has deep experience in schema design (embedding vs referencing), query optimizations, indexing structures, replica sets, sharding, and writing high-performance MongoDB aggregation pipelines.",
-      react: "On the frontend, Rahil is an expert in React, Next.js (SSR/Static Site Generation), and Redux Toolkit. He specializes in creating fluid, high-performance user interfaces with smooth micro-animations, glassmorphic styles, and clean component APIs."
+      experience: "Rahil is a Full Stack Developer specializing in React, Next.js, Node.js, Express.js, PostgreSQL, TypeORM, and TypeScript. He builds production-ready AI platforms, recruitment systems, enterprise management tools, and mobile apps.",
+      skills: "His stack includes React, Next.js, TypeScript, Tailwind CSS, and React Native (Expo) on the frontend/mobile, and Node.js, Express.js, PostgreSQL, TypeORM, Redis, Socket.IO, and LiveKit on the backend.",
+      projects: "Rahil's top projects include: 1) Purple Learning - an AI-powered learning & mentorship platform (Next.js, PostgreSQL, LiveKit, Socket.IO). 2) AI Product Auditor - an AI-assisted product analysis tool generating actionable UX/performance reports. 3) Seek-N-Hire - an AI recruitment platform with sponsorship rotation & notifications. 4) PurpleSuite - an enterprise business management suite.",
+      certifications: "He holds certifications including MongoDB Certified Developer Associate and AWS Certified Solutions Architect, backing his expertise in database architecture and cloud applications.",
+      devops: "Rahil uses Docker, Vercel, and CI/CD pipelines to package and deploy full-stack applications with scalable database management using PostgreSQL, TypeORM, and Redis caching.",
+      education: "He is pursuing B.Tech in Computer Science (2023-2027) at LNCT University, Indore, combined with hands-on experience in software engineering and production project delivery.",
+      career: "Rahil builds scalable full-stack products ranging from AI-powered learning platforms and recruitment systems to enterprise business applications and mobile-first experiences.",
+      contact: `You can reach Rahil via email at ${personalInfo.email}, or connect on LinkedIn (${personalInfo.linkedin}) and GitHub (${personalInfo.github}).`,
+      mongodb: "Rahil works with PostgreSQL, TypeORM, and MongoDB for structured schema design, complex query optimization, role-based permissions, and high-performance data processing.",
+      react: "Rahil is an expert in React, Next.js (SSR/App Router), TypeScript, and Tailwind CSS. He specializes in designing modern, responsive, recruiter-friendly interfaces with smooth micro-animations."
     }
   };
 
