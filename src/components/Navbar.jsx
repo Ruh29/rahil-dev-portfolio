@@ -192,7 +192,7 @@ export default function Navbar({ onOpenResume }) {
 
             <motion.button
               onClick={() => scrollTo("contact")}
-              className="btn-primary nav-action-btn"
+              className="btn-primary nav-action-btn nav-hire-btn"
               style={{ padding: "8px 18px", fontSize: "0.82rem", whiteSpace: "nowrap" }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

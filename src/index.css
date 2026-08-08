@@ -676,3 +676,28 @@ body {
     gap: 16px;
   }
 }
+
+.about-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .nav-hire-btn {
+    display: none !important;
+  }
+  .nav-action-btn {
+    padding: 6px 12px !important;
+    font-size: 0.78rem !important;
+  }
+  .about-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  .hero-avatar-orbit {
+    height: 340px !important;
+    transform: scale(0.85);
+    transform-origin: center center;
+  }
+}

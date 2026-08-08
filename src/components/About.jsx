@@ -248,11 +248,7 @@ export default function About() {
 
             {/* Stats */}
             <AnimatedSection delay={0.6}>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: "12px",
-              }}>
+              <div className="about-stats-grid">
                 {portfolioData.stats.map((stat, i) => (
                   <motion.div
                     key={i}

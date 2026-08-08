@@ -18,10 +18,14 @@ function CursorGlow() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const { theme } = useTheme();
   React.useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth <= 768) return;
     const h = (e) => setPos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", h, { passive: true });
     return () => window.removeEventListener("mousemove", h);
   }, []);
+
+  if (typeof window !== "undefined" && window.innerWidth <= 768) return null;
+
   return (
     <div style={{
       position: "fixed",

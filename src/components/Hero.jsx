@@ -84,14 +84,14 @@ export default function Hero() {
 
   useEffect(() => {
     const handleMouse = (e) => {
-      if (!heroRef.current) return;
+      if (!heroRef.current || window.innerWidth <= 768) return;
       const rect = heroRef.current.getBoundingClientRect();
       setMousePos({
         x: (e.clientX - rect.left - rect.width / 2) / rect.width,
         y: (e.clientY - rect.top - rect.height / 2) / rect.height,
       });
     };
-    window.addEventListener("mousemove", handleMouse);
+    window.addEventListener("mousemove", handleMouse, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouse);
   }, []);
 
