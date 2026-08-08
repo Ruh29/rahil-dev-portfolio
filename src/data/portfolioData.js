@@ -292,13 +292,13 @@ const portfolioData = {
     {
       year: "2021 - 2025",
       period: "08/2021 – 05/2025",
-      title: "Bachelor of Computer Applications (BCA)",
+      title: "Bachelor of Technology (B.Tech)",
       company: "VIT Institute, Barwani",
       description:
-        "Completed Bachelor of Computer Applications with a strong focus on Full Stack Development, Software Engineering, Web Technologies, Database Management, and Real-World Application Development. Actively worked on practical projects, internships, and production-level applications throughout the academic journey.",
+        "Completed Bachelor of Technology with a strong focus on Full Stack Development, Software Engineering, Web Technologies, Database Management, and Real-World Application Development. Actively worked on practical projects, internships, and production-level applications throughout the academic journey.",
       icon: "GraduationCap",
       color: "#ec4899",
-      skills: ["BCA", "Full Stack", "Databases", "Web Development"],
+      skills: ["B.Tech", "Full Stack", "Databases", "Web Development"],
     },
   ],
 
