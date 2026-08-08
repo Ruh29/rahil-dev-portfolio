@@ -82,6 +82,12 @@ export default function Hero() {
   const { personalInfo } = portfolioData;
   const { theme } = useTheme();
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+  const activeHeroOpacity = isMobile ? 1 : heroOpacity;
+  const activeHeroY = isMobile ? 0 : heroY;
+  const activeBlobY1 = isMobile ? 0 : blobY1;
+  const activeBlobY2 = isMobile ? 0 : blobY2;
+
   useEffect(() => {
     const handleMouse = (e) => {
       if (!heroRef.current || window.innerWidth <= 768) return;
@@ -103,11 +109,11 @@ export default function Hero() {
     } else {
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(personalInfo.voiceIntroText);
-      u.rate = 0.92;
-      u.pitch = 1.1;
-      u.onstart = () => setIsSpeaking(true);
+      u.rate = 0.95;
+      u.pitch = 1.0;
       u.onend = () => setIsSpeaking(false);
       u.onerror = () => setIsSpeaking(false);
+      setIsSpeaking(true);
       window.speechSynthesis.speak(u);
     }
   };
@@ -115,8 +121,14 @@ export default function Hero() {
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const containerVariants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -146,7 +158,7 @@ export default function Hero() {
       <div className="grid-bg" />
 
       {/* Parallax blobs */}
-      <motion.div style={{ y: blobY1 }}>
+      <motion.div style={{ y: activeBlobY1 }}>
         <motion.div
           style={{
             position: "absolute",
@@ -167,7 +179,7 @@ export default function Hero() {
         />
       </motion.div>
 
-      <motion.div style={{ y: blobY2 }}>
+      <motion.div style={{ y: activeBlobY2 }}>
         <motion.div
           style={{
             position: "absolute",
@@ -199,13 +211,13 @@ export default function Hero() {
           background: `radial-gradient(circle, ${theme.accent}14, transparent 70%)`,
           filter: "blur(50px)",
           pointerEvents: "none",
-          y: blobY1,
+          y: activeBlobY1,
         }}
       />
 
       {/* Main content */}
       <motion.div
-        style={{ opacity: heroOpacity, y: heroY, position: "relative", zIndex: 1, width: "100%" }}
+        style={{ opacity: activeHeroOpacity, y: activeHeroY, position: "relative", zIndex: 1, width: "100%" }}
       >
         <div className="container" style={{ paddingTop: "100px", paddingBottom: "60px" }}>
           <div style={{

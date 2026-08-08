@@ -34,6 +34,11 @@ export default function ScatterText({ children, delay = 0, speed = 1, isGradient
                   const letterDelay =
                     delay + wIdx * 0.02 + lIdx * 0.008 + Math.random() * 0.03;
 
+                  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+                  const transitionConfig = isMobile
+                    ? { type: "tween", ease: "easeOut", duration: 0.35, delay: letterDelay }
+                    : { type: "spring", stiffness: 100 * speed, damping: 15, delay: letterDelay };
+
                   return (
                     <motion.span
                       key={lIdx}
@@ -56,12 +61,7 @@ export default function ScatterText({ children, delay = 0, speed = 1, isGradient
                         scale: 1,
                         opacity: 1,
                       }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 100 * speed,
-                        damping: 15,
-                        delay: letterDelay,
-                      }}
+                      transition={transitionConfig}
                     >
                       {letter}
                     </motion.span>
