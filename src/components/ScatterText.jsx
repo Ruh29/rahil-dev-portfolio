@@ -1,10 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useTheme } from "../context/ThemeContext";
 
 export default function ScatterText({ children, delay = 0, speed = 1 }) {
-  const { themeId } = useTheme();
-
   const renderChild = (child, index) => {
     if (typeof child === "string") {
       const normalized = child.replace(/\s+/g, " ");
@@ -27,12 +24,12 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                 }}
               >
                 {letters.map((letter, lIdx) => {
-                  const randomX = (Math.random() - 0.5) * 140;
-                  const randomY = (Math.random() - 0.5) * 90;
-                  const randomRotate = (Math.random() - 0.5) * 50;
-                  const randomScale = 0.5 + Math.random() * 0.4;
+                  const randomX = (Math.random() - 0.5) * 600;
+                  const randomY = (Math.random() - 0.5) * 400;
+                  const randomRotate = (Math.random() - 0.5) * 100;
+                  const randomScale = 0.3 + Math.random() * 0.4;
                   const letterDelay =
-                    delay + wIdx * 0.018 + lIdx * 0.007 + Math.random() * 0.025;
+                    delay + wIdx * 0.02 + lIdx * 0.008 + Math.random() * 0.03;
 
                   return (
                     <motion.span
@@ -57,8 +54,8 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                       }}
                       transition={{
                         type: "spring",
-                        stiffness: 130 * speed,
-                        damping: 17,
+                        stiffness: 100 * speed,
+                        damping: 15,
                         delay: letterDelay,
                       }}
                     >
@@ -100,7 +97,7 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
   };
 
   return (
-    <span key={themeId} style={{ display: "inline-block" }}>
+    <span style={{ display: "inline-block" }}>
       {Array.isArray(children)
         ? children.map((c, i) => renderChild(c, i))
         : renderChild(children, 0)}
