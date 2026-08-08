@@ -36,21 +36,21 @@ export default function Navbar({ onOpenResume }) {
 
   const scrollTo = (id) => {
     setMobileOpen(false);
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) {
-        const navHeight = 70;
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = el.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - navHeight;
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }
-    }, 120);
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    // Use requestAnimationFrame for instantaneous and accurate smooth scrolling
+    requestAnimationFrame(() => {
+      const navHeight = 70;
+      const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = Math.max(0, elementPosition - navHeight);
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    });
   };
 
   return (
@@ -245,14 +245,10 @@ export default function Navbar({ onOpenResume }) {
             }}
           >
             <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: "6px" }}>
-              {navSections.map((sec, i) => (
-                <motion.button
+              {navSections.map((sec) => (
+                <button
                   key={sec.id}
                   onClick={() => scrollTo(sec.id)}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.04 }}
-                  whileTap={{ scale: 0.97 }}
                   style={{
                     background: activeSection === sec.id ? "rgba(var(--color-cyan-rgb), 0.12)" : "transparent",
                     border: activeSection === sec.id ? "1px solid rgba(var(--color-cyan-rgb), 0.25)" : "1px solid transparent",
@@ -268,13 +264,16 @@ export default function Navbar({ onOpenResume }) {
                     alignItems: "center",
                     justifyContent: "space-between",
                     width: "100%",
+                    outline: "none",
+                    WebkitTapHighlightColor: "transparent",
+                    transition: "all 0.2s ease",
                   }}
                 >
                   <span>{sec.label}</span>
                   {activeSection === sec.id && (
                     <span style={{ fontSize: "0.75rem", color: "var(--color-cyan)", fontWeight: 700 }}>●</span>
                   )}
-                </motion.button>
+                </button>
               ))}
             </div>
           </motion.div>
