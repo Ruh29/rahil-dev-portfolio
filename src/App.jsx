@@ -118,7 +118,7 @@ export default function App() {
         {!loaded && <PageLoader key="loader" />}
       </AnimatePresence>
 
-      <div key={themeId} style={{ minHeight: "100vh", position: "relative" }}>
+      <div style={{ minHeight: "100vh", position: "relative" }}>
         <CursorGlow />
         <Navbar onOpenResume={() => setIsResumeOpen(true)} />
         <main>
