@@ -293,7 +293,7 @@ const portfolioData = {
       year: "2021 - 2025",
       period: "08/2021 – 05/2025",
       title: "Bachelor of Information Technology",
-      company: "VIT Institute, Barwani",
+      company: "LNCT University, Indore",
       description:
         "Completed Bachelor of Information Technology with a strong focus on Full Stack Development, Software Engineering, Web Technologies, Database Management, and Real-World Application Development. Actively worked on practical projects, internships, and production-level applications throughout the academic journey.",
       icon: "GraduationCap",

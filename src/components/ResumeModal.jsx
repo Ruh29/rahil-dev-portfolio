@@ -55,9 +55,9 @@ const enhancvResumeData = {
   education: [
     {
       title: "Bachelor of Information Technology",
-      institute: "VIT Institute",
+      institute: "LNCT University",
       period: "08/2021 – 05/2025",
-      location: "Barwani"
+      location: "Indore"
     }
   ],
   skills: {
