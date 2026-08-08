@@ -35,8 +35,22 @@ export default function Navbar({ onOpenResume }) {
   }, []);
 
   const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMobileOpen(false);
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        const navHeight = 70;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - navHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 120);
   };
 
   return (
@@ -219,35 +233,47 @@ export default function Navbar({ onOpenResume }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
             style={{
               background: "var(--bg-overlay)",
               backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
               borderTop: "1px solid var(--border-main)",
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4)",
+              maxHeight: "calc(100vh - 70px)",
+              overflowY: "auto",
             }}
           >
-            <div style={{ padding: "16px 24px", display: "flex", flexDirection: "column", gap: "4px" }}>
+            <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: "6px" }}>
               {navSections.map((sec, i) => (
                 <motion.button
                   key={sec.id}
                   onClick={() => scrollTo(sec.id)}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+                  transition={{ delay: i * 0.04 }}
+                  whileTap={{ scale: 0.97 }}
                   style={{
-                    background: "none",
-                    border: "none",
+                    background: activeSection === sec.id ? "rgba(var(--color-cyan-rgb), 0.12)" : "transparent",
+                    border: activeSection === sec.id ? "1px solid rgba(var(--color-cyan-rgb), 0.25)" : "1px solid transparent",
                     textAlign: "left",
-                    padding: "12px 16px",
-                    borderRadius: "10px",
+                    padding: "12px 18px",
+                    borderRadius: "12px",
                     fontSize: "0.95rem",
-                    fontWeight: 500,
+                    fontWeight: 600,
                     cursor: "pointer",
                     color: activeSection === sec.id ? "var(--color-cyan)" : "var(--text-secondary)",
-                    backgroundColor: activeSection === sec.id ? "rgba(var(--color-cyan-rgb), 0.08)" : "transparent",
                     fontFamily: "var(--font-main)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
                   }}
                 >
-                  {sec.label}
+                  <span>{sec.label}</span>
+                  {activeSection === sec.id && (
+                    <span style={{ fontSize: "0.75rem", color: "var(--color-cyan)", fontWeight: 700 }}>●</span>
+                  )}
                 </motion.button>
               ))}
             </div>
