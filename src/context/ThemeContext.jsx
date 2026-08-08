@@ -213,8 +213,11 @@ const ThemeContext = createContext(null);
 export function ThemeProvider({ children }) {
   const [themeId, setThemeId] = useState(() => {
     try {
-      return localStorage.getItem("portfolio-theme") || "light";
+      const saved = localStorage.getItem("portfolio-theme") || "light";
+      applyThemeToCSSVars(saved);
+      return saved;
     } catch {
+      applyThemeToCSSVars("light");
       return "light";
     }
   });
@@ -223,19 +226,29 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     applyThemeToCSSVars(themeId);
-    try {
-      localStorage.setItem("portfolio-theme", themeId);
-    } catch {
-      // ignore
-    }
   }, [themeId]);
 
   const setTheme = useCallback((id) => {
-    if (THEMES[id]) setThemeId(id);
+    if (THEMES[id]) {
+      applyThemeToCSSVars(id);
+      setThemeId(id);
+      try {
+        localStorage.setItem("portfolio-theme", id);
+      } catch {
+        // ignore
+      }
+    }
   }, []);
 
+  const value = React.useMemo(() => ({
+    theme,
+    themeId,
+    setTheme,
+    themes: THEMES,
+  }), [theme, themeId, setTheme]);
+
   return (
-    <ThemeContext.Provider value={{ theme, themeId, setTheme, themes: THEMES }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );

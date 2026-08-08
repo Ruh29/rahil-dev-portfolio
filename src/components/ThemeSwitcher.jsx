@@ -137,19 +137,12 @@ export default function ThemeSwitcher() {
               gridTemplateColumns: "repeat(2, 1fr)",
               gap: "8px",
             }}>
-              {themeList.map((t, i) => {
+              {themeList.map((t) => {
                 const isActive = t.id === themeId;
                 return (
-                  <motion.button
+                  <button
                     key={t.id}
-                    onClick={() => {
-                      setTheme(t.id);
-                    }}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.03 }}
-                    whileHover={{ scale: 1.04, y: -2 }}
-                    whileTap={{ scale: 0.96 }}
+                    onClick={() => setTheme(t.id)}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -166,7 +159,9 @@ export default function ThemeSwitcher() {
                       fontFamily: "var(--font-main)",
                       position: "relative",
                       overflow: "hidden",
-                      transition: "background 0.2s ease, border-color 0.2s ease",
+                      transition: "all 0.15s ease",
+                      outline: "none",
+                      WebkitTapHighlightColor: "transparent",
                     }}
                     id={`theme-option-${t.id}`}
                   >
@@ -206,15 +201,9 @@ export default function ThemeSwitcher() {
 
                     {/* Active indicator */}
                     {isActive && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                      >
-                        <Check size={13} style={{ color: t.primary, flexShrink: 0 }} />
-                      </motion.div>
+                      <Check size={13} style={{ color: t.primary, flexShrink: 0 }} />
                     )}
-                  </motion.button>
+                  </button>
                 );
               })}
             </div>
