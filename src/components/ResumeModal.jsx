@@ -11,7 +11,7 @@ const enhancvResumeData = {
     role: "Full Stack Developer",
     phone: "+919993995502",
     email: "rahilsheikh73308@gmail.com",
-    linkedin: "linkedin.com/in/rahilsheikh",
+    linkedin: "linkedin.com/in/ruh-sheikh29/",
     github: "github.com/Ruh29",
     location: "Barwani / Indore, India"
   },
