@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 
 export default function ScatterText({ children, delay = 0, speed = 1 }) {
   const { themeId } = useTheme();
+  const [animCount, setAnimCount] = useState(0);
+
+  // Force re-trigger animation whenever theme changes
+  useEffect(() => {
+    setAnimCount((prev) => prev + 1);
+  }, [themeId]);
 
   const renderChild = (child, index) => {
     if (typeof child === "string") {
@@ -27,12 +33,12 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                 }}
               >
                 {letters.map((letter, lIdx) => {
-                  const randomX = (Math.random() - 0.5) * 800;
-                  const randomY = (Math.random() - 0.5) * 500;
-                  const randomRotate = (Math.random() - 0.5) * 140;
-                  const randomScale = 0.3 + Math.random() * 0.4;
+                  const randomX = (Math.random() - 0.5) * 900;
+                  const randomY = (Math.random() - 0.5) * 600;
+                  const randomRotate = (Math.random() - 0.5) * 160;
+                  const randomScale = 0.25 + Math.random() * 0.45;
                   const letterDelay =
-                    delay + wIdx * 0.02 + lIdx * 0.008 + Math.random() * 0.03;
+                    delay + wIdx * 0.022 + lIdx * 0.009 + Math.random() * 0.035;
 
                   return (
                     <motion.span
@@ -40,6 +46,7 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                       style={{
                         display: "inline-block",
                         verticalAlign: "baseline",
+                        willChange: "transform, opacity",
                       }}
                       initial={{
                         x: randomX,
@@ -57,8 +64,8 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                       }}
                       transition={{
                         type: "spring",
-                        stiffness: 100 * speed,
-                        damping: 15,
+                        stiffness: 95 * speed,
+                        damping: 14,
                         delay: letterDelay,
                       }}
                     >
@@ -83,13 +90,22 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
           </ScatterText>
         );
       }
+      const randomX = (Math.random() - 0.5) * 600;
+      const randomY = (Math.random() - 0.5) * 400;
+      const randomRotate = (Math.random() - 0.5) * 90;
+
       return (
         <motion.span
           key={index}
           style={{ display: "inline-block", verticalAlign: "middle" }}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: delay }}
+          initial={{ x: randomX, y: randomY, rotate: randomRotate, opacity: 0, scale: 0.5 }}
+          animate={{ x: 0, y: 0, rotate: 0, opacity: 1, scale: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 95 * speed,
+            damping: 14,
+            delay: delay + 0.05,
+          }}
         >
           {child}
         </motion.span>
@@ -100,7 +116,7 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
   };
 
   return (
-    <span key={themeId} style={{ display: "inline-block" }}>
+    <span key={`${themeId}-${animCount}`} style={{ display: "inline-block" }}>
       {Array.isArray(children)
         ? children.map((c, i) => renderChild(c, i))
         : renderChild(children, 0)}
