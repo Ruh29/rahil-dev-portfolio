@@ -277,7 +277,7 @@ Thank you for reaching out to me! I have successfully received your inquiry abou
 
 I am excited about potential opportunities and will review your message shortly. I'll get back to you within 24 hours.
 
-In the meantime, feel free to check out my GitHub (https://github.com/rahilsheikh) or connect on LinkedIn (https://linkedin.com/in/rahilsheikh).
+In the meantime, feel free to check out my GitHub (https://github.com/Ruh29) or connect on LinkedIn (https://linkedin.com/in/rahilsheikh).
 
 Best regards,
 Rahil Sheikh

@@ -11,7 +11,7 @@ const portfolioData = {
     location: "Indore, India",
     email: "rahilsheikh73308@gmail.com",
     phone: "+91 9993995502",
-    github: "https://github.com/rahilsheikh",
+    github: "https://github.com/Ruh29",
     linkedin: "https://linkedin.com/in/rahilsheikh",
     twitter: "https://twitter.com/rahilsheikh",
     resumeUrl: "/Rahil_Sheikh_MERN_Resume.pdf",
@@ -318,7 +318,7 @@ const portfolioData = {
   ],
 
   socialLinks: [
-    { platform: "GitHub", url: "https://github.com/rahilsheikh", icon: "Github" },
+    { platform: "GitHub", url: "https://github.com/Ruh29", icon: "Github" },
     { platform: "LinkedIn", url: "https://linkedin.com/in/rahilsheikh", icon: "Linkedin" },
     { platform: "Twitter", url: "https://twitter.com/rahilsheikh", icon: "Twitter" },
     { platform: "Email", url: "mailto:rahilsheikh73308@gmail.com", icon: "Mail" },

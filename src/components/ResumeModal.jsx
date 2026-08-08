@@ -12,7 +12,7 @@ const enhancvResumeData = {
     phone: "+919993995502",
     email: "rahilsheikh73308@gmail.com",
     linkedin: "linkedin.com/in/rahilsheikh",
-    github: "github.com/rahilsheikh",
+    github: "github.com/Ruh29",
     location: "Barwani / Indore, India"
   },
   summary:
