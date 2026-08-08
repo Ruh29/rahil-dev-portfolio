@@ -50,12 +50,16 @@ export default function Navbar({ onOpenResume }) {
         left: 0,
         right: 0,
         zIndex: 100,
-        transition: "all 0.4s ease",
-        backgroundColor: scrolled ? "rgba(5, 5, 8, 0.8)" : "rgba(5, 5, 8, 0.4)",
+        transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        background: scrolled
+          ? `linear-gradient(135deg, ${theme.primary}1A, ${theme.secondary}1A), var(--bg-nav)`
+          : `linear-gradient(135deg, ${theme.primary}0E, ${theme.secondary}0E), var(--bg-nav)`,
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        borderBottom: scrolled ? "1px solid var(--border-main)" : "1px solid rgba(255, 255, 255, 0.04)",
-        boxShadow: scrolled ? "0 8px 32px rgba(0, 0, 0, 0.35)" : "none",
+        borderBottom: `1px solid ${theme.primary}30`,
+        boxShadow: scrolled
+          ? `0 8px 32px rgba(0, 0, 0, ${theme.isLight ? "0.08" : "0.35"})`
+          : "none",
       }}
     >
       <div className="container" style={{ padding: "0 24px" }}>

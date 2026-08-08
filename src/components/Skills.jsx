@@ -229,6 +229,7 @@ export default function Skills() {
 
         {/* Tab navigation */}
         <motion.div
+          className="skills-tabs-container"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
@@ -246,6 +247,7 @@ export default function Skills() {
           {tabs.map(({ id, label, icon: Icon }) => (
             <motion.button
               key={id}
+              className="skills-tab-button"
               onClick={() => setActiveTab(id)}
               style={{
                 display: "flex",
@@ -307,6 +309,27 @@ export default function Skills() {
       <style>{`
         @media (max-width: 640px) {
           .skills-grid { grid-template-columns: 1fr !important; }
+          .skills-tabs-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            justify-content: flex-start !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: none !important;
+            padding: 4px !important;
+            border-radius: 12px !important;
+          }
+          .skills-tabs-container::-webkit-scrollbar {
+            display: none !important;
+          }
+          .skills-tab-button {
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+            padding: 8px 14px !important;
+            font-size: 0.82rem !important;
+          }
         }
       `}</style>
     </section>
