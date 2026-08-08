@@ -508,6 +508,7 @@ export default function Projects() {
 
           {/* Filter Buttons */}
           <motion.div
+            className="projects-filter-container"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.3 }}
@@ -516,6 +517,7 @@ export default function Projects() {
             {filterOptions.map(cat => (
               <motion.button
                 key={cat}
+                className="projects-filter-btn"
                 onClick={() => setFilter(cat)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -548,6 +550,7 @@ export default function Projects() {
         <AnimatePresence mode="wait">
           <motion.div
             key={filter}
+            className="projects-grid"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -565,6 +568,35 @@ export default function Projects() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .projects-filter-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            justify-content: flex-start !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: none !important;
+            padding: 4px 2px 8px !important;
+          }
+          .projects-filter-container::-webkit-scrollbar {
+            display: none !important;
+          }
+          .projects-filter-btn {
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+            padding: 7px 16px !important;
+            font-size: 0.8rem !important;
+          }
+          .projects-grid {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
