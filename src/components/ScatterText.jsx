@@ -1,7 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useTheme } from "../context/ThemeContext";
 
-export default function ScatterText({ children, delay = 0, speed = 1 }) {
+export default function ScatterText({ children, delay = 0, speed = 1, isGradient = false }) {
+  const { themeId } = useTheme();
+
   const renderChild = (child, index) => {
     if (typeof child === "string") {
       const normalized = child.replace(/\s+/g, " ");
@@ -34,6 +37,7 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                   return (
                     <motion.span
                       key={lIdx}
+                      className={isGradient ? "gradient-text" : ""}
                       style={{
                         display: "inline-block",
                         verticalAlign: "baseline",
@@ -71,11 +75,21 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
     }
 
     if (React.isValidElement(child)) {
+      const isGrad =
+        isGradient ||
+        (child.props &&
+          (child.props.className === "gradient-text" ||
+            child.props.style?.WebkitBackgroundClip === "text" ||
+            child.props.style?.webkitBackgroundClip === "text"));
+
       if (child.props && child.props.children) {
-        return React.cloneElement(
-          child,
-          { key: index },
-          <ScatterText delay={delay + 0.04} speed={speed}>
+        return (
+          <ScatterText
+            key={index}
+            delay={delay + 0.04}
+            speed={speed}
+            isGradient={isGrad}
+          >
             {child.props.children}
           </ScatterText>
         );
@@ -97,7 +111,7 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
   };
 
   return (
-    <span style={{ display: "inline-block" }}>
+    <span key={themeId} style={{ display: "inline-block" }}>
       {Array.isArray(children)
         ? children.map((c, i) => renderChild(c, i))
         : renderChild(children, 0)}

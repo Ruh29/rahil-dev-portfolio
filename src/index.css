@@ -49,6 +49,14 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
+.gradient-text {
+  background: var(--gradient-primary) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 16px;

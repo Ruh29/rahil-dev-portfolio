@@ -111,13 +111,10 @@ export default function ThemeSwitcher() {
                 gap: "8px",
               }}>
                 <Palette size={16} style={{ color: theme.primary }} />
-                <span style={{
+                <span className="gradient-text" style={{
                   fontFamily: "'Outfit', sans-serif",
                   fontWeight: 700,
                   fontSize: "0.95rem",
-                  background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
                 }}>
                   Choose Theme
                 </span>

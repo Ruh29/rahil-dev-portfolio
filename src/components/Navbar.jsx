@@ -109,13 +109,10 @@ export default function Navbar({ onOpenResume }) {
             }}>
               RS
             </div>
-            <span className="nav-logo-text" style={{
+            <span className="nav-logo-text gradient-text" style={{
               fontFamily: "'Outfit', sans-serif",
               fontWeight: 700,
               fontSize: "1.1rem",
-              background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
               whiteSpace: "nowrap",
             }}>
               Rahil.dev

@@ -247,7 +247,7 @@ export default function Hero() {
                   color: "var(--text-heading)",
                   marginBottom: "16px",
                 }}>
-                  <ScatterText delay={0.15}>Crafting <span style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary}, ${theme.accent})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Beautiful</span></ScatterText>
+                  <ScatterText delay={0.15}>Crafting <span className="gradient-text">Beautiful</span></ScatterText>
                   <br />
                   <ScatterText delay={0.4}>
                     Web Experiences
@@ -295,13 +295,10 @@ export default function Hero() {
                     alignItems: "center",
                     gap: "8px",
                   }}>
-                    <span style={{
+                    <span className="gradient-text" style={{
                       fontFamily: "'Outfit', sans-serif",
                       fontWeight: 800,
                       fontSize: "1.4rem",
-                      background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
                     }}>
                       {stat.value}
                     </span>
