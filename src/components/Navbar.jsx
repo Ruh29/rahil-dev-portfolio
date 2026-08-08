@@ -62,8 +62,8 @@ export default function Navbar({ onOpenResume }) {
           : "none",
       }}
     >
-      <div className="container" style={{ padding: "0 24px" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "70px" }}>
+      <div className="container nav-container-inner" style={{ padding: "0 24px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "70px", gap: "8px" }}>
           {/* Logo */}
           <motion.button
             onClick={() => scrollTo("hero")}
@@ -73,33 +73,36 @@ export default function Navbar({ onOpenResume }) {
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              gap: "10px",
+              gap: "8px",
+              flexShrink: 0,
             }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <div style={{
-              width: "38px",
-              height: "38px",
+              width: "36px",
+              height: "36px",
               borderRadius: "10px",
               background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               fontWeight: 800,
-              fontSize: "0.95rem",
+              fontSize: "0.9rem",
               color: "#000",
               fontFamily: "'Outfit', sans-serif",
+              flexShrink: 0,
             }}>
               RS
             </div>
-            <span style={{
+            <span className="nav-logo-text" style={{
               fontFamily: "'Outfit', sans-serif",
               fontWeight: 700,
               fontSize: "1.1rem",
               background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
+              whiteSpace: "nowrap",
             }}>
               Rahil.dev
             </span>
@@ -148,7 +151,7 @@ export default function Navbar({ onOpenResume }) {
           </div>
 
           {/* Actions */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div className="nav-actions-group" style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
             {/* Available badge */}
             <motion.div
               className="status-badge status-available"
@@ -167,8 +170,8 @@ export default function Navbar({ onOpenResume }) {
 
             <motion.button
               onClick={onOpenResume}
-              className="btn-secondary"
-              style={{ padding: "8px 18px", fontSize: "0.82rem", display: "flex", alignItems: "center", gap: "6px", cursor: "pointer" }}
+              className="btn-secondary nav-action-btn"
+              style={{ padding: "8px 18px", fontSize: "0.82rem", display: "flex", alignItems: "center", gap: "6px", cursor: "pointer", whiteSpace: "nowrap" }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -178,8 +181,8 @@ export default function Navbar({ onOpenResume }) {
 
             <motion.button
               onClick={() => scrollTo("contact")}
-              className="btn-primary"
-              style={{ padding: "8px 18px", fontSize: "0.82rem" }}
+              className="btn-primary nav-action-btn"
+              style={{ padding: "8px 18px", fontSize: "0.82rem", whiteSpace: "nowrap" }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -259,6 +262,24 @@ export default function Navbar({ onOpenResume }) {
         }
         @media (max-width: 640px) {
           .status-badge { display: none !important; }
+          .nav-container-inner { padding: 0 12px !important; }
+          .nav-actions-group { gap: 6px !important; }
+          .nav-action-btn {
+            padding: 6px 10px !important;
+            font-size: 0.76rem !important;
+          }
+          .nav-logo-text {
+            font-size: 0.95rem !important;
+          }
+        }
+        @media (max-width: 400px) {
+          .nav-logo-text {
+            font-size: 0.85rem !important;
+          }
+          .nav-action-btn {
+            padding: 5px 8px !important;
+            font-size: 0.72rem !important;
+          }
         }
       `}</style>
     </motion.nav>
