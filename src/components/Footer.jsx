@@ -39,7 +39,7 @@ export default function Footer() {
           className="footer-grid"
         >
           {/* Brand */}
-          <div>
+          <div className="footer-brand">
             <div style={{
               display: "flex",
               alignItems: "center",
@@ -197,10 +197,22 @@ export default function Footer() {
 
       <style>{`
         @media (max-width: 768px) {
-          .footer-grid { grid-template-columns: 1fr 1fr !important; }
+          .footer-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 28px !important;
+          }
+          .footer-brand {
+            grid-column: 1 / -1 !important;
+          }
         }
         @media (max-width: 480px) {
-          .footer-grid { grid-template-columns: 1fr !important; }
+          .footer-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 20px !important;
+          }
+          .footer-brand {
+            grid-column: 1 / -1 !important;
+          }
         }
       `}</style>
     </footer>
