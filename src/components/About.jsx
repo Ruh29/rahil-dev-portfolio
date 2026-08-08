@@ -266,13 +266,10 @@ export default function About() {
                     whileHover={{ scale: 1.05, borderColor: "rgba(var(--color-cyan-rgb), 0.3)" }}
                     transition={{ type: "spring", stiffness: 300, damping: 10 }}
                   >
-                    <div style={{
+                    <div className="gradient-text" style={{
                       fontFamily: "'Outfit', sans-serif",
                       fontWeight: 800,
                       fontSize: "1.4rem",
-                      background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
                     }}>
                       {stat.value}
                     </div>

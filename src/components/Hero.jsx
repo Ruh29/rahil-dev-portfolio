@@ -59,11 +59,7 @@ function TypeWriter({ texts }) {
 
   return (
     <span>
-      <span style={{
-        background: "var(--gradient-primary)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-      }}>
+      <span className="gradient-text">
         {displayed}
       </span>
       <span className="cursor-blink" style={{ color: "var(--color-cyan)" }}>|</span>

@@ -61,13 +61,10 @@ export default function Footer() {
               }}>
                 RS
               </div>
-              <span style={{
+              <span className="gradient-text" style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontWeight: 700,
                 fontSize: "1rem",
-                background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
               }}>
                 Rahil Sheikh
               </span>
