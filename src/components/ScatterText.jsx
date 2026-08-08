@@ -1,31 +1,45 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useTheme } from "../context/ThemeContext";
 
 export default function ScatterText({ children, delay = 0, speed = 1 }) {
+  const { themeId } = useTheme();
+
   const renderChild = (child, index) => {
     if (typeof child === "string") {
       const normalized = child.replace(/\s+/g, " ");
       if (normalized === "" || normalized === " ") {
         return <span key={index} style={{ marginRight: "0.25em" }} />;
       }
-      const words = normalized.split(" ").filter(w => w !== "");
+      const words = normalized.split(" ").filter((w) => w !== "");
       return (
         <span key={index} style={{ display: "inline" }}>
           {words.map((word, wIdx) => {
             const letters = word.split("");
             return (
-              <span key={wIdx} style={{ display: "inline-block", marginRight: "0.25em", whiteSpace: "nowrap" }}>
+              <span
+                key={wIdx}
+                style={{
+                  display: "inline-block",
+                  marginRight: "0.25em",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 {letters.map((letter, lIdx) => {
-                  const randomX = (Math.random() - 0.5) * 800;
-                  const randomY = (Math.random() - 0.5) * 600;
-                  const randomRotate = (Math.random() - 0.5) * 120;
-                  const randomScale = 0.3 + Math.random() * 0.4;
-                  const letterDelay = delay + (wIdx * 0.03) + (lIdx * 0.01) + (Math.random() * 0.05);
+                  const randomX = (Math.random() - 0.5) * 400;
+                  const randomY = (Math.random() - 0.5) * 300;
+                  const randomRotate = (Math.random() - 0.5) * 90;
+                  const randomScale = 0.4 + Math.random() * 0.4;
+                  const letterDelay =
+                    delay + wIdx * 0.02 + lIdx * 0.008 + Math.random() * 0.03;
 
                   return (
                     <motion.span
                       key={lIdx}
-                      style={{ display: "inline-block" }}
+                      style={{
+                        display: "inline-block",
+                        willChange: "transform, opacity",
+                      }}
                       initial={{
                         x: randomX,
                         y: randomY,
@@ -42,8 +56,8 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
                       }}
                       transition={{
                         type: "spring",
-                        stiffness: 90 * speed,
-                        damping: 15,
+                        stiffness: 110 * speed,
+                        damping: 14,
                         delay: letterDelay,
                       }}
                     >
@@ -63,37 +77,22 @@ export default function ScatterText({ children, delay = 0, speed = 1 }) {
         return React.cloneElement(
           child,
           { key: index },
-          <ScatterText delay={delay + 0.1} speed={speed}>{child.props.children}</ScatterText>
-        );
-      } else {
-        const randomX = (Math.random() - 0.5) * 600;
-        const randomY = (Math.random() - 0.5) * 600;
-        const randomRotate = (Math.random() - 0.5) * 90;
-        return (
-          <motion.span
-            key={index}
-            style={{ display: "inline-block" }}
-            initial={{ x: randomX, y: randomY, rotate: randomRotate, opacity: 0, scale: 0.8 }}
-            animate={{ x: 0, y: 0, rotate: 0, opacity: 1, scale: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 90 * speed,
-              damping: 15,
-              delay: delay + 0.1,
-            }}
-          >
-            {child}
-          </motion.span>
+          <ScatterText delay={delay + 0.05} speed={speed}>
+            {child.props.children}
+          </ScatterText>
         );
       }
+      return React.cloneElement(child, { key: index });
     }
 
     return child;
   };
 
-  if (Array.isArray(children)) {
-    return <>{children.map((child, idx) => renderChild(child, idx))}</>;
-  }
-
-  return <>{renderChild(children, 0)}</>;
+  return (
+    <span key={themeId} style={{ display: "inline" }}>
+      {Array.isArray(children)
+        ? children.map((c, i) => renderChild(c, i))
+        : renderChild(children, 0)}
+    </span>
+  );
 }
