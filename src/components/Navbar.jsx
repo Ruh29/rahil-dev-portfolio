@@ -13,26 +13,35 @@ export default function Navbar({ onOpenResume }) {
   const { navSections, personalInfo } = portfolioData;
 
   useEffect(() => {
+    let ticking = false;
     const onScroll = () => {
-      setScrolled(window.scrollY > 60);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const isScrolled = window.scrollY > 60;
+          setScrolled((prev) => (prev !== isScrolled ? isScrolled : prev));
 
-      // Active section tracking
-      const sectionEls = navSections.map(s => ({
-        id: s.id,
-        el: document.getElementById(s.id),
-      }));
-      const inView = sectionEls
-        .filter(s => s.el)
-        .find(s => {
-          const rect = s.el.getBoundingClientRect();
-          return rect.top <= 120 && rect.bottom > 120;
+          const sectionEls = navSections.map((s) => ({
+            id: s.id,
+            el: document.getElementById(s.id),
+          }));
+          const inView = sectionEls
+            .filter((s) => s.el)
+            .find((s) => {
+              const rect = s.el.getBoundingClientRect();
+              return rect.top <= 140 && rect.bottom > 140;
+            });
+          if (inView) {
+            setActiveSection((prev) => (prev !== inView.id ? inView.id : prev));
+          }
+          ticking = false;
         });
-      if (inView) setActiveSection(inView.id);
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [navSections]);
 
   const scrollTo = (id) => {
     setMobileOpen(false);

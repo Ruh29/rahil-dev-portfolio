@@ -701,3 +701,17 @@ body {
     transform-origin: center center;
   }
 }
+
+/* Mobile GPU hardware compositing hints for 60fps scrolling */
+@media (max-width: 768px) {
+  section,
+  .hero-grid,
+  .project-card,
+  .skill-card,
+  .timeline-card,
+  .ai-chat-box {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
