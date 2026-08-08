@@ -23,7 +23,7 @@ const portfolioData = {
 
   stats: [
     { label: "Years Experience", value: "1+", icon: "Briefcase" },
-    { label: "Projects Built", value: "20+", icon: "FolderGit2" },
+    { label: "Projects Built", value: "10+", icon: "FolderGit2" },
     { label: "Technologies", value: "25+", icon: "Code2" },
     { label: "Languages", value: "2", icon: "Languages" },
   ],

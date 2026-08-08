@@ -287,7 +287,7 @@ export default function Hero() {
               >
                 {[
                   { value: "1+", label: "Year Exp" },
-                  { value: "20+", label: "Projects" },
+                  { value: "10+", label: "Projects" },
                   { value: "Full Stack", label: "Primary Focus" },
                 ].map((stat, i) => (
                   <div key={i} style={{
