@@ -802,19 +802,23 @@ export default function ResumeModal({ isOpen, onClose }) {
               width: 100% !important;
               max-width: 800px !important;
               margin: 0 auto !important;
-              padding: 24px 30px !important;
+              padding: 24px 28px !important;
               background: #ffffff !important;
               color: #1e293b !important;
               box-shadow: none !important;
               border: none !important;
+              box-sizing: border-box !important;
             }
             @page {
               size: A4 portrait;
-              margin: 6mm 8mm;
+              margin: 10mm 12mm;
             }
             @media print {
               html, body { background: #ffffff !important; margin: 0; padding: 0; }
-              .resume-print-area { padding: 0 !important; }
+              .resume-print-area {
+                padding: 20px 24px !important;
+                margin: 0 auto !important;
+              }
             }
           </style>
         </head>
@@ -1090,13 +1094,14 @@ export default function ResumeModal({ isOpen, onClose }) {
             width: 100% !important;
             max-width: 800px !important;
             margin: 0 auto !important;
-            padding: 0 !important;
+            padding: 20px 24px !important;
             box-shadow: none !important;
             border: none !important;
             border-radius: 0 !important;
             background: #ffffff !important;
             color: #0f172a !important;
             overflow: visible !important;
+            box-sizing: border-box !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
