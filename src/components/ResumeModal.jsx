@@ -947,38 +947,79 @@ export default function ResumeModal({ isOpen, onClose }) {
         @media print {
           @page {
             size: A4 portrait;
-            margin: 0mm;
+            margin: 6mm 8mm;
           }
 
-          html, body, #root, #root > div, main {
+          /* Hide all main page content outside of ResumeModal */
+          #root > div > *:not(.resume-modal-container),
+          main, nav, footer, .no-print, [style*="radial-gradient"] {
+            display: none !important;
+          }
+
+          /* Reset root layout for clean block printing */
+          html, body, #root, #root > div {
             background: #ffffff !important;
             margin: 0 !important;
             padding: 0 !important;
             height: auto !important;
             min-height: 0 !important;
             overflow: visible !important;
+            display: block !important;
           }
 
-          body * {
-            visibility: hidden !important;
+          /* Reset fixed modal container */
+          .resume-modal-container {
+            position: static !important;
+            inset: auto !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: #ffffff !important;
+            display: block !important;
+            overflow: visible !important;
+            width: 100% !important;
+            height: auto !important;
           }
 
-          .resume-print-area, .resume-print-area * {
-            visibility: visible !important;
+          .resume-modal-backdrop {
+            display: none !important;
+          }
+
+          .resume-modal-content {
+            position: static !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            max-height: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            overflow: visible !important;
+            display: block !important;
+            background: #ffffff !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+
+          .resume-frame-wrapper {
+            padding: 0 !important;
+            background: #ffffff !important;
+            overflow: visible !important;
+            display: block !important;
+            height: auto !important;
+            max-height: none !important;
           }
 
           .resume-print-area {
-            position: absolute !important;
-            left: 0 !important;
-            top: 0 !important;
+            position: static !important;
             width: 100% !important;
-            max-width: 100% !important;
-            margin: 0 !important;
-            padding: 24px 32px !important;
+            max-width: 800px !important;
+            margin: 0 auto !important;
+            padding: 0 !important;
             box-shadow: none !important;
             border: none !important;
+            border-radius: 0 !important;
             background: #ffffff !important;
             color: #0f172a !important;
+            overflow: visible !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
