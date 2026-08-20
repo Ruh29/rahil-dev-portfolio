@@ -945,66 +945,40 @@ export default function ResumeModal({ isOpen, onClose }) {
       {/* Global Print Styling CSS */}
       <style>{`
         @media print {
-          /* Hide website chrome */
-          nav, main, footer, .no-print, [style*="radial-gradient"] {
-            display: none !important;
+          @page {
+            size: A4 portrait;
+            margin: 0mm;
           }
-          
-          /* Reset root layout for printing */
-          html, body, #root, #root > div {
+
+          html, body, #root, #root > div, main {
+            background: #ffffff !important;
+            margin: 0 !important;
+            padding: 0 !important;
             height: auto !important;
             min-height: 0 !important;
             overflow: visible !important;
-            background: #ffffff !important;
           }
 
-          /* Reset modal fixed containers to block */
-          .resume-modal-container {
-            position: static !important;
-            inset: auto !important;
-            padding: 0 !important;
-            overflow: visible !important;
-            display: block !important;
-            z-index: auto !important;
+          body * {
+            visibility: hidden !important;
           }
 
-          /* Hide backdrop */
-          .resume-modal-backdrop {
-            display: none !important;
+          .resume-print-area, .resume-print-area * {
+            visibility: visible !important;
           }
 
-          /* Reset modal content box for full page print */
-          .resume-modal-content {
-            position: static !important;
-            width: 100% !important;
-            max-width: none !important;
-            max-height: none !important;
-            border: none !important;
-            box-shadow: none !important;
-            border-radius: 0 !important;
-            overflow: visible !important;
-            display: block !important;
-            background: #ffffff !important;
-          }
-
-          /* Reset frame wrapper */
-          .resume-frame-wrapper {
-            padding: 0 !important;
-            background: none !important;
-            overflow: visible !important;
-            display: block !important;
-          }
-
-          /* Format the print area */
           .resume-print-area {
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
             width: 100% !important;
-            max-width: 800px !important;
-            margin: 0 auto !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 24px 32px !important;
             box-shadow: none !important;
             border: none !important;
-            border-radius: 0 !important;
-            overflow: visible !important;
-            min-height: 0 !important;
+            background: #ffffff !important;
+            color: #0f172a !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
