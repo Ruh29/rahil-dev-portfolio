@@ -9,31 +9,15 @@ const enhancvResumeData = {
   header: {
     name: "RAHIL SHEIKH",
     role: "Full Stack Developer",
-    phone: "+919993995502",
+    phone: "+91 9993995502",
     email: "rahilsheikh73308@gmail.com",
     linkedin: "linkedin.com/in/ruh-sheikh29/",
     github: "github.com/Ruh29",
-    location: "Barwani / Indore, India"
+    location: "Indore, India"
   },
   summary:
-    "Full Stack Developer specializing in React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, and Redis. Experienced in developing enterprise applications, project management systems, event management platforms, and real-time web solutions. Strong understanding of software architecture, API development, database design, authentication, and performance optimization with a focus on delivering scalable and maintainable applications.",
+    "Full Stack Developer specializing in React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, and Redis. Experienced in developing enterprise applications, recruitment systems, CRM suites, and real-time mobile/web solutions. Strong understanding of software architecture, REST API development, database design, role-based authentication, and performance optimization with a focus on delivering scalable and maintainable applications.",
   experience: [
-    {
-      title: "Frontend Developer Intern (Paid Internship)",
-      company: "LogiQlink Technology",
-      period: "06/2025 – 11/2025",
-      location: "Indore",
-      intro:
-        "Completed a 6-month paid internship focused on frontend development and modern web technologies. Gained practical industry experience by working on real-world projects under the guidance of senior developers.",
-      bullets: [
-        "Developed responsive user interfaces using React.js, JavaScript, HTML5, CSS3, and Tailwind CSS",
-        "Implemented reusable UI components and optimized application performance",
-        "Integrated REST APIs and collaborated with backend developers for seamless functionality",
-        "Learned industry-standard development practices including Git, GitHub, code reviews, and agile workflows",
-        "Participated in debugging, testing, and feature implementation for client projects",
-        "Strengthened problem-solving skills and understanding of scalable frontend architecture"
-      ]
-    },
     {
       title: "Full Stack Developer",
       company: "Purplesky Infotech",
@@ -43,12 +27,26 @@ const enhancvResumeData = {
         "Working as a Full Stack Developer responsible for designing, developing, and maintaining web applications across frontend and backend systems. Collaborating with cross-functional teams to build scalable solutions and improve user experience.",
       bullets: [
         "Developed and maintained full-stack applications using React.js, Next.js, Node.js, Express.js, PostgreSQL, and Redis",
-        "Built secure REST APIs, authentication systems, and role-based access control mechanisms",
+        "Built secure REST APIs, authentication systems, and role-based access control (RBAC) mechanisms",
         "Designed and optimized database structures for high-performance applications",
-        "Developed ticket management, project management, and analytics modules for enterprise platforms",
+        "Developed ticket management, CRM project workflows, and analytics modules for enterprise platforms",
         "Integrated third-party services, real-time communication, and caching mechanisms",
-        "Participated in requirement analysis, code reviews, debugging, testing, and deployment processes",
-        "Worked closely with clients and team members to deliver business-focused solutions"
+        "Participated in requirement analysis, code reviews, debugging, testing, and deployment processes"
+      ]
+    },
+    {
+      title: "Frontend Developer Intern (Paid Internship)",
+      company: "LogiQlink Technology",
+      period: "06/2025 – 11/2025",
+      location: "Indore",
+      intro:
+        "Completed a 6-month paid internship focused on frontend development and modern web technologies. Gained practical industry experience by working on real-world projects under senior guidance.",
+      bullets: [
+        "Developed responsive user interfaces using React.js, JavaScript, HTML5, CSS3, and Tailwind CSS",
+        "Implemented reusable UI components and optimized application performance",
+        "Integrated REST APIs and collaborated with backend developers for seamless functionality",
+        "Practiced industry-standard development workflows including Git, GitHub, code reviews, and agile methodologies",
+        "Participated in debugging, testing, and feature implementation for client projects"
       ]
     }
   ],
@@ -62,33 +60,83 @@ const enhancvResumeData = {
   ],
   skills: {
     frontend: [
-      "React.js", "Next.js", "JavaScript (ES6+)", "TypeScript", "HTML5", "CSS3",
-      "Tailwind CSS", "Redux Toolkit", "React Router DOM", "Responsive Web Design"
+      "React.js", "React Native", "Next.js", "JavaScript", "TypeScript",
+      "HTML5", "CSS3", "Tailwind CSS", "Redux Toolkit", "React Router DOM", "Responsive Web Design"
     ],
     backend: [
       "Node.js", "Express.js", "REST APIs", "JWT Authentication",
       "Role-Based Access Control (RBAC)", "Socket.IO", "API Development"
     ],
     database: [
-      "PostgreSQL", "MongoDB", "Redis", "TypeORM"
+      "PostgreSQL", "MongoDB", "Redis", "TypeORM", "Prisma"
+    ],
+    tools: [
+      "Git", "GitHub", "Jira", "Postman", "VS Code", "npm", "REST Client", "Agile/Scrum", "Debugging", "Code Review"
+    ],
+    deployment: [
+      "Vercel", "Netlify", "Render", "Cloudinary", "GitHub-based Deployment", "Environment Configuration", "Production Deployment"
+    ],
+    practices: [
+      "API Integration", "Authentication & Authorization", "Database Design", "Performance Optimization", "Real-Time Communication", "Version Control", "CI/CD Fundamentals"
     ]
   },
   languages: [
     { name: "Hindi", level: "Native" },
-    { name: "English", level: "Native" }
+    { name: "English", level: "Professional" }
   ],
   projects: [
     {
-      title: "AI Auditor Platform",
-      period: "05/2026",
-      location: "Barwani",
-      tech: "Next.js | TypeScript | Node.js | PostgreSQL | Redis | AI",
-      description:
-        "Developed AI Auditor Platform, an intelligent auditing solution that automates document analysis, compliance verification, risk assessment, and audit report generation. Built secure role-based access control, analytics dashboards, and scalable backend services to streamline auditing workflows and improve operational efficiency.",
+      title: "Learning Web / E-Learning Platform",
+      tech: "React.js • Next.js • Node.js • Express.js • PostgreSQL • Redis • TypeScript • LiveKit • HLS",
       bullets: [
-        "Built scalable PostgreSQL database architecture and REST APIs for enterprise-level usage.",
-        "Implemented Redis caching to improve report generation speed and system performance.",
-        "Designed secure role-based access control for Auditors, Managers, and ADMIN."
+        "Developed an e-learning platform supporting Admin, Instructor, and Student roles with role-based access and course management.",
+        "Implemented video learning workflows with video processing, transcoding, HLS streaming, and Redis/Valkey-based services.",
+        "Integrated LiveKit for real-time live classes and implemented scalable backend APIs for courses, users, and learning modules."
+      ]
+    },
+    {
+      title: "Seek-N-Hire – Recruitment & Job Management Platform",
+      tech: "React.js • Node.js • Express.js • PostgreSQL • Redis • Socket.IO",
+      bullets: [
+        "Developed features for a recruitment platform covering job management, candidate workflows, notifications, sponsorships, and administrative modules.",
+        "Implemented REST APIs, authentication, role-based access control, real-time communication, and database-driven business logic.",
+        "Worked on scalable modules including permission management, notification systems, sponsorship management, and reporting workflows."
+      ]
+    },
+    {
+      title: "CRM / Project Management System",
+      tech: "React.js • Next.js • Node.js • Express.js • PostgreSQL • Redis • TypeScript",
+      bullets: [
+        "Developed enterprise CRM functionality for lead, client, project, sales, proposal, quotation, purchase order, and reporting workflows.",
+        "Designed and integrated REST APIs, database structures, authentication, permissions, and role-based access control.",
+        "Built reusable UI components and optimized application workflows for maintainability and performance."
+      ]
+    },
+    {
+      title: "Fleet Management Mobile Application",
+      tech: "React Native • Expo • Node.js • Express.js • PostgreSQL • REST APIs",
+      bullets: [
+        "Developed a cross-platform React Native mobile application for fleet and field-management workflows.",
+        "Implemented mobile UI, API integration, authentication, location-based workflows, and real-time operational data handling.",
+        "Worked on reusable components and optimized mobile application performance and user experience."
+      ]
+    },
+    {
+      title: "AI Interview / Interview Preparation Application",
+      tech: "React Native • Expo • Node.js • Express.js • REST APIs • AI Integration",
+      bullets: [
+        "Developed a mobile interview preparation application supporting technical and role-based interview sessions.",
+        "Implemented interview session management, question-answer workflows, API integration, and structured interview responses.",
+        "Built reusable React Native components and integrated backend services for dynamic interview experiences."
+      ]
+    },
+    {
+      title: "Stock Market Application",
+      tech: "React Native • Expo • Node.js • Express.js • REST APIs",
+      bullets: [
+        "Developed a mobile application for stock market data, financial information, and market tracking workflows.",
+        "Implemented API integration, dynamic market data presentation, reusable mobile components, and responsive interfaces.",
+        "Focused on performance, clean UI architecture, and efficient handling of frequently changing data."
       ]
     }
   ]
@@ -97,6 +145,15 @@ const enhancvResumeData = {
 // Component rendering the Exact Enhancv PDF Template
 function EnhancvWhiteTemplate({ data }) {
   const { header, summary, experience, education, skills, languages, projects } = data;
+
+  const skillCategories = [
+    { title: "Frontend", items: skills.frontend },
+    { title: "Backend", items: skills.backend },
+    { title: "Database & Caching", items: skills.database },
+    { title: "Tools & Development", items: skills.tools },
+    { title: "Deployment & Cloud", items: skills.deployment },
+    { title: "Development Practices", items: skills.practices }
+  ];
 
   return (
     <div 
@@ -147,6 +204,9 @@ function EnhancvWhiteTemplate({ data }) {
         }}>
           <span>📞 {header.phone}</span>
           <span>✉️ {header.email}</span>
+          <span>🔗 {header.linkedin}</span>
+          <span>💻 {header.github}</span>
+          <span>📍 {header.location}</span>
         </div>
         <div style={{
           width: "100%",
@@ -159,7 +219,7 @@ function EnhancvWhiteTemplate({ data }) {
       {/* Main 2-Column Grid */}
       <div style={{
         display: "grid",
-        gridTemplateColumns: "1.65fr 1fr",
+        gridTemplateColumns: "1.55fr 1fr",
         gap: "28px",
         alignItems: "start",
       }}>
@@ -280,8 +340,8 @@ function EnhancvWhiteTemplate({ data }) {
         </div>
 
         {/* Right Column (Sidebar) */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          {/* Skills */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+          {/* Skills Section */}
           <div>
             <h2 style={{
               fontSize: "0.85rem",
@@ -296,65 +356,32 @@ function EnhancvWhiteTemplate({ data }) {
               SKILLS
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <div>
-                <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "#0284c7", marginBottom: "4px" }}>
-                  Frontend
+              {skillCategories.map((cat, idx) => (
+                <div key={idx}>
+                  <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "#0284c7", marginBottom: "4px" }}>
+                    {cat.title}
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "2px 0" }}>
+                    {cat.items.map((s) => (
+                      <span
+                        key={s}
+                        style={{
+                          fontSize: "0.7rem",
+                          fontWeight: 600,
+                          color: "#1e293b",
+                          borderBottom: "1.5px solid #0284c7",
+                          paddingBottom: "2px",
+                          marginRight: "10px",
+                          marginBottom: "6px",
+                          display: "inline-block",
+                        }}
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
-                  {skills.frontend.map(s => (
-                    <span key={s} style={{
-                      fontSize: "0.68rem",
-                      fontWeight: 600,
-                      background: "#f1f5f9",
-                      padding: "2px 6px",
-                      borderRadius: "4px",
-                      color: "#334155",
-                    }}>
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "#0284c7", marginBottom: "4px" }}>
-                  Backend
-                </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
-                  {skills.backend.map(s => (
-                    <span key={s} style={{
-                      fontSize: "0.68rem",
-                      fontWeight: 600,
-                      background: "#f1f5f9",
-                      padding: "2px 6px",
-                      borderRadius: "4px",
-                      color: "#334155",
-                    }}>
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "#0284c7", marginBottom: "4px" }}>
-                  Database
-                </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
-                  {skills.database.map(s => (
-                    <span key={s} style={{
-                      fontSize: "0.68rem",
-                      fontWeight: 600,
-                      background: "#f1f5f9",
-                      padding: "2px 6px",
-                      borderRadius: "4px",
-                      color: "#334155",
-                    }}>
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -381,52 +408,58 @@ function EnhancvWhiteTemplate({ data }) {
               ))}
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Projects */}
-          <div>
-            <h2 style={{
-              fontSize: "0.85rem",
-              fontWeight: 800,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "#0f172a",
-              borderBottom: "1.5px solid #0f172a",
-              paddingBottom: "3px",
-              marginBottom: "10px",
+      {/* Horizontal Full Width Projects Section at the Bottom */}
+      <div style={{ marginTop: "26px", paddingTop: "14px", borderTop: "1.5px dashed #cbd5e1" }}>
+        <h2 style={{
+          fontSize: "0.85rem",
+          fontWeight: 800,
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          color: "#0f172a",
+          borderBottom: "1.5px solid #0f172a",
+          paddingBottom: "3px",
+          marginBottom: "12px",
+        }}>
+          SELECTED PROJECTS
+        </h2>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gap: "14px 18px",
+        }}>
+          {projects.map((proj, idx) => (
+            <div key={idx} style={{
+              background: "#f8fafc",
+              padding: "10px 12px",
+              borderRadius: "6px",
+              border: "1px solid #e2e8f0",
+              boxSizing: "border-box",
             }}>
-              PROJECTS
-            </h2>
-            {projects.map((proj, idx) => (
-              <div key={idx}>
-                <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#0f172a" }}>
-                  {proj.title}
-                </div>
-                <div style={{ fontSize: "0.72rem", color: "#64748b", margin: "2px 0" }}>
-                  📅 {proj.period} &nbsp; 📍 {proj.location}
-                </div>
-                <div style={{ fontSize: "0.7rem", color: "#0284c7", fontWeight: 600, marginBottom: "4px" }}>
-                  {proj.tech}
-                </div>
-                <p style={{ fontSize: "0.71rem", color: "#334155", lineHeight: 1.4, margin: "0 0 6px 0" }}>
-                  {proj.description}
-                </p>
-                <ul style={{
-                  margin: 0,
-                  paddingLeft: "14px",
-                  fontSize: "0.7rem",
-                  color: "#334155",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "3px",
-                  lineHeight: 1.4,
-                }}>
-                  {proj.bullets.map((b, bIdx) => (
-                    <li key={bIdx}>{b}</li>
-                  ))}
-                </ul>
+              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#0f172a", marginBottom: "2px" }}>
+                {proj.title}
               </div>
-            ))}
-          </div>
+              <div style={{ fontSize: "0.68rem", color: "#0284c7", fontWeight: 600, marginBottom: "6px", lineHeight: 1.3 }}>
+                <strong>Technologies:</strong> {proj.tech}
+              </div>
+              <ul style={{
+                margin: 0,
+                paddingLeft: "14px",
+                fontSize: "0.68rem",
+                color: "#334155",
+                display: "flex",
+                flexDirection: "column",
+                gap: "3px",
+                lineHeight: 1.4,
+              }}>
+                {proj.bullets.map((b, bIdx) => (
+                  <li key={bIdx}>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -670,12 +703,41 @@ function TealSplitTemplate({ data }) {
                 {exp.company} ({exp.period})
               </div>
               <ul style={{ margin: 0, paddingLeft: "14px", fontSize: "0.7rem", color: "#334155", lineHeight: 1.4 }}>
-                {exp.bullets.slice(0, 4).map((b, bIdx) => (
+                {exp.bullets.map((b, bIdx) => (
                   <li key={bIdx}>{b}</li>
                 ))}
               </ul>
             </div>
           ))}
+        </div>
+
+        {/* Selected Projects */}
+        <div style={{ marginTop: "8px" }}>
+          <h3 style={{
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "#005c53",
+            borderBottom: "1.5px solid #005c53",
+            paddingBottom: "4px",
+            marginBottom: "10px",
+          }}>
+            Selected Projects
+          </h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {projects.map((proj, idx) => (
+              <div key={idx} style={{ background: "#f8fafc", padding: "8px 10px", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
+                <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#0f172a" }}>{proj.title}</div>
+                <div style={{ fontSize: "0.68rem", color: "#005c53", fontWeight: 600, margin: "2px 0 4px 0" }}>{proj.tech}</div>
+                <ul style={{ margin: 0, paddingLeft: "14px", fontSize: "0.68rem", color: "#334155", lineHeight: 1.35 }}>
+                  {proj.bullets.map((b, bIdx) => (
+                    <li key={bIdx}>{b}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Footer */}
