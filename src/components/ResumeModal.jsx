@@ -756,7 +756,84 @@ export default function ResumeModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const handlePrint = () => {
-    window.print();
+    const printArea = document.querySelector(".resume-print-area");
+    if (!printArea) {
+      window.print();
+      return;
+    }
+
+    let iframe = document.getElementById("resume-print-iframe");
+    if (!iframe) {
+      iframe = document.createElement("iframe");
+      iframe.id = "resume-print-iframe";
+      iframe.style.position = "fixed";
+      iframe.style.right = "0";
+      iframe.style.bottom = "0";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+      iframe.style.opacity = "0";
+      iframe.style.pointerEvents = "none";
+      document.body.appendChild(iframe);
+    }
+
+    const doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Rahil Sheikh - Resume</title>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+          <style>
+            * { box-sizing: border-box; }
+            html, body {
+              margin: 0;
+              padding: 0;
+              background: #ffffff !important;
+              color: #1e293b !important;
+              font-family: 'Inter', sans-serif;
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+            }
+            .resume-print-area {
+              width: 100% !important;
+              max-width: 800px !important;
+              margin: 0 auto !important;
+              padding: 24px 30px !important;
+              background: #ffffff !important;
+              color: #1e293b !important;
+              box-shadow: none !important;
+              border: none !important;
+            }
+            @page {
+              size: A4 portrait;
+              margin: 6mm 8mm;
+            }
+            @media print {
+              html, body { background: #ffffff !important; margin: 0; padding: 0; }
+              .resume-print-area { padding: 0 !important; }
+            }
+          </style>
+        </head>
+        <body>
+          ${printArea.outerHTML}
+        </body>
+      </html>
+    `);
+    doc.close();
+
+    setTimeout(() => {
+      try {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+      } catch (err) {
+        console.error("Print error:", err);
+        window.print();
+      }
+    }, 250);
   };
 
   return (
