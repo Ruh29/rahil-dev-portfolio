@@ -164,7 +164,7 @@ function EnhancvWhiteTemplate({ data }) {
         margin: "0 auto",
         background: "#ffffff",
         boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
-        padding: "36px 40px",
+        padding: "28px 34px",
         color: "#1e293b",
         fontFamily: "'Inter', sans-serif",
         boxSizing: "border-box",
@@ -173,10 +173,10 @@ function EnhancvWhiteTemplate({ data }) {
       }}
     >
       {/* Header */}
-      <div style={{ marginBottom: "16px" }}>
+      <div style={{ marginBottom: "12px" }}>
         <h1 style={{
           fontFamily: "'Outfit', sans-serif",
-          fontSize: "2.4rem",
+          fontSize: "2.1rem",
           fontWeight: 800,
           letterSpacing: "0.02em",
           color: "#0f172a",
@@ -186,19 +186,19 @@ function EnhancvWhiteTemplate({ data }) {
           {header.name}
         </h1>
         <div style={{
-          fontSize: "1.1rem",
+          fontSize: "1.05rem",
           fontWeight: 600,
           color: "#0284c7",
-          marginTop: "4px",
-          marginBottom: "10px",
+          marginTop: "3px",
+          marginBottom: "8px",
         }}>
           {header.role}
         </div>
         <div style={{
           display: "flex",
           flexWrap: "wrap",
-          gap: "16px",
-          fontSize: "0.78rem",
+          gap: "12px",
+          fontSize: "0.74rem",
           color: "#475569",
           fontWeight: 500,
         }}>
@@ -212,7 +212,7 @@ function EnhancvWhiteTemplate({ data }) {
           width: "100%",
           height: "1.5px",
           background: "#334155",
-          marginTop: "14px",
+          marginTop: "10px",
         }} />
       </div>
 
@@ -220,29 +220,29 @@ function EnhancvWhiteTemplate({ data }) {
       <div style={{
         display: "grid",
         gridTemplateColumns: "1.55fr 1fr",
-        gap: "28px",
+        gap: "20px",
         alignItems: "start",
       }}>
         {/* Left Column (Main Content) */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
           {/* Summary */}
           <div>
             <h2 style={{
-              fontSize: "0.85rem",
+              fontSize: "0.8rem",
               fontWeight: 800,
               letterSpacing: "0.08em",
               textTransform: "uppercase",
               color: "#0f172a",
               borderBottom: "1.5px solid #0f172a",
-              paddingBottom: "3px",
-              marginBottom: "8px",
+              paddingBottom: "2px",
+              marginBottom: "6px",
             }}>
               SUMMARY
             </h2>
             <p style={{
-              fontSize: "0.75rem",
+              fontSize: "0.71rem",
               color: "#334155",
-              lineHeight: 1.55,
+              lineHeight: 1.45,
               margin: 0,
               textAlign: "justify",
             }}>
@@ -253,47 +253,47 @@ function EnhancvWhiteTemplate({ data }) {
           {/* Experience */}
           <div>
             <h2 style={{
-              fontSize: "0.85rem",
+              fontSize: "0.8rem",
               fontWeight: 800,
               letterSpacing: "0.08em",
               textTransform: "uppercase",
               color: "#0f172a",
               borderBottom: "1.5px solid #0f172a",
-              paddingBottom: "3px",
-              marginBottom: "12px",
+              paddingBottom: "2px",
+              marginBottom: "8px",
             }}>
               EXPERIENCE
             </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {experience.map((exp, idx) => (
                 <div key={idx}>
-                  <div style={{ fontSize: "0.88rem", fontWeight: 700, color: "#0f172a" }}>
+                  <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#0f172a" }}>
                     {exp.title}
                   </div>
                   <div style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    fontSize: "0.76rem",
+                    fontSize: "0.73rem",
                     color: "#0284c7",
                     fontWeight: 600,
-                    marginTop: "2px",
-                    marginBottom: "4px",
+                    marginTop: "1px",
+                    marginBottom: "3px",
                   }}>
                     <span>{exp.company}</span>
                     <span>📅 {exp.period} &nbsp; 📍 {exp.location}</span>
                   </div>
-                  <p style={{ fontSize: "0.73rem", color: "#475569", lineHeight: 1.45, margin: "0 0 6px 0" }}>
+                  <p style={{ fontSize: "0.7rem", color: "#475569", lineHeight: 1.35, margin: "0 0 4px 0" }}>
                     {exp.intro}
                   </p>
                   <ul style={{
                     margin: 0,
                     paddingLeft: "14px",
-                    fontSize: "0.72rem",
+                    fontSize: "0.68rem",
                     color: "#334155",
                     display: "flex",
                     flexDirection: "column",
-                    gap: "4px",
-                    lineHeight: 1.4,
+                    gap: "2px",
+                    lineHeight: 1.35,
                   }}>
                     {exp.bullets.map((b, bIdx) => (
                       <li key={bIdx}>{b}</li>
@@ -307,29 +307,29 @@ function EnhancvWhiteTemplate({ data }) {
           {/* Education */}
           <div>
             <h2 style={{
-              fontSize: "0.85rem",
+              fontSize: "0.8rem",
               fontWeight: 800,
               letterSpacing: "0.08em",
               textTransform: "uppercase",
               color: "#0f172a",
               borderBottom: "1.5px solid #0f172a",
-              paddingBottom: "3px",
-              marginBottom: "10px",
+              paddingBottom: "2px",
+              marginBottom: "6px",
             }}>
               EDUCATION
             </h2>
             {education.map((edu, idx) => (
               <div key={idx}>
-                <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#0f172a" }}>
+                <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#0f172a" }}>
                   {edu.title}
                 </div>
                 <div style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  fontSize: "0.76rem",
+                  fontSize: "0.72rem",
                   color: "#0284c7",
                   fontWeight: 600,
-                  marginTop: "2px",
+                  marginTop: "1px",
                 }}>
                   <span>{edu.institute}</span>
                   <span>📅 {edu.period} &nbsp; 📍 {edu.location}</span>
@@ -340,39 +340,39 @@ function EnhancvWhiteTemplate({ data }) {
         </div>
 
         {/* Right Column (Sidebar) */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
           {/* Skills Section */}
           <div>
             <h2 style={{
-              fontSize: "0.85rem",
+              fontSize: "0.8rem",
               fontWeight: 800,
               letterSpacing: "0.08em",
               textTransform: "uppercase",
               color: "#0f172a",
               borderBottom: "1.5px solid #0f172a",
-              paddingBottom: "3px",
-              marginBottom: "10px",
+              paddingBottom: "2px",
+              marginBottom: "8px",
             }}>
               SKILLS
             </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               {skillCategories.map((cat, idx) => (
                 <div key={idx}>
-                  <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "#0284c7", marginBottom: "4px" }}>
+                  <div style={{ fontSize: "0.72rem", fontWeight: 700, color: "#0284c7", marginBottom: "2px" }}>
                     {cat.title}
                   </div>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "2px 0" }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "1px 0" }}>
                     {cat.items.map((s) => (
                       <span
                         key={s}
                         style={{
-                          fontSize: "0.7rem",
+                          fontSize: "0.66rem",
                           fontWeight: 600,
                           color: "#1e293b",
                           borderBottom: "1.5px solid #0284c7",
-                          paddingBottom: "2px",
-                          marginRight: "10px",
-                          marginBottom: "6px",
+                          paddingBottom: "1px",
+                          marginRight: "8px",
+                          marginBottom: "4px",
                           display: "inline-block",
                         }}
                       >
@@ -388,20 +388,20 @@ function EnhancvWhiteTemplate({ data }) {
           {/* Languages */}
           <div>
             <h2 style={{
-              fontSize: "0.85rem",
+              fontSize: "0.8rem",
               fontWeight: 800,
               letterSpacing: "0.08em",
               textTransform: "uppercase",
               color: "#0f172a",
               borderBottom: "1.5px solid #0f172a",
-              paddingBottom: "3px",
-              marginBottom: "8px",
+              paddingBottom: "2px",
+              marginBottom: "6px",
             }}>
               LANGUAGES
             </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
               {languages.map(lang => (
-                <div key={lang.name} style={{ display: "flex", justifyContent: "space-between", fontSize: "0.74rem" }}>
+                <div key={lang.name} style={{ display: "flex", justifyContent: "space-between", fontSize: "0.7rem" }}>
                   <span style={{ fontWeight: 600, color: "#334155" }}>{lang.name}</span>
                   <span style={{ color: "#64748b" }}>{lang.level}</span>
                 </div>
@@ -412,47 +412,47 @@ function EnhancvWhiteTemplate({ data }) {
       </div>
 
       {/* Horizontal Full Width Projects Section at the Bottom */}
-      <div style={{ marginTop: "26px", paddingTop: "14px", borderTop: "1.5px dashed #cbd5e1" }}>
+      <div style={{ marginTop: "18px", paddingTop: "10px", borderTop: "1.5px dashed #cbd5e1" }}>
         <h2 style={{
-          fontSize: "0.85rem",
+          fontSize: "0.8rem",
           fontWeight: 800,
           letterSpacing: "0.08em",
           textTransform: "uppercase",
           color: "#0f172a",
           borderBottom: "1.5px solid #0f172a",
-          paddingBottom: "3px",
-          marginBottom: "12px",
+          paddingBottom: "2px",
+          marginBottom: "8px",
         }}>
           SELECTED PROJECTS
         </h2>
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(2, 1fr)",
-          gap: "14px 18px",
+          gap: "10px 14px",
         }}>
           {projects.map((proj, idx) => (
             <div key={idx} style={{
               background: "#f8fafc",
-              padding: "10px 12px",
+              padding: "8px 10px",
               borderRadius: "6px",
               border: "1px solid #e2e8f0",
               boxSizing: "border-box",
             }}>
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#0f172a", marginBottom: "2px" }}>
+              <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#0f172a", marginBottom: "2px" }}>
                 {proj.title}
               </div>
-              <div style={{ fontSize: "0.68rem", color: "#0284c7", fontWeight: 600, marginBottom: "6px", lineHeight: 1.3 }}>
+              <div style={{ fontSize: "0.65rem", color: "#0284c7", fontWeight: 600, marginBottom: "4px", lineHeight: 1.3 }}>
                 <strong>Technologies:</strong> {proj.tech}
               </div>
               <ul style={{
                 margin: 0,
                 paddingLeft: "14px",
-                fontSize: "0.68rem",
+                fontSize: "0.65rem",
                 color: "#334155",
                 display: "flex",
                 flexDirection: "column",
-                gap: "3px",
-                lineHeight: 1.4,
+                gap: "2px",
+                lineHeight: 1.35,
               }}>
                 {proj.bullets.map((b, bIdx) => (
                   <li key={bIdx}>{b}</li>
@@ -465,13 +465,13 @@ function EnhancvWhiteTemplate({ data }) {
 
       {/* Enhancv Footer Branding */}
       <div style={{
-        marginTop: "28px",
-        paddingTop: "12px",
+        marginTop: "20px",
+        paddingTop: "10px",
         borderTop: "1px solid #e2e8f0",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        fontSize: "0.65rem",
+        fontSize: "0.62rem",
         color: "#94a3b8",
       }}>
         <span>www.enhancv.com</span>
