@@ -142,6 +142,187 @@ const enhancvResumeData = {
   ]
 };
 
+// Component rendering the Classic Academic / Serif Template (Harshita Patidar style)
+function ClassicSerifTemplate({ data }) {
+  const { header, summary, experience, education, skills, languages, projects } = data;
+
+  return (
+    <div 
+      className="resume-print-area classic-serif-template"
+      style={{
+        width: "100%",
+        maxWidth: "800px",
+        margin: "0 auto",
+        background: "#ffffff",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
+        padding: "36px 44px",
+        color: "#000000",
+        fontFamily: "'Times New Roman', 'Georgia', 'Playfair Display', serif",
+        boxSizing: "border-box",
+        lineHeight: 1.4,
+        WebkitPrintColorAdjust: "exact",
+        printColorAdjust: "exact",
+      }}
+    >
+      {/* Header */}
+      <div style={{ textAlign: "center", marginBottom: "16px" }}>
+        <h1 style={{
+          fontFamily: "'Times New Roman', 'Georgia', serif",
+          fontSize: "2.3rem",
+          fontWeight: 700,
+          letterSpacing: "0.05em",
+          color: "#000000",
+          margin: "0 0 6px 0",
+          textTransform: "uppercase",
+        }}>
+          {header.name}
+        </h1>
+        <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "14px",
+          fontSize: "0.82rem",
+          color: "#111111",
+          fontFamily: "'Times New Roman', 'Georgia', serif",
+        }}>
+          <span>📞 {header.phone}</span>
+          <span>✉️ <a href={`mailto:${header.email}`} style={{ color: "#000000", textDecoration: "underline" }}>{header.email}</a></span>
+          <span>🔗 <a href={`https://${header.linkedin}`} target="_blank" rel="noreferrer" style={{ color: "#000000", textDecoration: "underline" }}>{header.linkedin}</a></span>
+          <span>💻 <a href={`https://${header.github}`} target="_blank" rel="noreferrer" style={{ color: "#000000", textDecoration: "underline" }}>{header.github}</a></span>
+        </div>
+      </div>
+
+      {/* Summary */}
+      <div style={{ marginBottom: "14px" }}>
+        <div style={{ borderBottom: "1px solid #000000", paddingBottom: "1px", marginBottom: "6px" }}>
+          <h2 style={{ fontSize: "0.98rem", fontWeight: 700, color: "#000000", margin: 0 }}>
+            Summary
+          </h2>
+        </div>
+        <p style={{ fontSize: "0.8rem", color: "#111111", margin: 0, textAlign: "justify", lineHeight: 1.45 }}>
+          {summary}
+        </p>
+      </div>
+
+      {/* Experience */}
+      <div style={{ marginBottom: "14px" }}>
+        <div style={{ borderBottom: "1px solid #000000", paddingBottom: "1px", marginBottom: "8px" }}>
+          <h2 style={{ fontSize: "0.98rem", fontWeight: 700, color: "#000000", margin: 0 }}>
+            Experience
+          </h2>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          {experience.map((exp, idx) => (
+            <div key={idx}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                <div style={{ fontSize: "0.85rem", color: "#000000" }}>
+                  <strong style={{ fontWeight: 700 }}>{exp.company}</strong> | <span>{exp.title}</span>
+                </div>
+                <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#000000" }}>
+                  {exp.period}
+                </div>
+              </div>
+              <ul style={{ margin: "3px 0 0 0", paddingLeft: "18px", fontSize: "0.78rem", color: "#111111" }}>
+                {exp.bullets.map((b, bIdx) => (
+                  <li key={bIdx} style={{ marginBottom: "2px", lineHeight: 1.38 }}>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Skills */}
+      <div style={{ marginBottom: "14px" }}>
+        <div style={{ borderBottom: "1px solid #000000", paddingBottom: "1px", marginBottom: "6px" }}>
+          <h2 style={{ fontSize: "0.98rem", fontWeight: 700, color: "#000000", margin: 0 }}>
+            Skills
+          </h2>
+        </div>
+        <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "0.79rem", color: "#111111", lineHeight: 1.45 }}>
+          <li style={{ marginBottom: "2px" }}>
+            <strong>Frontend:</strong> React.js, React Native (Expo), Next.js, JavaScript (ES6+), TypeScript, HTML5, CSS3, Tailwind CSS, Redux Toolkit, React Router DOM, Responsive Web Design.
+          </li>
+          <li style={{ marginBottom: "2px" }}>
+            <strong>Backend:</strong> Node.js, Express.js, RESTful APIs, JWT Authentication, Role-Based Access Control (RBAC), Socket.IO, LiveKit WebRTC, API Development.
+          </li>
+          <li style={{ marginBottom: "2px" }}>
+            <strong>Database & Caching:</strong> PostgreSQL, MongoDB, Redis, TypeORM, Prisma.
+          </li>
+          <li style={{ marginBottom: "2px" }}>
+            <strong>Tools & Platforms:</strong> Git, GitHub, Jira, Postman, VS Code, npm, REST Client, Vercel, Netlify, Render, Cloudinary.
+          </li>
+          <li style={{ marginBottom: "2px" }}>
+            <strong>Development Practices:</strong> API Integration, Authentication & Authorization, Database Design, Performance Optimization, Real-Time Communication, Version Control, CI/CD Fundamentals, Agile/Scrum.
+          </li>
+        </ul>
+      </div>
+
+      {/* Projects */}
+      <div style={{ marginBottom: "14px" }}>
+        <div style={{ borderBottom: "1px solid #000000", paddingBottom: "1px", marginBottom: "8px" }}>
+          <h2 style={{ fontSize: "0.98rem", fontWeight: 700, color: "#000000", margin: 0 }}>
+            Projects
+          </h2>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          {projects.map((proj, idx) => (
+            <div key={idx}>
+              <div style={{ fontSize: "0.85rem", color: "#000000" }}>
+                <strong style={{ fontWeight: 700 }}>{proj.title}</strong> | <em style={{ fontStyle: "italic", fontWeight: 400 }}>{proj.tech}</em>
+              </div>
+              <ul style={{ margin: "3px 0 0 0", paddingLeft: "18px", fontSize: "0.78rem", color: "#111111" }}>
+                {proj.bullets.map((b, bIdx) => (
+                  <li key={bIdx} style={{ marginBottom: "2px", lineHeight: 1.38 }}>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Education */}
+      <div style={{ marginBottom: "14px" }}>
+        <div style={{ borderBottom: "1px solid #000000", paddingBottom: "1px", marginBottom: "6px" }}>
+          <h2 style={{ fontSize: "0.98rem", fontWeight: 700, color: "#000000", margin: 0 }}>
+            Education
+          </h2>
+        </div>
+        {education.map((edu, idx) => (
+          <div key={idx}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+              <strong style={{ fontSize: "0.85rem", fontWeight: 700, color: "#000000" }}>
+                {edu.institute}
+              </strong>
+              <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "#000000" }}>
+                {edu.period}
+              </span>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.79rem", color: "#111111", fontStyle: "italic" }}>
+              <span>{edu.title}</span>
+              <span>{edu.location}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Languages */}
+      <div>
+        <div style={{ borderBottom: "1px solid #000000", paddingBottom: "1px", marginBottom: "4px" }}>
+          <h2 style={{ fontSize: "0.98rem", fontWeight: 700, color: "#000000", margin: 0 }}>
+            Languages
+          </h2>
+        </div>
+        <div style={{ fontSize: "0.79rem", color: "#111111" }}>
+          • Hindi (Native), English (Professional)
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Component rendering the Exact Enhancv PDF Template
 function EnhancvWhiteTemplate({ data }) {
   const { header, summary, experience, education, skills, languages, projects } = data;
@@ -750,7 +931,7 @@ function TealSplitTemplate({ data }) {
 }
 
 export default function ResumeModal({ isOpen, onClose }) {
-  const [activeTemplate, setActiveTemplate] = useState("enhancvWhite");
+  const [activeTemplate, setActiveTemplate] = useState("classicSerif");
   const { theme } = useTheme();
 
   if (!isOpen) return null;
@@ -786,7 +967,7 @@ export default function ResumeModal({ isOpen, onClose }) {
           <title>Rahil Sheikh - Resume</title>
           <link rel="preconnect" href="https://fonts.googleapis.com">
           <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
           <style>
             * { box-sizing: border-box; }
             html, body {
@@ -929,6 +1110,26 @@ export default function ResumeModal({ isOpen, onClose }) {
                 border: "1px solid var(--border-main)",
               }}>
                 <button
+                  onClick={() => setActiveTemplate("classicSerif")}
+                  style={{
+                    padding: "5px 12px",
+                    borderRadius: "6px",
+                    border: "none",
+                    background: activeTemplate === "classicSerif" ? "rgba(var(--color-cyan-rgb), 0.15)" : "transparent",
+                    color: activeTemplate === "classicSerif" ? "var(--color-cyan)" : "var(--text-secondary)",
+                    fontSize: "0.78rem",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
+                  {activeTemplate === "classicSerif" && <Check size={12} />}
+                  Classic Academic Format
+                </button>
+                <button
                   onClick={() => setActiveTemplate("enhancvWhite")}
                   style={{
                     padding: "5px 12px",
@@ -1014,7 +1215,9 @@ export default function ResumeModal({ isOpen, onClose }) {
 
           {/* Resume Frame Container */}
           <div className="resume-frame-wrapper" style={{ flex: 1, overflowY: "auto", padding: "24px", background: "rgba(0,0,0,0.2)" }}>
-            {activeTemplate === "enhancvWhite" ? (
+            {activeTemplate === "classicSerif" ? (
+              <ClassicSerifTemplate data={enhancvResumeData} />
+            ) : activeTemplate === "enhancvWhite" ? (
               <EnhancvWhiteTemplate data={enhancvResumeData} />
             ) : (
               <TealSplitTemplate data={enhancvResumeData} />
