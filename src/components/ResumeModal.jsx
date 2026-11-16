@@ -20,33 +20,33 @@ const enhancvResumeData = {
   experience: [
     {
       title: "Full Stack Developer",
-      company: "Purplesky Infotech",
-      period: "12/2025 – Present",
+      company: "Purple Sky Infotech",
+      period: "1 Year | Dec 2024 – Present",
       location: "Barwani",
       intro:
-        "Working as a Full Stack Developer responsible for designing, architecting, and maintaining scalable web and mobile applications. Collaborating with cross-functional teams to build high-performance products.",
+        "Working as a Full Stack Developer responsible for architecting enterprise CRMs, e-learning solutions, video streaming platforms, and scalable web/mobile applications with Node.js and PostgreSQL.",
       bullets: [
-        "Architected full-stack applications using React.js, Next.js, Node.js, Express.js, PostgreSQL, and Redis for high-availability production systems",
-        "Engineered secure RESTful APIs with JWT authentication and granular Role-Based Access Control (RBAC) across 5+ permission tiers",
+        "Architected full-stack web and mobile applications using React.js, Next.js, Node.js, Express.js, PostgreSQL, and Redis for high-availability production systems",
+        "Engineered multiple enterprise CRM platforms, ticket management pipelines, and real-time analytical dashboards with role-based access control (RBAC)",
+        "Built end-to-end E-Learning platforms with modular full-stack architectures, course management workflows, and student/instructor/admin portals",
+        "Integrated real-time video streaming pipelines using LiveKit WebRTC and adaptive HLS video streaming for seamless virtual classrooms",
         "Optimized relational PostgreSQL & TypeORM database schemas and indexing, significantly improving query response times",
-        "Spearheaded production CRM modules, ticket management pipelines, and real-time analytical dashboards for enterprise clients",
-        "Integrated low-latency Redis caching and Socket.IO real-time event streaming to deliver sub-second data synchronization",
         "Orchestrated CI/CD deployment workflows on Vercel and cloud platforms, maintaining strict code review and testing standards"
       ]
     },
     {
-      title: "Frontend Developer Intern (Paid Internship)",
-      company: "LogiQlink Technology",
-      period: "06/2025 – 11/2025",
-      location: "Indore",
+      title: "Frontend Developer Intern",
+      company: "Developers Point",
+      period: "6-Month Internship (Completed)",
+      location: "Barwani",
       intro:
-        "Completed a 6-month paid internship focused on frontend development and modern web applications. Gained hands-on industry experience by building production client interfaces under senior engineering guidance.",
+        "Completed a 6-month hands-on frontend development internship focused on modern web applications. Learned and mastered React.js, JavaScript, HTML5, CSS3, Tailwind CSS, jQuery, and Bootstrap, developing client-facing web applications on live projects.",
       bullets: [
-        "Engineered 15+ pixel-perfect responsive web interfaces utilizing React.js, JavaScript, Tailwind CSS, and HTML5 across all device breakpoints",
+        "Engineered 15+ pixel-perfect responsive web interfaces utilizing React.js, JavaScript (ES6+), Tailwind CSS, jQuery, Bootstrap, and HTML5 across all device breakpoints",
+        "Contributed directly to live client projects, converting Figma UI designs into interactive, accessible, and mobile-friendly web pages",
         "Constructed a modular library of reusable React components, accelerating feature development velocity across client projects",
         "Streamlined frontend API integration with asynchronous state management, resulting in zero-regression data fetching pipelines",
-        "Collaborated in daily Agile/Scrum sprints, utilizing Git/GitHub version control for seamless team feature delivery",
-        "Resolved 30+ critical frontend bugs and UI performance bottlenecks during client application delivery cycles"
+        "Practiced daily Agile sprints, code reviews, and Git/GitHub version-controlled releases on Vercel and Netlify"
       ]
     }
   ],
@@ -61,7 +61,7 @@ const enhancvResumeData = {
   skills: {
     frontend: [
       "React.js", "React Native", "Next.js", "JavaScript", "TypeScript",
-      "HTML5", "CSS3", "Tailwind CSS", "Redux Toolkit", "React Router DOM", "Responsive Web Design"
+      "HTML5", "CSS3", "Tailwind CSS", "Bootstrap", "jQuery", "Redux Toolkit", "React Router DOM", "Responsive Web Design"
     ],
     backend: [
       "Node.js", "Express.js", "REST APIs", "JWT Authentication",

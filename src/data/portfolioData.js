@@ -268,26 +268,26 @@ const portfolioData = {
 
   timeline: [
     {
-      year: "2025 - Present",
-      period: "12/2025 – Present",
-      title: "Full Stack & Application Developer",
-      company: "PurpleSky Infotech, Barwani",
+      year: "2024 - Present",
+      period: "1 Year | Dec 2024 – Present",
+      title: "Full Stack Developer",
+      company: "Purple Sky Infotech, Barwani",
       description:
-        "Currently working as a Full Stack and Application Developer on scalable web and mobile applications. Involved in frontend development with React/Next.js and TypeScript, backend development with Node.js, Express.js, PostgreSQL, and TypeORM, API design, authentication, permission systems, reporting modules, real-time features, and production deployment workflows. Contributing to AI-powered platforms, recruitment systems, enterprise dashboards, and mobile application development.",
+        "Full Stack Developer architecting enterprise web and mobile platforms. Built multiple scalable CRM platforms, ticket management systems, client portals, and full-featured E-Learning platforms with frontend and backend architecture, course management workflows, and adaptive video streaming (LiveKit / HLS). Worked extensively across React, Next.js, Node.js, Express, PostgreSQL, TypeORM, Redis, and React Native.",
       icon: "Rocket",
       color: "#00f5ff",
-      skills: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "TypeORM", "Mobile Apps", "AI Platforms"],
+      skills: ["Full Stack", "CRMs", "E-Learning", "Video Streaming", "Node.js", "PostgreSQL", "React", "Next.js", "Redis"],
     },
     {
-      year: "2025",
-      period: "06/2025 – 11/2025",
-      title: "Frontend Developer Intern (Paid Internship)",
-      company: "LogiQlink Technologies, Indore",
+      year: "2024",
+      period: "6-Month Internship (Completed)",
+      title: "Frontend Developer Intern",
+      company: "Developers Point, Barwani",
       description:
-        "Completed a 6-month paid internship focused on frontend and application development. Worked on real-world client projects using React.js, Redux Toolkit, Tailwind CSS, JavaScript (ES6+), Git/GitHub, Netlify, and Vercel. Contributed to responsive UI development, state management, API integration, bug fixing, performance improvements, and deployment workflows.",
+        "Completed an intensive 6-month hands-on frontend internship building client-facing web applications. Learned and mastered core and modern frontend technologies including React.js, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, jQuery, and Bootstrap, working directly on live client projects.",
       icon: "Briefcase",
       color: "#8b5cf6",
-      skills: ["React.js", "Redux Toolkit", "Tailwind CSS", "JavaScript", "Git", "Netlify", "Vercel"],
+      skills: ["React.js", "JavaScript", "HTML5", "CSS3", "Tailwind CSS", "jQuery", "Bootstrap", "Git", "Live Projects"],
     },
     {
       year: "2021 - 2025",
@@ -295,24 +295,24 @@ const portfolioData = {
       title: "Bachelor of Information Technology",
       company: "LNCT University, Indore",
       description:
-        "Completed Bachelor of Information Technology with a strong focus on Full Stack Development, Software Engineering, Web Technologies, Database Management, and Real-World Application Development. Actively worked on practical projects, internships, and production-level applications throughout the academic journey.",
+        "Bachelor of Information Technology focusing on Software Engineering, Full Stack Development, Relational Databases, Web Architectures, and Practical Systems. Actively worked on production-level projects and client applications throughout the academic journey.",
       icon: "GraduationCap",
       color: "#ec4899",
-      skills: ["Information Tech", "Full Stack", "Databases", "Web Development"],
+      skills: ["Software Engineering", "Full Stack", "Databases", "Web Architecture"],
     },
   ],
 
   certifications: [
     {
-      name: "MongoDB Certified Developer Associate",
-      issuer: "MongoDB Inc.",
-      year: "2023",
+      name: "Frontend Web Engineering & UI Development",
+      issuer: "Developers Point, Barwani",
+      year: "2024",
       icon: "Award",
     },
     {
-      name: "AWS Certified Solutions Architect",
-      issuer: "Amazon Web Services",
-      year: "2023",
+      name: "Full Stack Systems & Enterprise Platforms",
+      issuer: "Purple Sky Infotech, Barwani",
+      year: "2025",
       icon: "Award",
     },
   ],

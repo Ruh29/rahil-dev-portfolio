@@ -93,12 +93,12 @@ export default function AIChat() {
       return "For databases, Rahil designs structured relational schemas with PostgreSQL and TypeORM migrations, as well as MongoDB. He uses Redis for high-speed caching and session states, and Socket.IO/LiveKit for real-time video and streaming events.";
     }
 
-    if (text.includes("experience") || text.includes("work") || text.includes("job") || text.includes("company")) {
-      return "Rahil has 1.5+ years of full-stack experience. Currently at PurpleSky Infotech as Full Stack & Application Developer working on enterprise platforms, and previously completed a 6-month frontend internship at LogiQlink Technologies.";
+    if (text.includes("experience") || text.includes("work") || text.includes("job") || text.includes("company") || text.includes("crm")) {
+      return "Rahil has 1.5+ years of engineering experience: 1 year as Full Stack Developer at Purple Sky Infotech, Barwani (building multiple CRM platforms, e-learning systems, video streaming, and scalable APIs) and a 6-month frontend internship at Developers Point, Barwani (learning & building with React.js, JavaScript, HTML5/CSS3, Tailwind CSS, jQuery, and Bootstrap on live projects).";
     }
 
-    if (text.includes("education") || text.includes("college") || text.includes("degree")) {
-      return "Rahil completed his Bachelor of Information Technology from LNCT University, Indore (2021-2025). He also holds AWS Certified Solutions Architect and MongoDB Certified Developer Associate credentials.";
+    if (text.includes("education") || text.includes("college") || text.includes("degree") || text.includes("certif")) {
+      return "Rahil holds a Bachelor of Information Technology degree from LNCT University, Indore (2021-2025) with a focus on Full Stack & Software Engineering, complemented by intensive hands-on frontend and full-stack product engineering experience.";
     }
 
     if (text.includes("hire") || text.includes("available") || text.includes("contact") || text.includes("email") || text.includes("phone")) {

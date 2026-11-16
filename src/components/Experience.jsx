@@ -4,27 +4,28 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const experience = [
   {
-    role: "Full Stack & Application Developer",
-    company: "PurpleSky Infotech — Barwani, MP",
-    period: "Dec 2025 — Present",
+    role: "Full Stack Developer",
+    company: "Purple Sky Infotech — Barwani, MP",
+    period: "1 Year Full-Time | Dec 2024 — Present",
     desc: [
       "Architect and maintain scalable web and mobile applications using React.js, Next.js, Node.js, Express.js, PostgreSQL, TypeORM, and Redis.",
-      "Build secure REST APIs, role-based access control (RBAC), and authentication systems across enterprise applications.",
-      "Contribute to AI-powered platforms including Purple Learning, AI Product Auditor, and Seek-N-Hire recruitment system.",
-      "Develop cross-platform mobile applications in React Native (Expo) with real-time features, state management, and optimized workflows.",
-      "Integrate real-time communications using Socket.IO and LiveKit, reducing latency and enhancing live session collaboration.",
-      "Optimize PostgreSQL database queries, schemas, and indexing for high-performance multi-tenant platforms."
+      "Engineered multiple enterprise CRM platforms, ticket management systems, and client admin dashboards with role-based access control (RBAC).",
+      "Built end-to-end E-Learning platforms with modular full-stack architectures, course management workflows, and student/instructor/admin portals.",
+      "Integrated real-time video streaming pipelines using LiveKit WebRTC and adaptive HLS video streaming for seamless virtual classrooms.",
+      "Developed cross-platform mobile applications in React Native (Expo) with optimized state management and offline-first workflows.",
+      "Optimized PostgreSQL database queries, schemas, and indexing for high-performance multi-tenant platforms."
     ]
   },
   {
-    role: "Frontend Developer Intern (Paid Internship)",
-    company: "LogiQlink Technologies — Indore, MP",
-    period: "Jun 2025 — Nov 2025",
+    role: "Frontend Developer Intern",
+    company: "Developers Point — Barwani, MP",
+    period: "6-Month Internship (Completed)",
     desc: [
-      "Completed a 6-month hands-on paid internship focused on frontend and client application development.",
-      "Built responsive, mobile-first user interfaces using React.js, JavaScript (ES6+), HTML5, CSS3, and Tailwind CSS.",
-      "Managed application state with Redux Toolkit and integrated RESTful endpoints with error handling.",
-      "Participated in agile sprints, daily standups, code reviews, and Git/GitHub version-controlled releases on Vercel and Netlify."
+      "Completed a 6-month hands-on frontend development internship building responsive client-facing web applications.",
+      "Learned and mastered core web engineering with React.js, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, jQuery, and Bootstrap.",
+      "Contributed directly to live client projects, converting Figma mockups into clean, interactive, and mobile-friendly web pages.",
+      "Implemented dynamic component state management, asynchronous REST API data fetching, and zero-regression error handling.",
+      "Practiced production Git/GitHub version control, code reviews, agile workflows, and deployments on Vercel and Netlify."
     ]
   }
 ];
@@ -37,16 +38,16 @@ const education = [
     grade: "Major: Full Stack & Software Engineering"
   },
   {
-    degree: "AWS Certified Solutions Architect",
-    institution: "Amazon Web Services (AWS)",
-    period: "2023",
-    grade: "Cloud Architecture & Services"
+    degree: "Frontend Web Engineering & UI Development",
+    institution: "Developers Point, Barwani",
+    period: "6-Month Practical Training",
+    grade: "React.js • JavaScript • Tailwind CSS • Bootstrap"
   },
   {
-    degree: "MongoDB Certified Developer Associate",
-    institution: "MongoDB Inc.",
-    period: "2023",
-    grade: "Database Design & Queries"
+    degree: "Full Stack Product Engineering",
+    institution: "Purple Sky Infotech, Barwani",
+    period: "1-Year Practical Specialization",
+    grade: "Enterprise CRMs • Video Streaming • Scalable APIs"
   }
 ];
 

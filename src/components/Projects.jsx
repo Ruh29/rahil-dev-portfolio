@@ -69,10 +69,10 @@ const rahilProjects = [
   },
   {
     id: "09",
-    name: "LogiQlink Client Portal",
+    name: "Enterprise Client Portal",
     subtitle: "Client Onboarding & Project Management Portal",
-    desc: "Responsive web portal built during internship featuring modular dashboard components, state caching, and responsive data tables.",
-    focus: ["React.js", "Redux Toolkit", "Tailwind CSS", "Vercel"],
+    desc: "Responsive web portal built during Developers Point internship featuring modular dashboard components, state caching, and responsive data tables.",
+    focus: ["React.js", "JavaScript", "Tailwind CSS", "Bootstrap"],
     link: "#",
   },
 ];
