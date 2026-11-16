@@ -61,7 +61,7 @@ export default function Intro() {
               <div className="absolute top-0 left-0 w-12 h-12 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 scale-0 group-hover:scale-[15] transition-transform duration-700 ease-out z-0 origin-center"></div>
               <div className="relative z-10 flex flex-col items-center text-center">
                 <span className="text-5xl lg:text-7xl font-black text-white group-hover:text-black transition-colors duration-300">
-                  1.5+
+                  2+
                 </span>
                 <span className="text-xs lg:text-sm font-bold text-slate-300 group-hover:text-slate-800 transition-colors duration-300 mt-2">
                   Years of Experience
@@ -73,7 +73,7 @@ export default function Intro() {
           {/* Center: Text Content */}
           <div className="flex-1 flex flex-col gap-6 lg:gap-8 text-slate-900 dark:text-slate-100 text-lg md:text-xl lg:text-2xl font-bold leading-relaxed text-center px-4 lg:px-8">
             <p className="reveal-item">
-              I'm a <span className="text-black dark:text-white font-black underline decoration-slate-400 dark:decoration-slate-600 underline-offset-4">Full Stack Developer</span> with 1.5+ years of experience building scalable, responsive and production-ready web applications.
+              I'm a <span className="text-black dark:text-white font-black underline decoration-slate-400 dark:decoration-slate-600 underline-offset-4">Full Stack Developer</span> with 2+ years of experience building scalable, responsive and production-ready web applications.
             </p>
             <p className="reveal-item">
               I specialize in React.js, Next.js, TypeScript, Tailwind CSS and Node.js, with hands-on expertise in REST APIs, PostgreSQL, Redis, real-time communication with Socket.IO & LiveKit, and modular component architecture.

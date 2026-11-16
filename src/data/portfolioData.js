@@ -7,7 +7,7 @@ const portfolioData = {
     role: "Full Stack Developer | React | Next.js | Node.js | PostgreSQL | TypeScript",
     tagline: "Full Stack Developer",
     subtitle:
-      "Full Stack Developer with 1.5+ year of experience in React Native and strong expertise in React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, and Redis. Experienced in developing enterprise applications, cross-platform mobile applications, project management systems, event management platforms, and real-time web solutions.",
+      "Full Stack Developer with 2+ years of experience in React Native and strong expertise in React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, and Redis. Experienced in developing enterprise applications, cross-platform mobile applications, project management systems, event management platforms, and real-time web solutions.",
     location: "Indore, India",
     email: "rahilsheikh73308@gmail.com",
     phone: "+91 9993995502",
@@ -22,7 +22,7 @@ const portfolioData = {
   },
 
   stats: [
-    { label: "Years Experience", value: "1.5+", icon: "Briefcase" },
+    { label: "Years Experience", value: "2+", icon: "Briefcase" },
     { label: "Projects Built", value: "10+", icon: "FolderGit2" },
     { label: "Technologies", value: "25+", icon: "Code2" },
     { label: "Languages", value: "2", icon: "Languages" },

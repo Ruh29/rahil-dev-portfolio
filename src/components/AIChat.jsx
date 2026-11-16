@@ -94,7 +94,7 @@ export default function AIChat() {
     }
 
     if (text.includes("experience") || text.includes("work") || text.includes("job") || text.includes("company") || text.includes("crm")) {
-      return "Rahil has 1.5+ years of engineering experience: 1 year as Full Stack Developer at Purple Sky Infotech, Barwani (building multiple CRM platforms, e-learning systems, video streaming, and scalable APIs) and a 6-month frontend internship at Developers Point, Barwani (learning & building with React.js, JavaScript, HTML5/CSS3, Tailwind CSS, jQuery, and Bootstrap on live projects).";
+      return "Rahil has 2+ years of engineering experience: Full Stack Developer at Purple Sky Infotech, Barwani (building multiple CRM platforms, e-learning systems, video streaming, and scalable APIs) and a 6-month frontend internship at Developers Point, Barwani (learning & building with React.js, JavaScript, HTML5/CSS3, Tailwind CSS, jQuery, and Bootstrap on live projects).";
     }
 
     if (text.includes("education") || text.includes("college") || text.includes("degree") || text.includes("certif")) {

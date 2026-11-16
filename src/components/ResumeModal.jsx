@@ -16,7 +16,7 @@ const enhancvResumeData = {
     location: "Indore, India"
   },
   summary:
-    "Full Stack Developer with 1.5+ year of experience in React Native and strong expertise in React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, and Redis. Experienced in developing enterprise applications, cross-platform mobile applications, project management systems, event management platforms, and real-time web solutions. Strong understanding of software architecture, RESTful API development, database design, authentication, state management, and performance optimization. Skilled in building scalable, maintainable, and high-performance web and mobile applications with a focus on clean code, reusable components, and reliable system architecture.",
+    "Full Stack Developer with 2+ years of experience in React Native and strong expertise in React.js, Next.js, Node.js, Express.js, PostgreSQL, MongoDB, and Redis. Experienced in developing enterprise applications, cross-platform mobile applications, project management systems, event management platforms, and real-time web solutions. Strong understanding of software architecture, RESTful API development, database design, authentication, state management, and performance optimization. Skilled in building scalable, maintainable, and high-performance web and mobile applications with a focus on clean code, reusable components, and reliable system architecture.",
   experience: [
     {
       title: "Full Stack Developer",
