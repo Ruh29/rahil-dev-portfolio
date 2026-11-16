@@ -1,5 +1,4 @@
-import React from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import React, { useState } from "react";
 import {
   Atom,
   Zap,
@@ -25,26 +24,32 @@ import {
 
 const skillCategories = [
   {
+    id: "frontend",
     title: "Frontend Engineering",
     skills: ["React.js", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "HTML5 & CSS3"],
   },
   {
+    id: "backend",
     title: "Backend & Real-Time",
     skills: ["Node.js", "Express.js", "REST APIs", "Socket.IO", "LiveKit WebRTC"],
   },
   {
+    id: "database",
     title: "Database & Caching",
     skills: ["PostgreSQL", "MongoDB", "Redis", "TypeORM", "Prisma"],
   },
   {
-    title: "Mobile Development",
+    id: "mobile",
+    title: "Mobile App Development",
     skills: ["React Native", "Expo", "Mobile UI", "Real-Time Sync"],
   },
   {
+    id: "tools",
     title: "Tools & Cloud",
     skills: ["Git", "GitHub", "Postman", "Vercel", "Docker", "Jira"],
   },
   {
+    id: "architecture",
     title: "Architecture & Practices",
     skills: ["RBAC Auth", "Database Design", "Performance Optimization", "Clean Code"],
   },
@@ -83,71 +88,77 @@ const skillIconMap = {
   "Clean Code": Users,
 };
 
-function SkillCard({ skill }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const rotateXValue = useMotionValue(0);
-  const rotateYValue = useMotionValue(0);
-
-  const rotateX = useSpring(rotateXValue, { stiffness: 300, damping: 30 });
-  const rotateY = useSpring(rotateYValue, { stiffness: 300, damping: 30 });
-
-  function handleMouseMove({ currentTarget, clientX, clientY }) {
-    const rect = currentTarget.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
-    mouseX.set(x);
-    mouseY.set(y);
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    rotateXValue.set(((y - centerY) / centerY) * -12);
-    rotateYValue.set(((x - centerX) / centerX) * 12);
-  }
-
-  function handleMouseLeave() {
-    rotateXValue.set(0);
-    rotateYValue.set(0);
-  }
-
-  const Icon = skillIconMap[skill] || Code2;
-
-  return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      style={{ rotateX, rotateY, transformPerspective: 1000, transformStyle: "preserve-3d" }}
-      className="group relative w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-2xl md:rounded-3xl cursor-pointer pointer-events-auto"
-    >
-      <div className="absolute inset-0 glass-panel overflow-hidden rounded-2xl md:rounded-3xl border border-white/60 dark:border-slate-800/60 group-hover:border-primary-500/70 dark:group-hover:border-primary-400/70 transition-all duration-300 shadow-sm group-hover:shadow-[0_0_25px_rgba(var(--primary-500,139,92,246),0.25)] flex flex-col items-center justify-center p-3 text-center">
-        <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
-          <Icon className="w-5 h-5 md:w-6 md:h-6" />
-        </div>
-        <span className="text-[11px] md:text-xs font-bold text-slate-800 dark:text-slate-200 tracking-tight leading-tight">
-          {skill}
-        </span>
-      </div>
-    </motion.div>
-  );
-}
-
 export default function SkillsGrid() {
+  const [activeTab, setActiveTab] = useState("all");
+
+  const displayedCategories =
+    activeTab === "all"
+      ? skillCategories
+      : skillCategories.filter((cat) => cat.id === activeTab);
+
   return (
-    <div className="w-full max-w-7xl mx-auto px-6 md:px-12 mt-16">
-      <div className="space-y-12">
-        {skillCategories.map((cat, idx) => (
-          <div key={idx} className="flex flex-col items-center">
-            <h4 className="text-xs font-black tracking-[0.3em] uppercase text-primary-600 dark:text-primary-400 mb-6 border border-slate-200 dark:border-slate-800 px-5 py-1.5 rounded-full bg-white/50 dark:bg-slate-900/50 backdrop-blur-md">
-              {cat.title}
-            </h4>
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-5 max-w-5xl">
-              {cat.skills.map((s, sIdx) => (
-                <SkillCard key={sIdx} skill={s} />
-              ))}
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+      {/* Category Filter Pills for Quick Browsing */}
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-12 sm:mb-16">
+        <button
+          onClick={() => setActiveTab("all")}
+          className={`px-4 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+            activeTab === "all"
+              ? "bg-primary-600 text-white shadow-md shadow-primary-500/25 scale-105"
+              : "bg-white/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800"
+          }`}
+        >
+          All Skills
+        </button>
+        {skillCategories.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => setActiveTab(cat.id)}
+            className={`px-4 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+              activeTab === cat.id
+                ? "bg-primary-600 text-white shadow-md shadow-primary-500/25 scale-105"
+                : "bg-white/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800"
+            }`}
+          >
+            {cat.title}
+          </button>
+        ))}
+      </div>
+
+      {/* Categorized Cards Grid */}
+      <div className="space-y-12 sm:space-y-16">
+        {displayedCategories.map((category) => (
+          <div key={category.id} className="flex flex-col items-center">
+            {/* Category Header */}
+            <div className="flex items-center gap-3 mb-6 sm:mb-8">
+              <span className="w-8 sm:w-12 h-px bg-slate-300 dark:bg-slate-700"></span>
+              <h4 className="text-xs sm:text-sm font-black tracking-[0.25em] uppercase text-primary-600 dark:text-primary-400 px-4 py-1.5 rounded-full bg-primary-50 dark:bg-primary-950/40 border border-primary-500/20 shadow-xs">
+                {category.title}
+              </h4>
+              <span className="w-8 sm:w-12 h-px bg-slate-300 dark:bg-slate-700"></span>
+            </div>
+
+            {/* Responsive Cards Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5 w-full max-w-6xl">
+              {category.skills.map((skill, sIdx) => {
+                const Icon = skillIconMap[skill] || Code2;
+                return (
+                  <div
+                    key={sIdx}
+                    className="group relative rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 transform-gpu hover:-translate-y-1.5 hover:shadow-xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 hover:border-primary-500/60 dark:hover:border-primary-400/60"
+                  >
+                    {/* Icon container */}
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-primary-500/10 text-primary-600 dark:text-primary-400 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-primary-600 group-hover:text-white transition-all duration-300 shadow-xs">
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2} />
+                    </div>
+
+                    {/* Skill Name */}
+                    <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 tracking-tight leading-snug group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                      {skill}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}

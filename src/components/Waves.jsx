@@ -82,13 +82,13 @@ export default function Waves({
   backgroundColor = 'transparent',
   waveSpeedX = 0.0125,
   waveSpeedY = 0.005,
-  waveAmpX = 32,
-  waveAmpY = 16,
-  xGap = 12,
-  yGap = 32,
+  waveAmpX = 24,
+  waveAmpY = 14,
+  xGap = 16,
+  yGap = 36,
   friction = 0.925,
   tension = 0.005,
-  maxCursorMove = 100,
+  maxCursorMove = 80,
   style = {},
   className = ''
 }) {
@@ -96,7 +96,7 @@ export default function Waves({
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
   const boundingRef = useRef({ width: 0, height: 0, left: 0, top: 0 });
-  const noiseRef = useRef(new Noise(Math.random()));
+  const noiseRef = useRef(new Noise(12345));
   const linesRef = useRef([]);
   const mouseRef = useRef({
     x: -10,
@@ -123,6 +123,7 @@ export default function Waves({
     yGap
   });
   const frameIdRef = useRef(null);
+  const isVisibleRef = useRef(false);
 
   useEffect(() => {
     configRef.current = {
@@ -149,14 +150,18 @@ export default function Waves({
     function setSize() {
       if (!container || !canvas) return;
       boundingRef.current = container.getBoundingClientRect();
-      canvas.width = boundingRef.current.width;
-      canvas.height = boundingRef.current.height;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = boundingRef.current.width * dpr;
+      canvas.height = boundingRef.current.height * dpr;
+      if (ctxRef.current) {
+        ctxRef.current.scale(dpr, dpr);
+      }
     }
 
     function setLines() {
       const { width, height } = boundingRef.current;
       linesRef.current = [];
-      const oWidth = width + 200,
+      const oWidth = width + 100,
         oHeight = height + 30;
       const { xGap, yGap } = configRef.current;
       const totalLines = Math.ceil(oWidth / xGap);
@@ -184,27 +189,27 @@ export default function Waves({
       const { waveSpeedX, waveSpeedY, waveAmpX, waveAmpY, friction, tension, maxCursorMove } = configRef.current;
       lines.forEach((pts) => {
         pts.forEach((p) => {
-          const move = noise.perlin2((p.x + time * waveSpeedX) * 0.002, (p.y + time * waveSpeedY) * 0.0015) * 12;
+          const move = noise.perlin2((p.x + time * waveSpeedX) * 0.002, (p.y + time * waveSpeedY) * 0.0015) * 10;
           p.wave.x = Math.cos(move) * waveAmpX;
           p.wave.y = Math.sin(move) * waveAmpY;
 
           const dx = p.x - mouse.sx,
             dy = p.y - mouse.sy;
           const dist = Math.hypot(dx, dy),
-            l = Math.max(175, mouse.vs);
+            l = Math.max(140, mouse.vs);
           if (dist < l) {
             const s = 1 - dist / l;
             const f = Math.cos(dist * 0.001) * s;
-            p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00065;
-            p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00065;
+            p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.0005;
+            p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.0005;
           }
 
           p.cursor.vx += (0 - p.cursor.x) * tension;
           p.cursor.vy += (0 - p.cursor.y) * tension;
           p.cursor.vx *= friction;
           p.cursor.vy *= friction;
-          p.cursor.x += p.cursor.vx * 2;
-          p.cursor.y += p.cursor.vy * 2;
+          p.cursor.x += p.cursor.vx * 1.5;
+          p.cursor.y += p.cursor.vy * 1.5;
           p.cursor.x = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.x));
           p.cursor.y = Math.min(maxCursorMove, Math.max(-maxCursorMove, p.cursor.y));
         });
@@ -230,16 +235,14 @@ export default function Waves({
         points.forEach((p, idx) => {
           const isLast = idx === points.length - 1;
           p1 = moved(p, !isLast);
-          const p2 = moved(points[idx + 1] || points[points.length - 1], !isLast);
           ctx.lineTo(p1.x, p1.y);
-          if (isLast) ctx.moveTo(p2.x, p2.y);
         });
       });
       ctx.stroke();
     }
 
     function tick(t) {
-      if (!container) return;
+      if (!container || !isVisibleRef.current) return;
       const mouse = mouseRef.current;
       mouse.sx += (mouse.x - mouse.sx) * 0.1;
       mouse.sy += (mouse.y - mouse.sy) * 0.1;
@@ -248,17 +251,42 @@ export default function Waves({
       const d = Math.hypot(dx, dy);
       mouse.v = d;
       mouse.vs += (d - mouse.vs) * 0.1;
-      mouse.vs = Math.min(100, mouse.vs);
+      mouse.vs = Math.min(80, mouse.vs);
       mouse.lx = mouse.x;
       mouse.ly = mouse.y;
       mouse.a = Math.atan2(dy, dx);
-      container.style.setProperty('--x', `${mouse.sx}px`);
-      container.style.setProperty('--y', `${mouse.sy}px`);
 
       movePoints(t);
       drawLines();
       frameIdRef.current = requestAnimationFrame(tick);
     }
+
+    function startAnimation() {
+      if (!frameIdRef.current && isVisibleRef.current) {
+        frameIdRef.current = requestAnimationFrame(tick);
+      }
+    }
+
+    function stopAnimation() {
+      if (frameIdRef.current) {
+        cancelAnimationFrame(frameIdRef.current);
+        frameIdRef.current = null;
+      }
+    }
+
+    // IntersectionObserver to only animate when in view
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+        if (isVisibleRef.current) {
+          startAnimation();
+        } else {
+          stopAnimation();
+        }
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(container);
 
     function onResize() {
       setSize();
@@ -287,16 +315,16 @@ export default function Waves({
 
     setSize();
     setLines();
-    frameIdRef.current = requestAnimationFrame(tick);
     window.addEventListener('resize', onResize);
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
 
     return () => {
+      observer.disconnect();
+      stopAnimation();
       window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('touchmove', onTouchMove);
-      if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
     };
   }, []);
 

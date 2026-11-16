@@ -7,19 +7,25 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function SmoothScroll({ children }) {
   useEffect(() => {
-    // Disable smooth scroll on mobile touch devices for best native responsiveness
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
+    // Only enable Lenis smooth scroll on desktop with pointer devices
+    // Mobile and touch screens have native 120Hz smooth scrolling
+    const isTouch =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window || navigator.maxTouchPoints > 0 || window.innerWidth < 1024);
+
+    if (isTouch) {
+      // Allow native high-performance touch scrolling
       return;
     }
 
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.5,
     });
 
     lenis.on("scroll", ScrollTrigger.update);
@@ -29,7 +35,8 @@ export default function SmoothScroll({ children }) {
     };
 
     gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(0);
+    // Keep default lag smoothing so any occasional frame drop recovers gracefully
+    gsap.ticker.lagSmoothing(500, 33);
 
     return () => {
       lenis.destroy();

@@ -1,30 +1,65 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
+  const cursorRef = useRef(null);
 
   useEffect(() => {
-    const updateMousePosition = (e) => {
-      if (!isVisible) setIsVisible(true);
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    // Only run on desktop devices with a precision mouse pointer
+    if (
+      typeof window === "undefined" ||
+      window.innerWidth < 1024 ||
+      window.matchMedia("(pointer: coarse)").matches
+    ) {
+      return;
+    }
+
+    const cursor = cursorRef.current;
+    if (!cursor) return;
+
+    let posX = -100,
+      posY = -100;
+    let mouseX = -100,
+      mouseY = -100;
+    let rafId = null;
+
+    const onMouseMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (cursor.style.opacity === "0" || !cursor.style.opacity) {
+        cursor.style.opacity = "1";
+      }
     };
 
-    window.addEventListener("mousemove", updateMousePosition);
-    return () => window.removeEventListener("mousemove", updateMousePosition);
-  }, [isVisible]);
+    const onMouseLeave = () => {
+      if (cursor) cursor.style.opacity = "0";
+    };
 
-  if (!isVisible) return null;
+    const render = () => {
+      // Smooth lerp
+      posX += (mouseX - posX) * 0.2;
+      posY += (mouseY - posY) * 0.2;
+      cursor.style.transform = `translate3d(${posX - 14}px, ${posY - 14}px, 0)`;
+      rafId = requestAnimationFrame(render);
+    };
+
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    document.addEventListener("mouseleave", onMouseLeave);
+    rafId = requestAnimationFrame(render);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseleave", onMouseLeave);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[9999] border border-slate-400 backdrop-invert mix-blend-difference hidden md:block"
-      animate={{
-        x: mousePosition.x - 16,
-        y: mousePosition.y - 16,
+    <div
+      ref={cursorRef}
+      className="fixed top-0 left-0 w-7 h-7 rounded-full pointer-events-none z-[9999] border-2 border-primary-500/80 backdrop-invert mix-blend-difference hidden lg:block opacity-0 will-change-transform"
+      style={{
+        transition: "opacity 0.2s ease-out",
       }}
-      transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
     />
   );
 }

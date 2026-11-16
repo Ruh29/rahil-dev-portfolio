@@ -1,27 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import CircularGallery from "./CircularGallery";
 import SkillsGrid from "./SkillsGrid";
-
-const galleryItems = [
-  {
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
-    text: "Frontend & Next.js",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
-    text: "Backend & REST APIs",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop",
-    text: "React Native Apps",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
-    text: "Real-Time & AI Systems",
-  },
-];
 
 export default function Skills() {
   const containerRef = useRef(null);
@@ -30,17 +10,17 @@ export default function Skills() {
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".skills-header",
-        { opacity: 0, y: 40 },
+        ".skills-header-anim",
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: 0.8,
           stagger: 0.1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 75%",
+            start: "top 80%",
             toggleActions: "play none none reverse",
           },
         }
@@ -53,35 +33,27 @@ export default function Skills() {
     <section
       id="skills"
       ref={containerRef}
-      className="w-full min-h-screen bg-black text-white overflow-hidden relative z-10 border-t border-slate-900 flex flex-col items-center py-24"
+      className="w-full py-20 sm:py-28 bg-slate-50/70 dark:bg-[#070b14] text-slate-900 dark:text-white overflow-hidden relative z-10 border-t border-slate-200/60 dark:border-slate-800/60 transition-colors duration-500"
     >
+      {/* Background glow matching theme */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,rgba(var(--primary-500,139,92,246),0.06),transparent_70%)] pointer-events-none"></div>
+
       {/* Header Section */}
-      <div className="w-full flex flex-col items-center text-center px-6 z-20 mb-6">
-        <div className="inline-block skills-header">
-          <h2 className="text-xs font-black tracking-[0.4em] uppercase text-slate-400 mb-6 border border-slate-800 px-6 py-2 rounded-full bg-white/5 shadow-sm backdrop-blur-md">
-            Services & Expertise
-          </h2>
+      <div className="w-full flex flex-col items-center text-center px-4 sm:px-6 relative z-10 mb-12 sm:mb-16">
+        <div className="inline-block skills-header-anim mb-4">
+          <span className="text-[11px] sm:text-xs font-black tracking-[0.3em] uppercase text-primary-600 dark:text-primary-400 border border-primary-500/20 px-5 py-1.5 rounded-full bg-primary-500/10 shadow-xs">
+            Technical Expertise
+          </span>
         </div>
-        <h3 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.1] skills-header text-white uppercase mb-4">
-          What I Do
+        <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-tight skills-header-anim uppercase mb-4">
+          Skills & Tech Stack
         </h3>
-        <p className="text-slate-400 max-w-xl text-sm md:text-base font-medium skills-header">
-          Building end-to-end full-stack architectures, interactive client portals, high-throughput microservices, and mobile products.
+        <p className="text-slate-500 dark:text-slate-400 max-w-xl text-sm sm:text-base font-medium skills-header-anim">
+          Production-proven engineering across modern frontend frameworks, scalable backends, real-time WebSockets, and cross-platform mobile apps.
         </p>
       </div>
 
-      {/* Circular Gallery Integration */}
-      <div className="relative w-full h-[550px] z-10">
-        <CircularGallery
-          items={galleryItems}
-          bend={3}
-          textColor="#ffffff"
-          borderRadius={0.05}
-          scrollEase={0.02}
-        />
-      </div>
-
-      {/* Detailed Skills Grid */}
+      {/* High-Performance Skills Grid */}
       <SkillsGrid />
     </section>
   );

@@ -14,17 +14,16 @@ const hexToRgb = (hex) => {
 };
 
 export default function CursorGrid({
-  cellSize = 70,
-  color = "#D946EF",
-  radius = 140,
+  cellSize = 80,
+  color = "#8b5cf6",
+  radius = 160,
   falloff = "smooth",
-  holdTime = 400,
-  fadeDuration = 800,
+  holdTime = 300,
+  fadeDuration = 600,
   lineWidth = 1.2,
-  maxOpacity = 1,
-  fillOpacity = 0,
-  gridOpacity = 0,
-  cellRadius = 0,
+  maxOpacity = 0.8,
+  fillOpacity = 0.04,
+  gridOpacity = 0.05,
   clickPulse = true,
   pulseSpeed = 600,
   className = "",
@@ -44,12 +43,16 @@ export default function CursorGrid({
     maxOpacity,
     fillOpacity,
     gridOpacity,
-    cellRadius,
     clickPulse,
     pulseSpeed,
   };
 
   useEffect(() => {
+    // Disable heavy canvas grid on mobile/touch screens
+    if (typeof window !== "undefined" && (window.innerWidth < 768 || "ontouchstart" in window)) {
+      return;
+    }
+
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
@@ -58,28 +61,29 @@ export default function CursorGrid({
     if (!ctx) return;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    let cols = 0;
-    let rows = 0;
-    let offX = 0;
-    let offY = 0;
-    let alphas = new Float32Array(0);
-    let touched = new Float64Array(0);
-    let w = 0;
-    let h = 0;
-    const pulses = [];
-    let raf = 0;
-    let running = false;
-    let lastFrame = 0;
+    let w = 0,
+      h = 0,
+      cols = 0,
+      rows = 0;
+    let offX = 0,
+      offY = 0;
+    let alphas = [];
+    let touched = [];
+    let pulses = [];
+    let rafId = null;
+    let isVisible = false;
+    let isRunning = false;
 
-    const rebuild = () => {
-      const p = propsRef.current;
-      w = container.offsetWidth;
-      h = container.offsetHeight;
-      canvas.width = Math.max(1, Math.round(w * dpr));
-      canvas.height = Math.max(1, Math.round(h * dpr));
+    const resize = () => {
+      const rect = container.getBoundingClientRect();
+      w = rect.width;
+      h = rect.height;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
 
+      const p = propsRef.current;
       cols = Math.ceil(w / p.cellSize);
       rows = Math.ceil(h / p.cellSize);
       offX = (w - cols * p.cellSize) / 2;
@@ -87,116 +91,118 @@ export default function CursorGrid({
 
       const total = cols * rows;
       alphas = new Float32Array(total);
-      touched = new Float64Array(total);
+      touched = new Float32Array(total);
+      drawStaticGrid();
     };
 
-    const wake = () => {
-      if (!running) {
-        running = true;
-        lastFrame = performance.now();
-        raf = requestAnimationFrame(loop);
+    const drawStaticGrid = () => {
+      ctx.save();
+      ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, w, h);
+      const p = propsRef.current;
+      const [cr, cg, cb] = hexToRgb(p.color);
+
+      ctx.strokeStyle = `rgba(${cr},${cg},${cb},${p.gridOpacity})`;
+      ctx.lineWidth = p.lineWidth;
+      ctx.beginPath();
+      for (let rIdx = 0; rIdx <= rows; rIdx++) {
+        const y = offY + rIdx * p.cellSize;
+        ctx.moveTo(offX, y);
+        ctx.lineTo(offX + cols * p.cellSize, y);
+      }
+      for (let cIdx = 0; cIdx <= cols; cIdx++) {
+        const x = offX + cIdx * p.cellSize;
+        ctx.moveTo(x, offY);
+        ctx.lineTo(x, offY + rows * p.cellSize);
+      }
+      ctx.stroke();
+      ctx.restore();
+    };
+
+    const startLoop = () => {
+      if (!isRunning && isVisible) {
+        isRunning = true;
+        rafId = requestAnimationFrame(loop);
       }
     };
 
+    const stopLoop = () => {
+      isRunning = false;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      drawStaticGrid();
+    };
+
     const updatePointer = (clientX, clientY) => {
-      const p = propsRef.current;
+      if (!isVisible) return;
       const rect = container.getBoundingClientRect();
       const px = clientX - rect.left;
       const py = clientY - rect.top;
       if (px < 0 || px > w || py < 0 || py > h) return;
 
+      const p = propsRef.current;
       const now = performance.now();
-      const r = p.radius;
-      const rSq = r * r;
-      const curve = FALLOFF_CURVES[p.falloff] || FALLOFF_CURVES.smooth;
+      const fn = FALLOFF_CURVES[p.falloff] || FALLOFF_CURVES.smooth;
 
-      const minC = Math.max(0, Math.floor((px - r - offX) / p.cellSize));
-      const maxC = Math.min(cols - 1, Math.floor((px + r - offX) / p.cellSize));
-      const minR = Math.max(0, Math.floor((py - r - offY) / p.cellSize));
-      const maxR = Math.min(rows - 1, Math.floor((py + r - offY) / p.cellSize));
+      const minC = Math.max(0, Math.floor((px - p.radius - offX) / p.cellSize));
+      const maxC = Math.min(cols - 1, Math.ceil((px + p.radius - offX) / p.cellSize));
+      const minR = Math.max(0, Math.floor((py - p.radius - offY) / p.cellSize));
+      const maxR = Math.min(rows - 1, Math.ceil((py + p.radius - offY) / p.cellSize));
 
       for (let rIdx = minR; rIdx <= maxR; rIdx++) {
         const cy = offY + rIdx * p.cellSize + p.cellSize / 2;
         for (let cIdx = minC; cIdx <= maxC; cIdx++) {
           const cx = offX + cIdx * p.cellSize + p.cellSize / 2;
-          const distSq = (cx - px) ** 2 + (cy - py) ** 2;
-          if (distSq < rSq) {
-            const d = Math.sqrt(distSq);
-            const intensity = curve(1 - d / r);
+          const d = Math.hypot(cx - px, cy - py);
+          if (d <= p.radius) {
+            const val = fn(1 - d / p.radius);
             const idx = rIdx * cols + cIdx;
-            if (intensity > alphas[idx]) {
-              alphas[idx] = intensity;
+            if (val > alphas[idx]) {
+              alphas[idx] = val;
               touched[idx] = now;
             }
           }
         }
       }
-      wake();
+      startLoop();
     };
 
     const handlePointerMove = (e) => updatePointer(e.clientX, e.clientY);
 
-    const handleClick = (e) => {
-      if (!propsRef.current.clickPulse) return;
-      const rect = container.getBoundingClientRect();
-      pulses.push({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-        t0: performance.now(),
-      });
-      wake();
-    };
-
     const loop = (now) => {
+      if (!isRunning) return;
       const p = propsRef.current;
-      const _dt = now - lastFrame;
-      lastFrame = now;
-
       ctx.save();
       ctx.scale(dpr, dpr);
       ctx.clearRect(0, 0, w, h);
 
       const [cr, cg, cb] = hexToRgb(p.color);
-      let active = false;
+      let hasActiveAlphas = false;
 
-      // Pulse handling
-      for (let i = pulses.length - 1; i >= 0; i--) {
-        const pulse = pulses[i];
-        const age = now - pulse.t0;
-        const maxDist = Math.max(w, h) * 1.5;
-        const curR = (age / 1000) * p.pulseSpeed;
-
-        if (curR > maxDist) {
-          pulses.splice(i, 1);
-          continue;
-        }
-
-        active = true;
-        const waveW = p.cellSize * 2;
-        for (let rIdx = 0; rIdx < rows; rIdx++) {
-          const cy = offY + rIdx * p.cellSize + p.cellSize / 2;
-          for (let cIdx = 0; cIdx < cols; cIdx++) {
-            const cx = offX + cIdx * p.cellSize + p.cellSize / 2;
-            const dist = Math.hypot(cx - pulse.x, cy - pulse.y);
-            const diff = Math.abs(dist - curR);
-            if (diff < waveW) {
-              const val = (1 - diff / waveW) * 0.8;
-              const idx = rIdx * cols + cIdx;
-              if (val > alphas[idx]) {
-                alphas[idx] = val;
-                touched[idx] = now;
-              }
-            }
-          }
-        }
+      // Draw background grid lines in one path
+      ctx.strokeStyle = `rgba(${cr},${cg},${cb},${p.gridOpacity})`;
+      ctx.lineWidth = p.lineWidth;
+      ctx.beginPath();
+      for (let rIdx = 0; rIdx <= rows; rIdx++) {
+        const y = offY + rIdx * p.cellSize;
+        ctx.moveTo(offX, y);
+        ctx.lineTo(offX + cols * p.cellSize, y);
       }
+      for (let cIdx = 0; cIdx <= cols; cIdx++) {
+        const x = offX + cIdx * p.cellSize;
+        ctx.moveTo(x, offY);
+        ctx.lineTo(x, offY + rows * p.cellSize);
+      }
+      ctx.stroke();
 
-      // Draw grid
+      // Only draw highlighted active cells
       for (let rIdx = 0; rIdx < rows; rIdx++) {
         const y = offY + rIdx * p.cellSize;
         for (let cIdx = 0; cIdx < cols; cIdx++) {
-          const x = offX + cIdx * p.cellSize;
           const idx = rIdx * cols + cIdx;
+          if (alphas[idx] <= 0.001) continue;
 
           const elapsed = now - touched[idx];
           if (elapsed > p.holdTime) {
@@ -204,20 +210,19 @@ export default function CursorGrid({
             alphas[idx] = Math.max(0, 1 - fadeProgress);
           }
 
-          if (alphas[idx] > 0.001) active = true;
+          if (alphas[idx] > 0.001) {
+            hasActiveAlphas = true;
+            const x = offX + cIdx * p.cellSize;
+            const a = alphas[idx] * p.maxOpacity;
 
-          const a = Math.max(alphas[idx] * p.maxOpacity, p.gridOpacity);
-
-          if (a > 0.001) {
-            // Fill cell if fillOpacity > 0
-            if (p.fillOpacity > 0 && alphas[idx] > 0.001) {
+            // Fill active cell
+            if (p.fillOpacity > 0) {
               ctx.fillStyle = `rgba(${cr},${cg},${cb},${alphas[idx] * p.fillOpacity})`;
               ctx.fillRect(x, y, p.cellSize, p.cellSize);
             }
 
-            // Stroke cell border
+            // Stroke active cell
             ctx.strokeStyle = `rgba(${cr},${cg},${cb},${a})`;
-            ctx.lineWidth = p.lineWidth;
             ctx.strokeRect(x, y, p.cellSize, p.cellSize);
           }
         }
@@ -225,36 +230,44 @@ export default function CursorGrid({
 
       ctx.restore();
 
-      if (active) {
-        raf = requestAnimationFrame(loop);
+      // If no active glowing cells remain, stop animation loop to conserve CPU/battery
+      if (!hasActiveAlphas && pulses.length === 0) {
+        stopLoop();
       } else {
-        running = false;
+        rafId = requestAnimationFrame(loop);
       }
     };
 
-    rebuild();
-    wake();
+    // IntersectionObserver to pause when off-screen
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (!isVisible) {
+          stopLoop();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(container);
 
-    const ro = new ResizeObserver(() => {
-      rebuild();
-      wake();
-    });
-    ro.observe(container);
-
+    resize();
+    window.addEventListener("resize", resize);
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    container.addEventListener("click", handleClick);
 
     return () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
+      observer.disconnect();
+      stopLoop();
+      window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", handlePointerMove);
-      container.removeEventListener("click", handleClick);
     };
   }, []);
 
   return (
-    <div ref={containerRef} className={`cursor-grid ${className}`}>
-      <canvas ref={canvasRef} className="cursor-grid__canvas" />
+    <div
+      ref={containerRef}
+      className={`absolute inset-0 w-full h-full pointer-events-none overflow-hidden ${className}`}
+    >
+      <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
   );
 }

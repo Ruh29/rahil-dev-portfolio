@@ -109,6 +109,7 @@ export default function Projects() {
   }, []);
 
   const handleMouseEnter = (startIndex) => {
+    if (typeof window !== "undefined" && window.innerWidth < 1024) return;
     timeoutsRef.current.forEach(clearTimeout);
     timeoutsRef.current = [];
 
