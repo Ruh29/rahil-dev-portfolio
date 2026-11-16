@@ -1,603 +1,329 @@
-import React, { useState, useRef } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ExternalLink, Sparkles, Star, Filter, CheckCircle2, Clock, Terminal, ChevronDown, ChevronUp } from "lucide-react";
-import { Github } from "./CustomIcons";
-import portfolioData from "../data/portfolioData";
-import ScatterText from "./ScatterText";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-function ProjectCard({ project, index }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-  const [hovered, setHovered] = useState(false);
-  const [showImplemented, setShowImplemented] = useState(false);
-
-  // Status Badge configurations
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case "Live":
-        return (
-          <div style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "5px",
-            padding: "4px 10px",
-            borderRadius: "100px",
-            background: "rgba(16, 185, 129, 0.18)",
-            border: "1px solid rgba(16, 185, 129, 0.4)",
-            color: "#10b981",
-            fontSize: "0.72rem",
-            fontWeight: 700,
-            fontFamily: "var(--font-mono)",
-            backdropFilter: "blur(10px)",
-          }}>
-            <span style={{
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              background: "#10b981",
-              boxShadow: "0 0 8px #10b981",
-            }} />
-            Live
-          </div>
-        );
-      case "API":
-        return (
-          <div style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "5px",
-            padding: "4px 10px",
-            borderRadius: "100px",
-            background: "rgba(14, 165, 233, 0.18)",
-            border: "1px solid rgba(14, 165, 233, 0.4)",
-            color: "#0ea5e9",
-            fontSize: "0.72rem",
-            fontWeight: 700,
-            fontFamily: "var(--font-mono)",
-            backdropFilter: "blur(10px)",
-          }}>
-            <Terminal size={10} />
-            API
-          </div>
-        );
-      case "In Progress":
-      default:
-        return (
-          <div style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "5px",
-            padding: "4px 10px",
-            borderRadius: "100px",
-            background: "rgba(245, 158, 11, 0.18)",
-            border: "1px solid rgba(245, 158, 11, 0.4)",
-            color: "#f59e0b",
-            fontSize: "0.72rem",
-            fontWeight: 700,
-            fontFamily: "var(--font-mono)",
-            backdropFilter: "blur(10px)",
-          }}>
-            <Clock size={10} />
-            In Progress
-          </div>
-        );
-    }
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ type: "spring", stiffness: 80, damping: 14, delay: index * 0.08 }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-      whileHover={{ y: -6 }}
-      style={{
-        background: "var(--bg-card)",
-        border: hovered ? "1px solid var(--border-accent)" : "1px solid var(--border-main)",
-        borderRadius: "20px",
-        overflow: "hidden",
-        cursor: "default",
-        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        boxShadow: hovered ? "0 20px 40px rgba(0,0,0,0.5), 0 0 25px rgba(var(--color-cyan-rgb), 0.15)" : "0 4px 20px rgba(0,0,0,0.2)",
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        position: "relative",
-      }}
-    >
-      {/* Project Banner Header */}
-      <div style={{
-        height: "150px",
-        background: `linear-gradient(135deg, ${project.gradient.replace("from-", "").replace(" to-", ", ")})`.replace("cyan-500", "#00f5ff").replace("blue-600", "#2563eb").replace("purple-500", "#8b5cf6").replace("pink-600", "#db2777").replace("sky-500", "#0ea5e9").replace("indigo-600", "#4f46e5").replace("emerald-500", "#10b981").replace("teal-600", "#0d9488").replace("orange-500", "#f97316").replace("rose-600", "#e11d48").replace("amber-500", "#f59e0b").replace("red-600", "#dc2626"),
-        position: "relative",
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexShrink: 0,
-      }}>
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          background: "rgba(0,0,0,0.35)",
-          backdropFilter: "blur(2px)",
-        }} />
-
-        {/* Project Emoji / Icon */}
-        <motion.div
-          animate={{ scale: hovered ? 1.15 : 1, rotate: hovered ? 4 : 0 }}
-          transition={{ type: "spring", stiffness: 200, damping: 15 }}
-          style={{
-            fontSize: "3.2rem",
-            position: "relative",
-            zIndex: 1,
-            filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.4))",
-          }}
-        >
-          {project.icon || "🚀"}
-        </motion.div>
-
-        {/* Top Badges Bar */}
-        <div style={{
-          position: "absolute",
-          top: "12px",
-          left: "12px",
-          right: "12px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          zIndex: 2,
-        }}>
-          {/* Status Badge */}
-          {getStatusBadge(project.status)}
-
-          {/* Featured Badge */}
-          {project.featured && (
-            <div style={{
-              background: "rgba(0,0,0,0.6)",
-              backdropFilter: "blur(10px)",
-              borderRadius: "100px",
-              padding: "4px 10px",
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-              fontSize: "0.7rem",
-              fontWeight: 700,
-              color: "#f59e0b",
-              border: "1px solid rgba(245,158,11,0.4)",
-            }}>
-              <Star size={10} fill="#f59e0b" />
-              Featured
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Card Content Body */}
-      <div style={{
-        padding: "20px 24px 24px",
-        display: "flex",
-        flexDirection: "column",
-        flexGrow: 1,
-        justifyContent: "space-between",
-      }}>
-        <div>
-          {/* Title & Subtitle */}
-          <div style={{ marginBottom: "12px" }}>
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: "8px",
-              marginBottom: "4px",
-            }}>
-              <h3 style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontWeight: 700,
-                fontSize: "1.2rem",
-                color: "var(--text-heading)",
-                lineHeight: 1.25,
-                margin: 0,
-              }}>
-                {project.title}
-              </h3>
-              <span style={{
-                fontSize: "0.7rem",
-                fontWeight: 600,
-                color: "var(--text-muted)",
-                background: "rgba(255,255,255,0.05)",
-                padding: "2px 8px",
-                borderRadius: "6px",
-                border: "1px solid var(--border-main)",
-                whiteSpace: "nowrap",
-              }}>
-                {project.category}
-              </span>
-            </div>
-            {project.subtitle && (
-              <div style={{
-                fontSize: "0.8rem",
-                fontWeight: 600,
-                color: "var(--color-cyan)",
-                lineHeight: 1.3,
-              }}>
-                {project.subtitle}
-              </div>
-            )}
-          </div>
-
-          {/* Description */}
-          <p style={{
-            fontSize: "0.85rem",
-            color: "var(--text-secondary)",
-            lineHeight: 1.6,
-            marginBottom: "14px",
-          }}>
-            {project.description}
-          </p>
-
-          {/* Portfolio Highlight Box */}
-          {project.highlight && (
-            <div style={{
-              padding: "10px 14px",
-              background: "linear-gradient(135deg, rgba(var(--color-cyan-rgb), 0.05), rgba(var(--color-purple-rgb), 0.05))",
-              borderLeft: "3px solid var(--color-cyan)",
-              borderRadius: "0 10px 10px 0",
-              marginBottom: "16px",
-              fontSize: "0.8rem",
-              color: "var(--text-primary)",
-              lineHeight: 1.5,
-              fontWeight: 500,
-            }}>
-              <span style={{ color: "var(--color-cyan)", fontWeight: 700 }}>Key Highlight: </span>
-              {project.highlight}
-            </div>
-          )}
-
-          {/* Key Contributions Toggle */}
-          {project.implemented && project.implemented.length > 0 && (
-            <div style={{ marginBottom: "16px" }}>
-              <button
-                onClick={() => setShowImplemented(!showImplemented)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: 0,
-                  color: "var(--text-secondary)",
-                  fontSize: "0.8rem",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  marginBottom: showImplemented ? "10px" : "0",
-                  fontFamily: "var(--font-main)",
-                }}
-              >
-                <span>{showImplemented ? "Hide key implementation details" : "Show key implementation details"}</span>
-                {showImplemented ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-              </button>
-
-              <AnimatePresence>
-                {showImplemented && (
-                  <motion.ul
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.25 }}
-                    style={{
-                      margin: 0,
-                      paddingLeft: "0",
-                      listStyle: "none",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "6px",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {project.implemented.map((item, idx) => (
-                      <li key={idx} style={{
-                        fontSize: "0.78rem",
-                        color: "var(--text-secondary)",
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: "6px",
-                        lineHeight: 1.4,
-                      }}>
-                        <CheckCircle2 size={12} style={{ color: "var(--color-cyan)", marginTop: "2px", flexShrink: 0 }} />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
-            </div>
-          )}
-
-          {/* Tech Stack Badges */}
-          <div style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "6px",
-            marginBottom: "20px",
-          }}>
-            {project.tech.map((t) => (
-              <span key={t} style={{
-                padding: "3px 9px",
-                background: "rgba(var(--color-cyan-rgb), 0.06)",
-                border: "1px solid rgba(var(--color-cyan-rgb), 0.18)",
-                borderRadius: "100px",
-                fontSize: "0.72rem",
-                fontWeight: 500,
-                color: "var(--color-cyan)",
-                fontFamily: "var(--font-mono)",
-              }}>
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Card Action Links Footer */}
-        <div style={{
-          display: "flex",
-          gap: "10px",
-          paddingTop: "12px",
-          borderTop: "1px solid var(--border-divider)",
-        }}>
-          {/* Render GitHub button ONLY if project.github exists */}
-          {project.github && project.github.trim() !== "" && (
-            <motion.a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                flex: 1,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                padding: "9px 14px",
-                background: "var(--bg-card)",
-                border: "1px solid var(--border-main)",
-                borderRadius: "10px",
-                fontSize: "0.82rem",
-                fontWeight: 600,
-                color: "var(--text-secondary)",
-                textDecoration: "none",
-                transition: "all 0.3s ease",
-              }}
-              whileHover={{ borderColor: "rgba(255,255,255,0.4)", color: "var(--text-primary)" }}
-            >
-              <Github size={15} />
-              Code
-            </motion.a>
-          )}
-
-          {/* Live / API button */}
-          {(project.live || project.apiLink) ? (
-            <motion.a
-              href={project.live || project.apiLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                flex: project.github ? 1 : 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                padding: "9px 14px",
-                background: "linear-gradient(135deg, rgba(var(--color-cyan-rgb), 0.15), rgba(var(--color-purple-rgb), 0.15))",
-                border: "1px solid rgba(var(--color-cyan-rgb), 0.3)",
-                borderRadius: "10px",
-                fontSize: "0.82rem",
-                fontWeight: 600,
-                color: "var(--color-cyan)",
-                textDecoration: "none",
-                transition: "all 0.3s ease",
-              }}
-              whileHover={{
-                background: "linear-gradient(135deg, rgba(var(--color-cyan-rgb), 0.25), rgba(var(--color-purple-rgb), 0.25))",
-                borderColor: "var(--color-cyan)",
-              }}
-            >
-              <ExternalLink size={14} />
-              {project.status === "API" ? "Live API" : "Live Demo"}
-            </motion.a>
-          ) : (
-            <div style={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "6px",
-              padding: "9px 14px",
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid var(--border-main)",
-              borderRadius: "10px",
-              fontSize: "0.82rem",
-              fontWeight: 600,
-              color: "var(--text-muted)",
-              cursor: "default",
-            }}>
-              <Clock size={14} />
-              In Development
-            </div>
-          )}
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+const rahilProjects = [
+  {
+    id: "01",
+    name: "Purple Learning",
+    subtitle: "AI-Powered Learning & Mentorship Platform",
+    desc: "Enterprise e-learning platform supporting Admin, Instructor, and Student portals with LiveKit live video classrooms, HLS streaming, and Redis caching.",
+    focus: ["Next.js", "Node.js", "PostgreSQL", "LiveKit", "Redis"],
+    link: "https://learning-dev.purpleagentic.in/",
+  },
+  {
+    id: "02",
+    name: "AI Product Auditor",
+    subtitle: "AI-Based Product Quality & Audit Tool",
+    desc: "AI-powered product audit dashboard converting UI, UX, and accessibility analysis into structured, actionable enterprise reports.",
+    focus: ["Next.js", "TypeScript", "Tailwind CSS", "AI APIs"],
+    link: "https://ai-product-auditor-6qjxufcqf-meetlychats-projects.vercel.app/",
+  },
+  {
+    id: "03",
+    name: "Seek-N-Hire",
+    subtitle: "Recruitment & Job Management Platform",
+    desc: "AI recruitment platform with candidate workflows, sponsorship rotation, real-time Socket.IO notifications, and RBAC permissions.",
+    focus: ["React.js", "Node.js", "Express.js", "PostgreSQL", "Socket.IO"],
+    link: "https://seek-n-hire-api.purpleagentic.in/",
+  },
+  {
+    id: "04",
+    name: "PurpleSuite",
+    subtitle: "Enterprise Business Management Suite",
+    desc: "Lead, client, sales, proposal, quotation, purchase order, and advanced reporting workflows with high-volume relational schemas.",
+    focus: ["React.js", "TypeScript", "Node.js", "PostgreSQL", "TypeORM"],
+    link: "https://purplesuite-staging.purpleagentic.in/",
+  },
+  {
+    id: "05",
+    name: "PurpleHire",
+    subtitle: "AI Mock Interview & Speech Coach",
+    desc: "Mobile interview prep application with dynamic technical mock interviews, voice capture pipelines, and automated performance insights.",
+    focus: ["React Native", "Expo", "AI Integration", "Node.js", "REST APIs"],
+    link: "#",
+  },
+  {
+    id: "06",
+    name: "FitZo",
+    subtitle: "Fitness & Nutrition Mobile Ecosystem",
+    desc: "Personalized fitness application with multi-step onboarding profiling, macro calculations, and offline-first state synchronization.",
+    focus: ["React Native", "TypeScript", "Zustand", "Express.js"],
+    link: "#",
+  },
+  {
+    id: "07",
+    name: "Fleet Management App",
+    subtitle: "Field Logistics & Tracking",
+    desc: "Cross-platform mobile application powering fleet operations, location-based GPS workflows, and real-time operational data handling.",
+    focus: ["React Native", "Expo", "PostgreSQL", "REST APIs"],
+    link: "#",
+  },
+  {
+    id: "08",
+    name: "Stock Market Tracker",
+    subtitle: "Financial Data & Analytics",
+    desc: "High-frequency market tracking mobile interface delivering live quotes, interactive charts, and optimized client-side caching.",
+    focus: ["React Native", "Expo", "REST APIs", "Node.js"],
+    link: "#",
+  },
+  {
+    id: "09",
+    name: "E-Commerce & Storefront",
+    subtitle: "Full-Stack Retail System",
+    desc: "Scalable e-commerce web platform with authentication, catalog browsing, cart state management, and payment checkout flows.",
+    focus: ["React.js", "Tailwind CSS", "Express.js", "MongoDB"],
+    link: "#",
+  },
+];
 
 export default function Projects() {
-  const [filter, setFilter] = useState("Featured");
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const { projects } = portfolioData;
+  const containerRef = useRef(null);
+  const gridRef = useRef(null);
 
-  const filterOptions = ["Featured", "All", ...new Set(projects.map(p => p.category))];
+  const [activeCards, setActiveCards] = useState([]);
+  const [activeLines, setActiveLines] = useState([]);
+  const [cardRects, setCardRects] = useState([]);
 
-  const filtered = filter === "Featured"
-    ? projects.filter(p => p.featured)
-    : filter === "All"
-      ? projects
-      : projects.filter(p => p.category === filter);
+  const timeoutsRef = useRef([]);
+
+  const measureCards = () => {
+    if (!gridRef.current) return;
+    const cards = gridRef.current.querySelectorAll(".featured-card");
+    const gridRect = gridRef.current.getBoundingClientRect();
+
+    const rects = Array.from(cards).map((card) => {
+      const rect = card.getBoundingClientRect();
+      return {
+        x: rect.left - gridRect.left + rect.width / 2,
+        y: rect.top - gridRect.top + rect.height / 2,
+      };
+    });
+    setCardRects(rects);
+  };
+
+  useEffect(() => {
+    measureCards();
+    window.addEventListener("resize", measureCards);
+    return () => window.removeEventListener("resize", measureCards);
+  }, []);
+
+  const handleMouseEnter = (startIndex) => {
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
+
+    setActiveCards([startIndex]);
+    setActiveLines([]);
+
+    let currentIndex = startIndex;
+
+    const animateNext = () => {
+      if (currentIndex >= rahilProjects.length - 1) return;
+
+      setActiveLines((prev) => [...prev, currentIndex]);
+
+      const t1 = setTimeout(() => {
+        currentIndex++;
+        setActiveCards((prev) => [...prev, currentIndex]);
+
+        const t2 = setTimeout(animateNext, 50);
+        timeoutsRef.current.push(t2);
+      }, 300);
+
+      timeoutsRef.current.push(t1);
+    };
+
+    const t = setTimeout(animateNext, 50);
+    timeoutsRef.current.push(t);
+  };
+
+  const handleMouseLeaveGrid = () => {
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
+    setActiveCards([]);
+    setActiveLines([]);
+  };
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".projects-header",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="projects" className="section" style={{ position: "relative" }}>
-      {/* Background Radial Glow */}
-      <div style={{
-        position: "absolute",
-        right: "5%",
-        top: "20%",
-        width: "450px",
-        height: "450px",
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(var(--color-cyan-rgb), 0.06), transparent 70%)",
-        filter: "blur(60px)",
-        pointerEvents: "none",
-      }} />
-
-      <div className="container">
-        {/* Header Section */}
-        <div ref={ref} style={{ textAlign: "center", marginBottom: "48px" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ type: "spring", stiffness: 100, damping: 12 }}
-            style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}
-          >
-            <div className="section-tag">
-              <ScatterText delay={0.05}>
-                <Sparkles size={12} style={{ display: "inline-block", marginRight: "6px", verticalAlign: "middle" }} />
-                Portfolio Showcase
-              </ScatterText>
-            </div>
-          </motion.div>
-
-          <motion.h2
-            className="section-title"
-            style={{ textAlign: "center" }}
-            initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1 }}
-          >
-            <ScatterText delay={0.1}>Featured <span>Projects</span></ScatterText>
-          </motion.h2>
-
-          {/* Requested Intro text */}
-          <motion.p
-            className="section-subtitle"
-            style={{
-              textAlign: "center",
-              margin: "0 auto 32px",
-              maxWidth: "750px",
-              fontSize: "1.05rem",
-              lineHeight: 1.7,
-              color: "var(--text-secondary)",
-            }}
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
-          >
-            I build scalable full-stack products ranging from AI-powered platforms and recruitment systems to enterprise business applications and mobile-first experiences.
-          </motion.p>
-
-          {/* Filter Buttons */}
-          <motion.div
-            className="projects-filter-container"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3 }}
-            style={{ display: "flex", gap: "8px", justifyContent: "center", flexWrap: "wrap" }}
-          >
-            {filterOptions.map(cat => (
-              <motion.button
-                key={cat}
-                className="projects-filter-btn"
-                onClick={() => setFilter(cat)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                style={{
-                  padding: "8px 20px",
-                  borderRadius: "100px",
-                  border: filter === cat ? "1px solid var(--color-cyan)" : "1px solid var(--border-main)",
-                  background: filter === cat ? "rgba(var(--color-cyan-rgb), 0.12)" : "var(--bg-card)",
-                  color: filter === cat ? "var(--color-cyan)" : "var(--text-secondary)",
-                  fontSize: "0.83rem",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  fontFamily: "var(--font-main)",
-                  transition: "all 0.3s ease",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  boxShadow: filter === cat ? "0 0 15px rgba(var(--color-cyan-rgb), 0.2)" : "none",
-                }}
-              >
-                {cat === "Featured" && <Star size={12} fill="currentColor" />}
-                {cat === "All" && <Filter size={12} />}
-                {cat}
-              </motion.button>
-            ))}
-          </motion.div>
+    <section
+      id="projects"
+      ref={containerRef}
+      className="relative w-full py-28 bg-white dark:bg-[#070b14] text-slate-900 dark:text-white overflow-hidden transition-colors duration-500"
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+        <div className="mb-16 flex flex-col items-center text-center">
+          <div className="inline-block projects-header">
+            <h2 className="text-xs font-black tracking-[0.4em] uppercase text-slate-500 dark:text-slate-400 mb-6 border border-slate-200 dark:border-slate-800 px-6 py-2 rounded-full bg-white dark:bg-slate-900 shadow-sm">
+              Portfolio
+            </h2>
+          </div>
+          <h3 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.1] projects-header text-slate-900 dark:text-white uppercase mb-4">
+            Selected Projects
+          </h3>
+          <p className="text-slate-500 dark:text-slate-400 max-w-xl text-sm md:text-base font-medium projects-header">
+            Enterprise platforms, AI systems, and mobile applications built for performance and scale.
+          </p>
         </div>
 
-        {/* Projects Equal Height Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={filter}
-            className="projects-grid"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
-              gap: "28px",
-              alignItems: "stretch",
-            }}
-          >
-            {filtered.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+        <div
+          ref={gridRef}
+          className="featured-projects-container relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          onMouseLeave={handleMouseLeaveGrid}
+        >
+          {/* SVG Overlay for Connecting Lines */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 hidden lg:block">
+            {cardRects.map((rect, i) => {
+              if (i === cardRects.length - 1) return null;
+              const nextRect = cardRects[i + 1];
+              if (!nextRect) return null;
+              const isActive = activeLines.includes(i);
+              const length = Math.sqrt(
+                Math.pow(nextRect.x - rect.x, 2) + Math.pow(nextRect.y - rect.y, 2)
+              );
 
-      <style>{`
-        @media (max-width: 640px) {
-          .projects-filter-container {
-            width: 100% !important;
-            max-width: 100% !important;
-            overflow-x: auto !important;
-            display: flex !important;
-            flex-wrap: nowrap !important;
-            justify-content: flex-start !important;
-            -webkit-overflow-scrolling: touch !important;
-            scrollbar-width: none !important;
-            padding: 4px 2px 8px !important;
-          }
-          .projects-filter-container::-webkit-scrollbar {
-            display: none !important;
-          }
-          .projects-filter-btn {
-            flex-shrink: 0 !important;
-            white-space: nowrap !important;
-            padding: 7px 16px !important;
-            font-size: 0.8rem !important;
-          }
-          .projects-grid {
-            grid-template-columns: 1fr !important;
-            gap: 20px !important;
-          }
-        }
-      `}</style>
+              return (
+                <line
+                  key={i}
+                  x1={rect.x}
+                  y1={rect.y}
+                  x2={nextRect.x}
+                  y2={nextRect.y}
+                  stroke="currentColor"
+                  className="text-primary-500 dark:text-primary-400"
+                  strokeWidth="2.5"
+                  strokeDasharray={length}
+                  strokeDashoffset={isActive ? 0 : length}
+                  style={{ transition: "stroke-dashoffset 0.3s linear" }}
+                />
+              );
+            })}
+          </svg>
+
+          {rahilProjects.map((project, index) => {
+            const isActive = activeCards.includes(index);
+
+            return (
+              <a
+                href={project.link !== "#" ? project.link : undefined}
+                target={project.link !== "#" ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                key={index}
+                onMouseEnter={() => handleMouseEnter(index)}
+                className={`block z-10 ${
+                  index === 0 || index === 1 ? "md:col-span-2 lg:col-span-1" : ""
+                }`}
+              >
+                <div
+                  className={`featured-card relative bg-white dark:bg-slate-900/80 border rounded-3xl p-8 md:p-10 h-full flex flex-col overflow-hidden origin-center transition-all duration-300 ${
+                    isActive
+                      ? "border-primary-500 dark:border-primary-400 shadow-xl shadow-primary-500/10 -translate-y-1.5"
+                      : "border-slate-200 dark:border-slate-800 shadow-sm"
+                  }`}
+                >
+                  {/* Watermark Number */}
+                  <div
+                    className={`absolute -right-4 -bottom-10 text-[120px] font-black transition-colors duration-300 pointer-events-none tracking-tighter leading-none select-none ${
+                      isActive
+                        ? "text-primary-500/10 dark:text-primary-400/10"
+                        : "text-slate-100 dark:text-slate-800/40"
+                    }`}
+                  >
+                    {project.id}
+                  </div>
+
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-6">
+                      <div
+                        className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors duration-300 ${
+                          isActive
+                            ? "text-primary-600 dark:text-primary-400"
+                            : "text-slate-400 dark:text-slate-500"
+                        }`}
+                      >
+                        PROJECT {project.id}
+                      </div>
+                      <div
+                        className={`w-11 h-11 rounded-full flex items-center justify-center transition-colors duration-300 ${
+                          isActive
+                            ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900"
+                            : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+                        }`}
+                      >
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={`transition-transform duration-300 ${
+                            isActive ? "rotate-45" : ""
+                          }`}
+                        >
+                          <path d="M7 17l9.2-9.2M17 17V7H7" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    <h4 className="text-2xl md:text-3xl font-black tracking-tighter mb-2 text-slate-900 dark:text-white">
+                      {project.name}
+                    </h4>
+                    <div className="text-primary-600 dark:text-primary-400 text-xs font-bold tracking-wide uppercase mb-5">
+                      {project.subtitle}
+                    </div>
+
+                    <p className="text-slate-600 dark:text-slate-300 font-medium text-sm leading-relaxed mb-8 flex-1">
+                      {project.desc}
+                    </p>
+
+                    <div className="mt-auto">
+                      <div className="flex flex-wrap gap-2">
+                        {project.focus.map((f, i) => (
+                          <span
+                            key={i}
+                            className={`text-[10px] font-bold px-3 py-1.5 border rounded-full transition-colors duration-300 ${
+                              isActive
+                                ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white"
+                                : "bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700"
+                            }`}
+                          >
+                            {f}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
     </section>
   );
 }
-

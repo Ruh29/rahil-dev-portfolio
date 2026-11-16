@@ -1,374 +1,103 @@
-import React, { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Send, Mail, MapPin, Phone, Sparkles, CheckCircle, AlertCircle, Loader } from "lucide-react";
-import { Github, Linkedin } from "./CustomIcons";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import portfolioData from "../data/portfolioData";
-import { useTheme } from "../context/ThemeContext";
-import ScatterText from "./ScatterText";
 
 export default function Contact() {
-  const { personalInfo, socialLinks } = portfolioData;
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const { theme } = useTheme();
+  const containerRef = useRef(null);
+  const { personalInfo } = portfolioData;
 
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
-  const [focusedField, setFocusedField] = useState(null);
-
-  const handleChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-
-  const handleSubmit = (e) => {
-    setStatus("sending");
-    setTimeout(() => {
-      setStatus("success");
-      setForm({ name: "", email: "", subject: "", message: "" });
-    }, 1000);
-    setTimeout(() => setStatus("idle"), 6000);
-  };
-
-  const contactInfo = [
-    { icon: Mail, label: "Email", value: personalInfo.email, href: `mailto:${personalInfo.email}`, color: theme.primary },
-    { icon: MapPin, label: "Location", value: personalInfo.location, href: null, color: theme.secondary },
-    { icon: Phone, label: "Phone", value: personalInfo.phone, href: `tel:${personalInfo.phone}`, color: theme.accent },
-  ];
-
-  const fields = [
-    { name: "name", label: "Your Name", type: "text", placeholder: "Rahil Sheikh", span: 1 },
-    { name: "email", label: "Email Address", type: "email", placeholder: "hello@example.com", span: 1 },
-    { name: "subject", label: "Subject", type: "text", placeholder: "Project Collaboration", span: 2 },
-    { name: "message", label: "Message", type: "textarea", placeholder: "Tell me about your project or opportunity...", span: 2 },
-  ];
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".contact-card",
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="contact" className="section" style={{ position: "relative", overflow: "hidden" }}>
-      <div style={{
-        position: "absolute",
-        left: "10%",
-        bottom: "10%",
-        width: "400px",
-        height: "400px",
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(var(--color-cyan-rgb), 0.06), transparent 70%)",
-        filter: "blur(60px)",
-        pointerEvents: "none",
-      }} />
-
-      <div className="container">
-        {/* Header */}
-        <div ref={ref} style={{ textAlign: "center", marginBottom: "60px" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ type: "spring", stiffness: 100, damping: 12 }}
-            style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}
-          >
-            <div className="section-tag">
-              <ScatterText delay={0.05}>
-                <Sparkles size={12} style={{ display: "inline-block", marginRight: "6px", verticalAlign: "middle" }} />
-                Let's Connect
-              </ScatterText>
-            </div>
-          </motion.div>
-
-          <motion.h2
-            className="section-title"
-            style={{ textAlign: "center" }}
-            initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1 }}
-          >
-            <ScatterText delay={0.1}>Get In <span>Touch</span></ScatterText>
-          </motion.h2>
-
-          <motion.p
-            className="section-subtitle"
-            style={{ textAlign: "center", margin: "0 auto" }}
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
-          >
-            Have a project in mind, a job opportunity, or just want to say hi? I'd love to hear from you! 💌
-          </motion.p>
+    <section id="contact" ref={containerRef} className="relative w-full py-32 bg-white dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent_60%)] pointer-events-none"></div>
+      
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 md:mb-20">
+          <h2 className="text-sm font-bold tracking-[0.3em] uppercase text-primary-500 mb-6">
+            Let's Connect
+          </h2>
+          <h3 className="text-5xl md:text-7xl font-black tracking-tighter leading-tight mb-8">
+            Have a Project<br />in Mind?
+          </h3>
+          <p className="text-slate-500 dark:text-slate-400 text-lg md:text-xl font-light leading-relaxed">
+            Let's build something scalable and impactful together. I'm always open to discussing new opportunities, full-stack roles, and modern tech architectures.
+          </p>
         </div>
 
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1.6fr",
-          gap: "48px",
-          alignItems: "start",
-        }}
-          className="contact-grid"
-        >
-          {/* Left — Info panel */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ type: "spring", stiffness: 80, damping: 12, delay: 0.2 }}
-            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 contact-card">
+          <a
+            href={`mailto:${personalInfo.email}`}
+            className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm rounded-3xl p-8 hover:border-primary-500/50 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center"
           >
-            {/* Contact info cards */}
-            {contactInfo.map(({ icon: Icon, label, value, href, color }, i) => (
-              <motion.div
-                key={label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.3 + i * 0.1 }}
-                whileHover={{ x: 6, borderColor: `${color}40` }}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "14px",
-                  padding: "16px 20px",
-                  background: "var(--bg-card)",
-                  border: "1px solid var(--border-main)",
-                  borderRadius: "14px",
-                  cursor: href ? "pointer" : "default",
-                  transition: "all 0.3s ease",
-                  textDecoration: "none",
-                }}
-                as={href ? "a" : "div"}
-                href={href}
-              >
-                <div style={{
-                  width: "42px",
-                  height: "42px",
-                  borderRadius: "12px",
-                  background: `${color}12`,
-                  border: `1px solid ${color}30`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}>
-                  <Icon size={18} style={{ color }} />
-                </div>
-                <div>
-                  <div style={{ fontSize: "0.72rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
-                    {label}
-                  </div>
-                  <div style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)", marginTop: "2px" }}>
-                    {value}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-
-            {/* Social links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.6 }}
-              style={{
-                padding: "20px",
-                background: "var(--bg-card)",
-                border: "1px solid var(--border-main)",
-                borderRadius: "14px",
-              }}
-            >
-              <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "14px" }}>
-                Find me on
-              </div>
-              <div style={{ display: "flex", gap: "10px" }}>
-                {[
-                  { href: personalInfo.github, icon: Github, color: "#fff", label: "GitHub" },
-                  { href: personalInfo.linkedin, icon: Linkedin, color: "#0A66C2", label: "LinkedIn" },
-                  { href: `mailto:${personalInfo.email}`, icon: Mail, color: theme.primary, label: "Email" },
-                ].map(({ href, icon: Icon, color, label }) => (
-                  <motion.a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={label}
-                    style={{
-                      flex: 1,
-                      height: "44px",
-                      borderRadius: "10px",
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid var(--border-main)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "var(--text-secondary)",
-                      textDecoration: "none",
-                      transition: "all 0.3s ease",
-                    }}
-                    whileHover={{ scale: 1.08, borderColor: color, color }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Icon size={18} />
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Availability card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.7 }}
-              style={{
-                padding: "20px",
-                background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(var(--color-cyan-rgb), 0.06))",
-                border: "1px solid rgba(16,185,129,0.25)",
-                borderRadius: "14px",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-                <motion.div
-                  style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981" }}
-                  animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "#10b981" }}>
-                  Available for opportunities
-                </span>
-              </div>
-              <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
-                Open to full-time, part-time, freelance, and internship opportunities. Response within 24 hours!
-              </p>
-            </motion.div>
-          </motion.div>
-
-          {/* Right — Contact form */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ type: "spring", stiffness: 80, damping: 12, delay: 0.3 }}
-            style={{
-              padding: "36px",
-              background: "var(--bg-card)",
-              border: "1px solid var(--border-main)",
-              borderRadius: "24px",
-              backdropFilter: "blur(20px)",
-            }}
-          >
-            <div style={{ marginBottom: "28px" }}>
-              <h3 style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontWeight: 700,
-                fontSize: "1.3rem",
-                color: "var(--text-heading)",
-                marginBottom: "6px",
-              }}>
-                Send me a message ✉️
-              </h3>
-              <p style={{ fontSize: "0.87rem", color: "var(--text-secondary)" }}>
-                I'll get back to you as soon as possible.
-              </p>
+            <div className="w-16 h-16 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </div>
+            <div className="text-sm font-bold tracking-widest text-slate-400 uppercase mb-2">Email</div>
+            <div className="text-slate-900 dark:text-slate-100 font-medium break-all">{personalInfo.email}</div>
+          </a>
+          
+          <a
+            href={`tel:${personalInfo.phone}`}
+            className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm rounded-3xl p-8 hover:border-primary-500/50 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center"
+          >
+            <div className="w-16 h-16 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div className="text-sm font-bold tracking-widest text-slate-400 uppercase mb-2">Phone</div>
+            <div className="text-slate-900 dark:text-slate-100 font-medium">{personalInfo.phone}</div>
+          </a>
 
-            <form
-              action={`https://formsubmit.co/${personalInfo.email}`}
-              method="POST"
-              target="invisible-iframe"
-              onSubmit={handleSubmit}
-            >
-              {/* Custom FormSubmit configurations */}
-              <input type="hidden" name="_subject" value={`New Portfolio Lead: ${form.subject || 'Inquiry'}`} />
-              <input type="hidden" name="_template" value="box" />
-              <input 
-                type="hidden" 
-                name="_autoresponse" 
-                value={`Hi ${form.name || 'there'},
+          <a
+            href={personalInfo.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm rounded-3xl p-8 hover:border-primary-500/50 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center"
+          >
+            <div className="w-16 h-16 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div className="text-sm font-bold tracking-widest text-slate-400 uppercase mb-2">LinkedIn</div>
+            <div className="text-slate-900 dark:text-slate-100 font-medium">ruh-sheikh29</div>
+          </a>
 
-Thank you for reaching out to me! I have successfully received your inquiry about "${form.subject || 'Project collaboration'}".
-
-I am excited about potential opportunities and will review your message shortly. I'll get back to you within 24 hours.
-
-In the meantime, feel free to check out my GitHub (https://github.com/Ruh29) or connect on LinkedIn (https://www.linkedin.com/in/ruh-sheikh29/).
-
-Best regards,
-Rahil Sheikh
-MERN Stack Developer`}
-              />
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-                {fields.map(({ name, label, type, placeholder, span }) => (
-                  <div
-                    key={name}
-                    style={{ gridColumn: span === 2 ? "1 / -1" : "auto" }}
-                  >
-                    <label className="form-label">{label}</label>
-                    {type === "textarea" ? (
-                      <motion.textarea
-                        name={name}
-                        value={form[name]}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField(name)}
-                        onBlur={() => setFocusedField(null)}
-                        placeholder={placeholder}
-                        rows={5}
-                        className="form-input"
-                        required
-                        animate={focusedField === name ? { borderColor: "var(--color-cyan)" } : {}}
-                      />
-                    ) : (
-                      <motion.input
-                        name={name}
-                        type={type}
-                        value={form[name]}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField(name)}
-                        onBlur={() => setFocusedField(null)}
-                        placeholder={placeholder}
-                        className="form-input"
-                        required
-                        animate={focusedField === name ? { borderColor: "var(--color-cyan)" } : {}}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <motion.button
-                type="submit"
-                disabled={status === "sending" || status === "success"}
-                className="btn-primary"
-                style={{
-                  marginTop: "20px",
-                  width: "100%",
-                  justifyContent: "center",
-                  opacity: status === "success" ? 0.8 : 1,
-                }}
-                whileHover={status === "idle" ? { scale: 1.02 } : {}}
-                whileTap={status === "idle" ? { scale: 0.98 } : {}}
-              >
-                {status === "idle" && <><Send size={18} /><span>Send Message</span></>}
-                {status === "sending" && <><Loader size={18} style={{ animation: "spin-slow 1s linear infinite" }} /><span>Sending...</span></>}
-                {status === "success" && <><CheckCircle size={18} /><span>Message Sent! 🎉</span></>}
-                {status === "error" && <><AlertCircle size={18} /><span>Error — Try Again</span></>}
-              </motion.button>
-
-              {status === "success" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  style={{
-                    marginTop: "14px",
-                    padding: "12px 16px",
-                    background: "rgba(16,185,129,0.08)",
-                    border: "1px solid rgba(16,185,129,0.2)",
-                    borderRadius: "10px",
-                    fontSize: "0.85rem",
-                    color: "#10b981",
-                    textAlign: "center",
-                  }}
-                >
-                  Thanks for reaching out, Rahil will respond within 24 hours! 💌
-                </motion.div>
-              )}
-            </form>
-            <iframe name="invisible-iframe" style={{ display: "none" }} />
-          </motion.div>
+          <a
+            href={personalInfo.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm rounded-3xl p-8 hover:border-primary-500/50 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center"
+          >
+            <div className="w-16 h-16 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </div>
+            <div className="text-sm font-bold tracking-widest text-slate-400 uppercase mb-2">GitHub</div>
+            <div className="text-slate-900 dark:text-slate-100 font-medium break-all">github.com/Ruh29</div>
+          </a>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 900px) {
-          .contact-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </section>
   );
 }

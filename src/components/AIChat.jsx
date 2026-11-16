@@ -1,354 +1,260 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Bot, User, Mic, Send, MessageSquare, Mic2, HelpCircle, Loader2 } from "lucide-react";
+import { Send, Bot, User, Sparkles, Mic, MicOff, Loader2 } from "lucide-react";
+import Waves from "./Waves";
 import portfolioData from "../data/portfolioData";
 import { useTheme } from "../context/ThemeContext";
-import ScatterText from "./ScatterText";
 
 export default function AIChat() {
   const { personalInfo } = portfolioData;
-  const { theme } = useTheme();
+  const { mode } = useTheme();
 
-  // Dedicated responses for Rahil with Full Stack (React, Next.js, Node.js, PostgreSQL, TypeScript) experience
-  const chatbotConfig = {
-    welcomeMessage: "Hi! I'm Rahil's AI assistant. I can answer questions about his Full Stack experience (React, Next.js, Node.js, PostgreSQL, TypeScript), featured projects (Purple Learning, AI Product Auditor, Seek-N-Hire), and technical contributions. What would you like to know?",
-    quickQuestions: [
-      "Tell me about your full stack tech stack?",
-      "What are your featured AI & Web projects?",
-      "What is Purple Learning and Seek-N-Hire?",
-      "How do you approach real-time & database architecture?",
-      "How can I hire you?"
-    ],
-    responses: {
-      experience: "Rahil is a Full Stack Developer specializing in React, Next.js, Node.js, Express.js, PostgreSQL, TypeORM, and TypeScript. He builds production-ready AI platforms, recruitment systems, enterprise management tools, and mobile apps.",
-      skills: "His stack includes React, Next.js, TypeScript, Tailwind CSS, and React Native (Expo) on the frontend/mobile, and Node.js, Express.js, PostgreSQL, TypeORM, Redis, Socket.IO, and LiveKit on the backend.",
-      projects: "Rahil's top projects include: 1) Purple Learning - an AI-powered learning & mentorship platform (Next.js, PostgreSQL, LiveKit, Socket.IO). 2) AI Product Auditor - an AI-assisted product analysis tool generating actionable UX/performance reports. 3) Seek-N-Hire - an AI recruitment platform with sponsorship rotation & notifications. 4) PurpleSuite - an enterprise business management suite.",
-      certifications: "He holds certifications including MongoDB Certified Developer Associate and AWS Certified Solutions Architect, backing his expertise in database architecture and cloud applications.",
-      devops: "Rahil uses Docker, Vercel, and CI/CD pipelines to package and deploy full-stack applications with scalable database management using PostgreSQL, TypeORM, and Redis caching.",
-      education: "He completed Bachelor of Information Technology (2021-2025) at LNCT University, Indore, combined with hands-on experience in software engineering and production project delivery.",
-      career: "Rahil builds scalable full-stack products ranging from AI-powered learning platforms and recruitment systems to enterprise business applications and mobile-first experiences.",
-      contact: `You can reach Rahil via email at ${personalInfo.email}, or connect on LinkedIn (${personalInfo.linkedin}) and GitHub (${personalInfo.github}).`,
-      mongodb: "Rahil works with PostgreSQL, TypeORM, and MongoDB for structured schema design, complex query optimization, role-based permissions, and high-performance data processing.",
-      react: "Rahil is an expert in React, Next.js (SSR/App Router), TypeScript, and Tailwind CSS. He specializes in designing modern, responsive, recruiter-friendly interfaces with smooth micro-animations."
-    }
-  };
+  const quickPrompts = [
+    "Tell me about your tech stack",
+    "What is Purple Learning?",
+    "Real-time & DB architecture?",
+    "Are you available for hire?"
+  ];
 
   const [messages, setMessages] = useState([
     {
-      id: "msg-init",
-      text: chatbotConfig.welcomeMessage,
-      sender: "ai",
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      id: "1",
+      role: "agent",
+      content: `Hey there! 👋 I'm Rahil's AI assistant. Ask me anything about Rahil's full-stack work (React, Next.js, Node.js, PostgreSQL, TypeScript), featured projects (Purple Learning, AI Product Auditor, Seek-N-Hire), or his availability!`
     }
   ]);
-  const [inputValue, setInputValue] = useState("");
-  const [isThinking, setIsThinking] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
-  const [listeningPlaceholder, setListeningPlaceholder] = useState("Ask me anything about Rahil's skills...");
 
-  const chatMessagesBoxRef = useRef(null);
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
 
-  // Auto scroll to bottom
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
-    if (chatMessagesBoxRef.current) {
-      chatMessagesBoxRef.current.scrollTop = chatMessagesBoxRef.current.scrollHeight;
-    }
-  }, [messages, isThinking]);
+    scrollToBottom();
+  }, [messages, isTyping]);
 
-  // Clean up recognition
   useEffect(() => {
-    return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.abort();
-      }
-    };
-  }, []);
-
-  const processChatbotIntent = (input) => {
-    const raw = input.toLowerCase();
-    const responses = chatbotConfig.responses;
-
-    // Intent checks
-    if (raw.includes("experience") || raw.includes("work") || raw.includes("years") || raw.includes("year")) {
-      return responses.experience;
-    }
-    if (raw.includes("stack") || raw.includes("technologies") || raw.includes("skills") || raw.includes("frontend") || raw.includes("backend")) {
-      return responses.skills;
-    }
-    if (raw.includes("project") || raw.includes("portfolio") || raw.includes("demo") || raw.includes("develop")) {
-      return responses.projects;
-    }
-    if (raw.includes("certification") || raw.includes("cert") || raw.includes("aws") || raw.includes("kubernetes")) {
-      return responses.certifications;
-    }
-    if (raw.includes("devops") || raw.includes("pipeline") || raw.includes("docker") || raw.includes("terraform")) {
-      return responses.devops;
-    }
-    if (raw.includes("mongodb") || raw.includes("database") || raw.includes("nosql")) {
-      return responses.mongodb;
-    }
-    if (raw.includes("react") || raw.includes("next") || raw.includes("redux")) {
-      return responses.react;
-    }
-    if (raw.includes("education") || raw.includes("college") || raw.includes("university")) {
-      return responses.education;
-    }
-    if (raw.includes("hire") || raw.includes("opportunity") || raw.includes("available") || raw.includes("job")) {
-      return `Rahil is excited to explore new MERN stack opportunities! He specializes in scalable full-stack applications, real-time integrations, and cloud deployments on AWS. Drop him a message using the Contact Form at the bottom of the page, or email him directly at ${personalInfo.email}!`;
-    }
-    if (raw.includes("contact") || raw.includes("email") || raw.includes("linkedin") || raw.includes("reach")) {
-      return responses.contact;
-    }
-    if (raw.includes("hello") || raw.includes("hi") || raw.includes("hey")) {
-      return "Hello! I'm here to share insights on Rahil's full-stack qualifications. You can ask me about his MERN stack skills, certifications, projects, devops experience, or career path. What would you like to know?";
-    }
-
-    // Default response
-    return "That is a great question! Rahil specializes in designing highly scalable, secure, and clean web systems utilizing the MERN stack integrated with modern cloud ecosystems. Would you like me to elaborate on his frontend React skills, backend microservices, or MongoDB optimizations?";
-  };
-
-  const handleSendMessage = (textToSend = inputValue) => {
-    const text = textToSend.trim();
-    if (!text) return;
-
-    // Append user message
-    const userMsg = {
-      id: `msg-user-${Date.now()}`,
-      text: text,
-      sender: "user",
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-    };
-    setMessages((prev) => [...prev, userMsg]);
-    setInputValue("");
-
-    // Simulate thinking state
-    setIsThinking(true);
-
-    setTimeout(() => {
-      setIsThinking(false);
-      const replyText = processChatbotIntent(text);
-      const aiReply = {
-        id: `msg-ai-${Date.now()}`,
-        text: replyText,
-        sender: "ai",
-        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-      };
-      setMessages((prev) => [...prev, aiReply]);
-    }, 800 + Math.random() * 600);
-  };
-
-  const handleQuickChipClick = (qText) => {
-    handleSendMessage(qText);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && inputValue.trim() !== "") {
-      handleSendMessage();
-    }
-  };
-
-  const handleVoiceToggle = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    if (!SpeechRecognition) {
-      alert("Voice recognition is not supported in this browser. Please try on Google Chrome or Safari!");
-      return;
-    }
-
-    if (isRecording) {
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-      setIsRecording(false);
-    } else {
+    if (SpeechRecognition) {
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
       recognition.lang = "en-US";
 
-      recognition.onstart = () => {
-        setIsRecording(true);
-        setListeningPlaceholder("Listening...");
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setInput(transcript);
+        setIsListening(false);
       };
 
-      recognition.onresult = (e) => {
-        const text = e.results[0][0].transcript;
-        setIsRecording(false);
-        setListeningPlaceholder("Ask me anything about Rahil's skills...");
-        handleSendMessage(text);
-      };
-
-      recognition.onerror = () => {
-        setIsRecording(false);
-        setListeningPlaceholder("Ask me anything about Rahil's skills...");
-      };
-
-      recognition.onend = () => {
-        setIsRecording(false);
-        setListeningPlaceholder("Ask me anything about Rahil's skills...");
-      };
+      recognition.onerror = () => setIsListening(false);
+      recognition.onend = () => setIsListening(false);
 
       recognitionRef.current = recognition;
-      recognition.start();
+    }
+  }, []);
+
+  const toggleListening = () => {
+    if (!recognitionRef.current) return;
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      setIsListening(true);
+      recognitionRef.current.start();
     }
   };
 
-  return (
-    <section id="ai-chat" className="section" style={{ position: "relative", overflow: "hidden" }}>
-      <div className="grid-bg" style={{ opacity: 0.5 }} />
+  const generateResponse = (userMessage) => {
+    const text = userMessage.toLowerCase();
 
-      <div className="container">
+    if (text.includes("hi") || text.includes("hello") || text.includes("hey")) {
+      return "Hello! Great to meet you. What would you like to know about Rahil's engineering background or full-stack projects?";
+    }
+
+    if (text.includes("stack") || text.includes("tech") || text.includes("skills") || text.includes("technologies")) {
+      return "Rahil's core stack covers React.js, Next.js (SSR/App Router), TypeScript, Tailwind CSS, and React Native (Expo) on frontend/mobile, and Node.js, Express.js, PostgreSQL, TypeORM, Redis caching, and WebSockets (Socket.IO, LiveKit) on the backend.";
+    }
+
+    if (text.includes("purple learning") || text.includes("learning")) {
+      return "Purple Learning is an enterprise-grade AI-powered learning and mentorship platform built with Next.js, Node.js, PostgreSQL, TypeORM, Redis, Socket.IO, and LiveKit. Rahil architected real-time sessions, role management, and scalable backend workflows.";
+    }
+
+    if (text.includes("project") || text.includes("auditor") || text.includes("seek") || text.includes("portfolio")) {
+      return "Rahil has delivered 10+ live projects! Highlights include: 1) Purple Learning (AI learning platform), 2) AI Product Auditor (automated UX/performance inspection reports), 3) Seek-N-Hire (recruitment & hiring platform with sponsorship workflows), and 4) PurpleSuite (enterprise ERP suite).";
+    }
+
+    if (text.includes("database") || text.includes("real-time") || text.includes("architecture") || text.includes("backend")) {
+      return "For databases, Rahil designs structured relational schemas with PostgreSQL and TypeORM migrations, as well as MongoDB. He uses Redis for high-speed caching and session states, and Socket.IO/LiveKit for real-time video and streaming events.";
+    }
+
+    if (text.includes("experience") || text.includes("work") || text.includes("job") || text.includes("company")) {
+      return "Rahil has 1.5+ years of full-stack experience. Currently at PurpleSky Infotech as Full Stack & Application Developer working on enterprise platforms, and previously completed a 6-month frontend internship at LogiQlink Technologies.";
+    }
+
+    if (text.includes("education") || text.includes("college") || text.includes("degree")) {
+      return "Rahil completed his Bachelor of Information Technology from LNCT University, Indore (2021-2025). He also holds AWS Certified Solutions Architect and MongoDB Certified Developer Associate credentials.";
+    }
+
+    if (text.includes("hire") || text.includes("available") || text.includes("contact") || text.includes("email") || text.includes("phone")) {
+      return `Rahil is available for high-impact full-stack and mobile roles! You can email him at ${personalInfo.email}, call ${personalInfo.phone}, or connect on LinkedIn (in/ruh-sheikh29).`;
+    }
+
+    return "That's a great question! Rahil's engineering focus is on building resilient, scalable web and mobile applications with Next.js, React, Node.js, and PostgreSQL. Feel free to connect directly via the Contact section below!";
+  };
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    if (!input.trim() || isTyping) return;
+
+    const userText = input.trim();
+    setInput("");
+    const userMsg = { id: Date.now().toString(), role: "user", content: userText };
+    setMessages((prev) => [...prev, userMsg]);
+    setIsTyping(true);
+
+    setTimeout(() => {
+      const botResponse = generateResponse(userText);
+      const agentMsg = {
+        id: (Date.now() + 1).toString(),
+        role: "agent",
+        content: botResponse
+      };
+      setMessages((prev) => [...prev, agentMsg]);
+      setIsTyping(false);
+    }, 600);
+  };
+
+  const handleQuickPrompt = (prompt) => {
+    setInput(prompt);
+  };
+
+  const waveColor = mode === "dark" ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.08)";
+
+  return (
+    <section id="ai-chat" className="relative w-full py-28 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
+      {/* Dynamic interactive waves in background */}
+      <Waves lineColor={waveColor} />
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "50px" }}>
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
-            <div className="section-tag">
-              <ScatterText delay={0.05}>
-                <Sparkles size={12} style={{ display: "inline-block", marginRight: "6px", verticalAlign: "middle" }} />
-                AI Chat Assistant
-              </ScatterText>
-            </div>
+        <div className="flex flex-col items-center text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-600 dark:text-primary-400 text-xs font-black tracking-widest uppercase mb-4 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5" />
+            AI Interactive Assistant
           </div>
-          <h2 className="section-title">
-            <ScatterText delay={0.1}>Ask My <span>AI Assistant</span></ScatterText>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-4">
+            Ask My Digital Clone.
           </h2>
-          <p className="section-subtitle" style={{ maxWidth: "600px", margin: "0 auto" }}>
-            Interact with my custom AI chatbot to instantaneously explore details about my full-stack capabilities, cloud deployments, and professional milestones.
+          <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg max-w-xl font-medium">
+            Explore Rahil's full-stack stack, architecture choices, real-time modules, and project milestones in real-time.
           </p>
         </div>
 
-        <div className="ai-layout-container" style={{
-          background: "var(--bg-card)",
-          border: "1px solid var(--border-main)",
-          borderRadius: "24px",
-          backdropFilter: "blur(20px)",
-        }}>
-          <div className="chat-panel-container">
-            {/* Quick Suggestions */}
-            <div className="chat-header-quick-queries">
-              <h4 style={{ color: "var(--text-secondary)", fontWeight: 600, display: "flex", alignItems: "center", gap: "6px" }}>
-                <Sparkles size={14} style={{ color: "var(--color-cyan)" }} />
-                <span>Quick Inquiries</span>
-              </h4>
-              <div className="quick-chips-wrap" style={{ marginTop: "10px" }}>
-                {chatbotConfig.quickQuestions.map((q, idx) => (
-                  <button
-                    key={idx}
-                    className="quick-chip"
-                    onClick={() => handleQuickChipClick(q)}
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Chat Messages */}
-            <div 
-              className="chat-messages-container" 
-              ref={chatMessagesBoxRef}
-              style={{ maxHeight: "320px" }}
-            >
+        {/* Chat Container */}
+        <div className="glass-panel bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[560px]">
+          {/* Messages Box */}
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 custom-scrollbar">
+            <AnimatePresence initial={false}>
               {messages.map((msg) => (
-                <div 
+                <motion.div
                   key={msg.id}
-                  className={`chat-bubble-row ${msg.sender === "user" ? "chat-bubble-row-user" : "chat-bubble-row-ai"}`}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className={`flex items-start gap-3 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
                 >
-                  <div className="chat-bubble-wrapper">
-                    <div className="chat-avatar" style={{
-                      background: msg.sender === "user" 
-                        ? `linear-gradient(135deg, ${theme.primary} 0%, ${theme.primary}CC 100%)` 
-                        : `linear-gradient(135deg, ${theme.secondary} 0%, ${theme.accent} 100%)`
-                    }}>
-                      {msg.sender === "user" ? <User size={16} /> : <Bot size={16} />}
-                    </div>
-                    <div>
-                      <div className="chat-bubble-text-box" style={{
-                        background: msg.sender === "user"
-                          ? `linear-gradient(90deg, ${theme.primary} 0%, ${theme.secondary} 100%)`
-                          : "var(--bg-card)",
-                        border: msg.sender === "user" ? "none" : "1px solid var(--border-main)",
-                        color: msg.sender === "user"
-                          ? (["cyberpunk", "aurora", "matrix", "gold"].includes(theme.id) ? "#000000" : "#ffffff")
-                          : "var(--text-primary)"
-                      }}>
-                        <p style={{ margin: 0 }}>{msg.text}</p>
-                      </div>
-                      <div className="chat-bubble-time" style={{ color: "var(--text-muted)", fontSize: "0.68rem" }}>{msg.time}</div>
-                    </div>
+                  <div
+                    className={`w-9 h-9 rounded-2xl flex items-center justify-center shrink-0 shadow-sm ${
+                      msg.role === "user"
+                        ? "bg-primary-600 text-white"
+                        : "bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200"
+                    }`}
+                  >
+                    {msg.role === "user" ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                   </div>
-                </div>
+
+                  <div
+                    className={`max-w-[80%] sm:max-w-[70%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                      msg.role === "user"
+                        ? "bg-primary-600 text-white rounded-tr-sm shadow-md"
+                        : "bg-white dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 rounded-tl-sm border border-slate-200/80 dark:border-slate-700/80 shadow-sm"
+                    }`}
+                  >
+                    {msg.content}
+                  </div>
+                </motion.div>
               ))}
+            </AnimatePresence>
 
-              {isThinking && (
-                <div className="chat-bubble-row chat-bubble-row-ai">
-                  <div className="chat-bubble-wrapper">
-                    <div className="chat-avatar" style={{ background: `linear-gradient(135deg, ${theme.secondary} 0%, ${theme.accent} 100%)` }}>
-                      <Bot size={16} />
-                    </div>
-                    <div className="chat-bubble-text-box" style={{
-                      background: "var(--bg-card)",
-                      border: "1px solid var(--border-main)",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "4px",
-                      padding: "14px 20px"
-                    }}>
-                      <span className="dot-bounce"></span>
-                      <span className="dot-bounce"></span>
-                      <span className="dot-bounce"></span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Input Toolbar */}
-            <div className="chat-input-toolbar" style={{ borderTop: "1px solid var(--border-main)" }}>
-              <div className="chat-input-wrap">
-                <input 
-                  type="text" 
-                  placeholder={listeningPlaceholder}
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                />
-                <button 
-                  className={`chat-voice-btn ${isRecording ? "recording" : ""}`} 
-                  title="Speak question"
-                  onClick={handleVoiceToggle}
-                >
-                  <Mic size={16} />
-                </button>
-              </div>
-              <button 
-                className="btn-send"
-                disabled={inputValue.trim() === ""}
-                onClick={() => handleSendMessage()}
+            {isTyping && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 text-slate-400 text-xs font-semibold py-2 px-3"
               >
-                <Send size={16} />
-              </button>
-            </div>
-          </div>
-        </div>
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-primary-500" />
+                Rahil's AI is typing...
+              </motion.div>
+            )}
 
-        {/* Highlights */}
-        <div className="ai-highlights-grid">
-          <div className="ai-highlight-card">
-            <MessageSquare size={24} />
-            <h3>Natural Chat</h3>
-            <p>Converse seamlessly regarding technical frameworks, deployment systems, and career directions.</p>
+            <div ref={messagesEndRef} />
           </div>
-          <div className="ai-highlight-card">
-            <Mic2 size={24} />
-            <h3>Voice Input</h3>
-            <p>Utilize integrated high-performance Web Speech APIs to submit verbal queries directly.</p>
+
+          {/* Quick Prompts */}
+          <div className="px-4 py-2 bg-slate-100/50 dark:bg-slate-900/50 border-t border-slate-200/60 dark:border-slate-800/60 overflow-x-auto no-scrollbar flex items-center gap-2">
+            {quickPrompts.map((prompt, idx) => (
+              <button
+                key={idx}
+                onClick={() => handleQuickPrompt(prompt)}
+                className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors shadow-xs cursor-pointer shrink-0"
+              >
+                {prompt}
+              </button>
+            ))}
           </div>
-          <div className="ai-highlight-card">
-            <HelpCircle size={24} />
-            <h3>Instant Answers</h3>
-            <p>Acquire optimized answers instantly without network or server processing latency.</p>
-          </div>
+
+          {/* Input Form */}
+          <form
+            onSubmit={handleSend}
+            className="p-3 sm:p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2"
+          >
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask anything about Rahil's full-stack experience..."
+              className="flex-1 bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-primary-500/50"
+            />
+
+            {recognitionRef.current && (
+              <button
+                type="button"
+                onClick={toggleListening}
+                className={`p-3 rounded-2xl transition-all cursor-pointer ${
+                  isListening
+                    ? "bg-rose-500 text-white animate-pulse"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary-500"
+                }`}
+                title="Voice Input"
+              >
+                {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+              </button>
+            )}
+
+            <button
+              type="submit"
+              disabled={!input.trim() || isTyping}
+              className="p-3 rounded-2xl bg-primary-600 hover:bg-primary-700 disabled:opacity-40 disabled:hover:bg-primary-600 text-white font-bold transition-all shadow-md cursor-pointer"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
         </div>
       </div>
     </section>
