@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 export const THEME_COLORS = [
-  { name: "violet", label: "Violet", hex: "#8b5cf6" },
+  { name: "monochrome", label: "Monochrome", hex: "#0f172a" },
   { name: "blue", label: "Blue", hex: "#3b82f6" },
+  { name: "violet", label: "Violet", hex: "#8b5cf6" },
   { name: "emerald", label: "Emerald", hex: "#10b981" },
   { name: "rose", label: "Rose", hex: "#f43f5e" },
   { name: "amber", label: "Amber", hex: "#f59e0b" },
@@ -12,7 +13,7 @@ const ThemeContext = createContext(undefined);
 
 export function ThemeProvider({ children }) {
   const [mode, setMode] = useState("dark");
-  const [color, setColor] = useState("violet");
+  const [color, setColor] = useState("monochrome");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

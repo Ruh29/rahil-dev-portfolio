@@ -66,7 +66,7 @@ export default function Hero({ onOpenResume }) {
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-[92svh] md:min-h-screen bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-white overflow-hidden flex flex-col font-sans transition-colors duration-500 selection:bg-slate-900 selection:text-white"
+      className="relative min-h-[92svh] md:min-h-screen bg-[#F8F9FA] dark:bg-[#070b14] text-slate-900 dark:text-white overflow-hidden flex flex-col font-sans transition-colors duration-500 selection:bg-slate-900 selection:text-white"
     >
       {/* Top Header */}
       <header
@@ -74,12 +74,12 @@ export default function Hero({ onOpenResume }) {
         className="w-full flex items-center justify-between px-5 py-5 sm:px-8 sm:py-6 md:px-12 md:py-8 z-50 absolute top-0 left-0 right-0 opacity-0"
       >
         <div className="text-xl md:text-2xl font-black tracking-tighter uppercase cursor-pointer hover:opacity-75 transition-opacity">
-          RAHIL<span className="text-primary-500">.</span>
+          RAHIL<span className="text-black dark:text-white">.</span>
         </div>
 
         <button
           onClick={onOpenResume}
-          className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3.5 rounded-full text-[10px] sm:text-xs font-bold tracking-[0.2em] hover:bg-primary-600 hover:text-white dark:hover:bg-primary-500 dark:hover:text-white hover:shadow-xl hover:shadow-primary-500/25 transition-all duration-300 uppercase cursor-pointer active:scale-95"
+          className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3.5 rounded-full text-[10px] sm:text-xs font-bold tracking-[0.2em] hover:opacity-85 transition-all duration-300 uppercase cursor-pointer active:scale-95 shadow-sm"
         >
           Download CV
         </button>
@@ -117,7 +117,7 @@ export default function Hero({ onOpenResume }) {
           <img
             src={heroImg}
             alt="Rahil Sheikh - Full Stack Developer"
-            className="h-full w-auto max-w-[92vw] sm:max-w-[80vw] md:max-w-none object-contain object-bottom drop-shadow-[0_20px_30px_rgba(0,0,0,0.25)] dark:drop-shadow-[0_20px_35px_rgba(0,0,0,0.65)]"
+            className="h-full w-auto max-w-[92vw] sm:max-w-[80vw] md:max-w-none object-contain object-bottom drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_20px_35px_rgba(0,0,0,0.6)]"
             style={{
               maxHeight: "82vh",
             }}

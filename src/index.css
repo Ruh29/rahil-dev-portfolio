@@ -17,17 +17,38 @@
   --background: #f8fafc;
   --foreground: #0f172a;
 
-  /* Default violet */
-  --primary-50: #f5f3ff;
-  --primary-100: #ede9fe;
-  --primary-500: #8b5cf6;
-  --primary-600: #7c3aed;
-  --primary-900: #4c1d95;
+  /* Default clean monochrome */
+  --primary-50: #f8fafc;
+  --primary-100: #f1f5f9;
+  --primary-500: #0f172a;
+  --primary-600: #020617;
+  --primary-900: #000000;
 }
 
 :root.dark {
   --background: #0b0f19;
   --foreground: #f8fafc;
+  --primary-50: #1e293b;
+  --primary-100: #334155;
+  --primary-500: #f8fafc;
+  --primary-600: #ffffff;
+  --primary-900: #ffffff;
+}
+
+:root[data-color="monochrome"] {
+  --primary-50: #f8fafc;
+  --primary-100: #f1f5f9;
+  --primary-500: #0f172a;
+  --primary-600: #020617;
+  --primary-900: #000000;
+}
+
+:root.dark[data-color="monochrome"] {
+  --primary-50: #1e293b;
+  --primary-100: #334155;
+  --primary-500: #f8fafc;
+  --primary-600: #ffffff;
+  --primary-900: #ffffff;
 }
 
 :root[data-color="violet"] {

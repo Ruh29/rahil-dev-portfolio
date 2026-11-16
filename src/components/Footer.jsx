@@ -26,7 +26,7 @@ export default function Footer() {
           
           <div className="text-center md:text-left">
             <h2 className="text-2xl font-black tracking-tighter mb-1">
-              RAHIL SHEIKH<span className="text-primary-500">.</span>
+              RAHIL SHEIKH<span className="text-white">.</span>
             </h2>
             <div className="text-slate-400 font-medium text-sm mb-2">
               Full Stack Developer

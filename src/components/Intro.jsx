@@ -35,20 +35,19 @@ export default function Intro() {
       ref={containerRef}
       className="w-full py-24 md:py-32 bg-white dark:bg-[#070b14] text-slate-900 dark:text-white overflow-hidden relative z-10 transition-colors duration-500"
     >
-      {/* Interactive Background Grid */}
+      {/* Interactive Background Grid - Clean Neutral Monochrome */}
       <div className="absolute inset-0 z-0">
         <CursorGrid
-          cellSize={120}
-          color="#8b5cf6"
-          radius={200}
+          cellSize={100}
+          color="#000000"
+          radius={180}
           falloff="smooth"
-          holdTime={400}
-          fadeDuration={800}
-          lineWidth={1.5}
-          maxOpacity={0.8}
-          fillOpacity={0.05}
-          gridOpacity={0.08}
-          cellRadius={0}
+          holdTime={300}
+          fadeDuration={600}
+          lineWidth={1.2}
+          maxOpacity={0.6}
+          fillOpacity={0.03}
+          gridOpacity={0.05}
           clickPulse={true}
           pulseSpeed={600}
         />
@@ -58,7 +57,7 @@ export default function Intro() {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 pointer-events-none">
           {/* Left: Experience Badge */}
           <div className="flex-shrink-0 reveal-item relative z-20 pointer-events-auto">
-            <div className="relative group w-48 h-48 lg:w-56 lg:h-56 rounded-full border border-slate-800 dark:border-slate-700 flex flex-col items-center justify-center overflow-hidden cursor-default bg-black shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_-20px_rgba(139,92,246,0.3)] transition-all duration-500">
+            <div className="relative group w-48 h-48 lg:w-56 lg:h-56 rounded-full border border-slate-800 dark:border-slate-700 flex flex-col items-center justify-center overflow-hidden cursor-default bg-black shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)] transition-all duration-500">
               <div className="absolute top-0 left-0 w-12 h-12 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 scale-0 group-hover:scale-[15] transition-transform duration-700 ease-out z-0 origin-center"></div>
               <div className="relative z-10 flex flex-col items-center text-center">
                 <span className="text-5xl lg:text-7xl font-black text-white group-hover:text-black transition-colors duration-300">
@@ -74,7 +73,7 @@ export default function Intro() {
           {/* Center: Text Content */}
           <div className="flex-1 flex flex-col gap-6 lg:gap-8 text-slate-900 dark:text-slate-100 text-lg md:text-xl lg:text-2xl font-bold leading-relaxed text-center px-4 lg:px-8">
             <p className="reveal-item">
-              I'm a <span className="text-primary-600 dark:text-primary-400">Full Stack Developer</span> with 1.5+ years of experience building scalable, responsive and production-ready web applications.
+              I'm a <span className="text-black dark:text-white font-black underline decoration-slate-400 dark:decoration-slate-600 underline-offset-4">Full Stack Developer</span> with 1.5+ years of experience building scalable, responsive and production-ready web applications.
             </p>
             <p className="reveal-item">
               I specialize in React.js, Next.js, TypeScript, Tailwind CSS and Node.js, with hands-on expertise in REST APIs, PostgreSQL, Redis, real-time communication with Socket.IO & LiveKit, and modular component architecture.
@@ -86,7 +85,7 @@ export default function Intro() {
 
           {/* Right: Projects Badge */}
           <div className="flex-shrink-0 reveal-item relative z-20 pointer-events-auto">
-            <div className="relative group w-48 h-48 lg:w-56 lg:h-56 rounded-full border border-slate-800 dark:border-slate-700 flex flex-col items-center justify-center overflow-hidden cursor-default bg-black shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_50px_-20px_rgba(139,92,246,0.3)] transition-all duration-500">
+            <div className="relative group w-48 h-48 lg:w-56 lg:h-56 rounded-full border border-slate-800 dark:border-slate-700 flex flex-col items-center justify-center overflow-hidden cursor-default bg-black shadow-[0_10px_40px_-15px_rgba(0,0,0,0.3)] transition-all duration-500">
               <div className="absolute top-0 left-0 w-12 h-12 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 scale-0 group-hover:scale-[15] transition-transform duration-700 ease-out z-0 origin-center"></div>
               <div className="relative z-10 flex flex-col items-center text-center">
                 <span className="text-5xl lg:text-7xl font-black text-white group-hover:text-black transition-colors duration-300">

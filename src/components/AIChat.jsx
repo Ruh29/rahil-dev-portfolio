@@ -137,18 +137,18 @@ export default function AIChat() {
   const waveColor = mode === "dark" ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.08)";
 
   return (
-    <section id="ai-chat" className="relative w-full py-28 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300">
+    <section id="ai-chat" className="relative w-full py-28 bg-[#F8F9FA] dark:bg-[#070b14] text-slate-900 dark:text-white overflow-hidden transition-colors duration-500">
       {/* Dynamic interactive waves in background */}
       <Waves lineColor={waveColor} />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-600 dark:text-primary-400 text-xs font-black tracking-widest uppercase mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-black tracking-widest uppercase mb-4 shadow-xs">
             <Sparkles className="w-3.5 h-3.5" />
             AI Interactive Assistant
           </div>
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-4">
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-4 text-black dark:text-white">
             Ask My Digital Clone.
           </h2>
           <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg max-w-xl font-medium">
@@ -157,7 +157,7 @@ export default function AIChat() {
         </div>
 
         {/* Chat Container */}
-        <div className="glass-panel bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[560px]">
+        <div className="glass-panel bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-3xl shadow-xl overflow-hidden flex flex-col h-[560px]">
           {/* Messages Box */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 custom-scrollbar">
             <AnimatePresence initial={false}>
@@ -172,7 +172,7 @@ export default function AIChat() {
                   <div
                     className={`w-9 h-9 rounded-2xl flex items-center justify-center shrink-0 shadow-sm ${
                       msg.role === "user"
-                        ? "bg-primary-600 text-white"
+                        ? "bg-black dark:bg-white text-white dark:text-black"
                         : "bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200"
                     }`}
                   >
@@ -182,7 +182,7 @@ export default function AIChat() {
                   <div
                     className={`max-w-[80%] sm:max-w-[70%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                       msg.role === "user"
-                        ? "bg-primary-600 text-white rounded-tr-sm shadow-md"
+                        ? "bg-black dark:bg-white text-white dark:text-black rounded-tr-sm shadow-md"
                         : "bg-white dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 rounded-tl-sm border border-slate-200/80 dark:border-slate-700/80 shadow-sm"
                     }`}
                   >
@@ -198,7 +198,7 @@ export default function AIChat() {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex items-center gap-2 text-slate-400 text-xs font-semibold py-2 px-3"
               >
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-primary-500" />
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-black dark:text-white" />
                 Rahil's AI is typing...
               </motion.div>
             )}
@@ -212,7 +212,7 @@ export default function AIChat() {
               <button
                 key={idx}
                 onClick={() => handleQuickPrompt(prompt)}
-                className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors shadow-xs cursor-pointer shrink-0"
+                className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-colors shadow-xs cursor-pointer shrink-0"
               >
                 {prompt}
               </button>
@@ -229,7 +229,7 @@ export default function AIChat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask anything about Rahil's full-stack experience..."
-              className="flex-1 bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-primary-500/50"
+              className="flex-1 bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20"
             />
 
             {recognitionRef.current && (
@@ -239,7 +239,7 @@ export default function AIChat() {
                 className={`p-3 rounded-2xl transition-all cursor-pointer ${
                   isListening
                     ? "bg-rose-500 text-white animate-pulse"
-                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary-500"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white"
                 }`}
                 title="Voice Input"
               >
@@ -250,7 +250,7 @@ export default function AIChat() {
             <button
               type="submit"
               disabled={!input.trim() || isTyping}
-              className="p-3 rounded-2xl bg-primary-600 hover:bg-primary-700 disabled:opacity-40 disabled:hover:bg-primary-600 text-white font-bold transition-all shadow-md cursor-pointer"
+              className="p-3 rounded-2xl bg-black dark:bg-white hover:opacity-85 disabled:opacity-40 text-white dark:text-black font-bold transition-all shadow-md cursor-pointer"
             >
               <Send className="w-4 h-4" />
             </button>

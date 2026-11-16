@@ -98,14 +98,14 @@ export default function SkillsGrid() {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
-      {/* Category Filter Pills for Quick Browsing */}
+      {/* Category Filter Pills - Strict Monochrome Black & White */}
       <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-12 sm:mb-16">
         <button
           onClick={() => setActiveTab("all")}
           className={`px-4 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
             activeTab === "all"
-              ? "bg-primary-600 text-white shadow-md shadow-primary-500/25 scale-105"
-              : "bg-white/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800"
+              ? "bg-black text-white dark:bg-white dark:text-black shadow-md scale-105"
+              : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white border border-slate-200 dark:border-slate-800"
           }`}
         >
           All Skills
@@ -116,8 +116,8 @@ export default function SkillsGrid() {
             onClick={() => setActiveTab(cat.id)}
             className={`px-4 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
               activeTab === cat.id
-                ? "bg-primary-600 text-white shadow-md shadow-primary-500/25 scale-105"
-                : "bg-white/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800"
+                ? "bg-black text-white dark:bg-white dark:text-black shadow-md scale-105"
+                : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white border border-slate-200 dark:border-slate-800"
             }`}
           >
             {cat.title}
@@ -125,14 +125,14 @@ export default function SkillsGrid() {
         ))}
       </div>
 
-      {/* Categorized Cards Grid */}
+      {/* Categorized Cards Grid - Strict Monochrome Black & White */}
       <div className="space-y-12 sm:space-y-16">
         {displayedCategories.map((category) => (
           <div key={category.id} className="flex flex-col items-center">
             {/* Category Header */}
             <div className="flex items-center gap-3 mb-6 sm:mb-8">
               <span className="w-8 sm:w-12 h-px bg-slate-300 dark:bg-slate-700"></span>
-              <h4 className="text-xs sm:text-sm font-black tracking-[0.25em] uppercase text-primary-600 dark:text-primary-400 px-4 py-1.5 rounded-full bg-primary-50 dark:bg-primary-950/40 border border-primary-500/20 shadow-xs">
+              <h4 className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-slate-700 dark:text-slate-300 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
                 {category.title}
               </h4>
               <span className="w-8 sm:w-12 h-px bg-slate-300 dark:bg-slate-700"></span>
@@ -145,15 +145,15 @@ export default function SkillsGrid() {
                 return (
                   <div
                     key={sIdx}
-                    className="group relative rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 transform-gpu hover:-translate-y-1.5 hover:shadow-xl bg-white/70 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 hover:border-primary-500/60 dark:hover:border-primary-400/60"
+                    className="group relative rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 transform-gpu hover:-translate-y-1.5 hover:shadow-xl bg-white dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/90 dark:border-slate-800/90 hover:border-black/50 dark:hover:border-white/50"
                   >
                     {/* Icon container */}
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-primary-500/10 text-primary-600 dark:text-primary-400 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-primary-600 group-hover:text-white transition-all duration-300 shadow-xs">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all duration-300 shadow-xs">
                       <Icon className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2} />
                     </div>
 
                     {/* Skill Name */}
-                    <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 tracking-tight leading-snug group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                    <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 tracking-tight leading-snug group-hover:text-black dark:group-hover:text-white transition-colors">
                       {skill}
                     </span>
                   </div>

@@ -23,56 +23,56 @@ const rahilProjects = [
     id: "03",
     name: "Seek-N-Hire",
     subtitle: "Recruitment & Job Management Platform",
-    desc: "AI recruitment platform with candidate workflows, sponsorship rotation, real-time Socket.IO notifications, and RBAC permissions.",
-    focus: ["React.js", "Node.js", "Express.js", "PostgreSQL", "Socket.IO"],
+    desc: "Scalable recruitment workflow platform with candidate pipelines, sponsorship rotation, and granular role-based permissions.",
+    focus: ["React", "Express.js", "PostgreSQL", "TypeORM"],
     link: "https://seek-n-hire-api.purpleagentic.in/",
   },
   {
     id: "04",
     name: "PurpleSuite",
-    subtitle: "Enterprise Business Management Suite",
-    desc: "Lead, client, sales, proposal, quotation, purchase order, and advanced reporting workflows with high-volume relational schemas.",
-    focus: ["React.js", "TypeScript", "Node.js", "PostgreSQL", "TypeORM"],
+    subtitle: "Enterprise Business Management ERP",
+    desc: "Unified business suite featuring BOQ proposals, quotation generation, automated invoice PDF pipelines, and date-range operational reporting.",
+    focus: ["React", "TypeScript", "PostgreSQL", "TypeORM"],
     link: "https://purplesuite-staging.purpleagentic.in/",
   },
   {
     id: "05",
     name: "PurpleHire",
-    subtitle: "AI Mock Interview & Speech Coach",
-    desc: "Mobile interview prep application with dynamic technical mock interviews, voice capture pipelines, and automated performance insights.",
-    focus: ["React Native", "Expo", "AI Integration", "Node.js", "REST APIs"],
+    subtitle: "AI Interview Coach Mobile App",
+    desc: "Cross-platform mobile application conducting voice-based mock interviews with speech-to-text feedback and answer analysis.",
+    focus: ["React Native", "Expo", "Node.js", "AI APIs"],
     link: "#",
   },
   {
     id: "06",
     name: "FitZo",
-    subtitle: "Fitness & Nutrition Mobile Ecosystem",
-    desc: "Personalized fitness application with multi-step onboarding profiling, macro calculations, and offline-first state synchronization.",
-    focus: ["React Native", "TypeScript", "Zustand", "Express.js"],
+    subtitle: "Fitness & Macro Nutrition Mobile App",
+    desc: "Mobile fitness app with multi-step health onboarding, BMR calorie calculators, personalized workout splits, and hydration tracking.",
+    focus: ["React Native", "TypeScript", "Node.js", "Zustand"],
     link: "#",
   },
   {
     id: "07",
     name: "Fleet Management App",
-    subtitle: "Field Logistics & Tracking",
-    desc: "Cross-platform mobile application powering fleet operations, location-based GPS workflows, and real-time operational data handling.",
-    focus: ["React Native", "Expo", "PostgreSQL", "REST APIs"],
+    subtitle: "Cross-Platform Field Logistics Mobile App",
+    desc: "Field operational application managing fleet dispatching, location checkpoints, ticket assignments, and driver status updates.",
+    focus: ["React Native", "Expo", "REST APIs", "Node.js"],
     link: "#",
   },
   {
     id: "08",
     name: "Stock Market Tracker",
-    subtitle: "Financial Data & Analytics",
-    desc: "High-frequency market tracking mobile interface delivering live quotes, interactive charts, and optimized client-side caching.",
-    focus: ["React Native", "Expo", "REST APIs", "Node.js"],
+    subtitle: "Real-Time Equity Analysis App",
+    desc: "Mobile market tracker displaying dynamic stock charts, price alerts, watchlists, and portfolio performance analytics.",
+    focus: ["React Native", "Expo", "WebSockets", "REST APIs"],
     link: "#",
   },
   {
     id: "09",
-    name: "E-Commerce & Storefront",
-    subtitle: "Full-Stack Retail System",
-    desc: "Scalable e-commerce web platform with authentication, catalog browsing, cart state management, and payment checkout flows.",
-    focus: ["React.js", "Tailwind CSS", "Express.js", "MongoDB"],
+    name: "LogiQlink Client Portal",
+    subtitle: "Client Onboarding & Project Management Portal",
+    desc: "Responsive web portal built during internship featuring modular dashboard components, state caching, and responsive data tables.",
+    focus: ["React.js", "Redux Toolkit", "Tailwind CSS", "Vercel"],
     link: "#",
   },
 ];
@@ -80,25 +80,24 @@ const rahilProjects = [
 export default function Projects() {
   const containerRef = useRef(null);
   const gridRef = useRef(null);
-
   const [activeCards, setActiveCards] = useState([]);
   const [activeLines, setActiveLines] = useState([]);
   const [cardRects, setCardRects] = useState([]);
-
   const timeoutsRef = useRef([]);
 
   const measureCards = () => {
     if (!gridRef.current) return;
-    const cards = gridRef.current.querySelectorAll(".featured-card");
-    const gridRect = gridRef.current.getBoundingClientRect();
+    const cards = gridRef.current.querySelectorAll(".project-card");
+    const containerRect = gridRef.current.getBoundingClientRect();
 
     const rects = Array.from(cards).map((card) => {
-      const rect = card.getBoundingClientRect();
+      const r = card.getBoundingClientRect();
       return {
-        x: rect.left - gridRect.left + rect.width / 2,
-        y: rect.top - gridRect.top + rect.height / 2,
+        x: r.left - containerRect.left + r.width / 2,
+        y: r.top - containerRect.top + r.height / 2,
       };
     });
+
     setCardRects(rects);
   };
 
@@ -154,8 +153,8 @@ export default function Projects() {
         {
           opacity: 1,
           y: 0,
-          duration: 1,
-          stagger: 0.15,
+          duration: 0.8,
+          stagger: 0.1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: containerRef.current,
@@ -213,8 +212,8 @@ export default function Projects() {
                   x2={nextRect.x}
                   y2={nextRect.y}
                   stroke="currentColor"
-                  className="text-primary-500 dark:text-primary-400"
-                  strokeWidth="2.5"
+                  className="text-black dark:text-white opacity-40"
+                  strokeWidth="2"
                   strokeDasharray={length}
                   strokeDashoffset={isActive ? 0 : length}
                   style={{ transition: "stroke-dashoffset 0.3s linear" }}
@@ -230,95 +229,64 @@ export default function Projects() {
               <a
                 href={project.link !== "#" ? project.link : undefined}
                 target={project.link !== "#" ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                key={index}
+                rel={project.link !== "#" ? "noopener noreferrer" : undefined}
+                key={project.id}
                 onMouseEnter={() => handleMouseEnter(index)}
-                className={`block z-10 ${
-                  index === 0 || index === 1 ? "md:col-span-2 lg:col-span-1" : ""
+                className={`project-card group relative flex flex-col justify-between bg-white dark:bg-slate-900 rounded-3xl p-8 border transition-all duration-300 z-10 ${
+                  isActive
+                    ? "border-black dark:border-white shadow-xl scale-[1.02]"
+                    : "border-slate-200 dark:border-slate-800 shadow-sm hover:border-black/50 dark:hover:border-white/50"
                 }`}
               >
-                <div
-                  className={`featured-card relative bg-white dark:bg-slate-900/80 border rounded-3xl p-8 md:p-10 h-full flex flex-col overflow-hidden origin-center transition-all duration-300 ${
-                    isActive
-                      ? "border-primary-500 dark:border-primary-400 shadow-xl shadow-primary-500/10 -translate-y-1.5"
-                      : "border-slate-200 dark:border-slate-800 shadow-sm"
-                  }`}
-                >
-                  {/* Watermark Number */}
-                  <div
-                    className={`absolute -right-4 -bottom-10 text-[120px] font-black transition-colors duration-300 pointer-events-none tracking-tighter leading-none select-none ${
-                      isActive
-                        ? "text-primary-500/10 dark:text-primary-400/10"
-                        : "text-slate-100 dark:text-slate-800/40"
-                    }`}
-                  >
-                    {project.id}
-                  </div>
-
-                  <div className="relative z-10 flex flex-col h-full">
-                    <div className="flex items-center justify-between mb-6">
-                      <div
-                        className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors duration-300 ${
-                          isActive
-                            ? "text-primary-600 dark:text-primary-400"
-                            : "text-slate-400 dark:text-slate-500"
-                        }`}
-                      >
-                        PROJECT {project.id}
-                      </div>
-                      <div
-                        className={`w-11 h-11 rounded-full flex items-center justify-center transition-colors duration-300 ${
-                          isActive
-                            ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900"
-                            : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
-                        }`}
-                      >
+                <div>
+                  {/* Top Bar: Project ID & Link Arrow */}
+                  <div className="flex items-center justify-between mb-8">
+                    <span className="text-3xl font-black text-slate-300 dark:text-slate-700 group-hover:text-black dark:group-hover:text-white transition-colors">
+                      {project.id}
+                    </span>
+                    {project.link !== "#" && (
+                      <div className="w-10 h-10 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 group-hover:text-black dark:group-hover:text-white group-hover:border-black dark:group-hover:border-white transition-all">
                         <svg
                           width="16"
                           height="16"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
-                          strokeWidth="2.5"
+                          strokeWidth="2"
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          className={`transition-transform duration-300 ${
-                            isActive ? "rotate-45" : ""
-                          }`}
                         >
-                          <path d="M7 17l9.2-9.2M17 17V7H7" />
+                          <line x1="7" y1="17" x2="17" y2="7"></line>
+                          <polyline points="7 7 17 7 17 17"></polyline>
                         </svg>
                       </div>
-                    </div>
-
-                    <h4 className="text-2xl md:text-3xl font-black tracking-tighter mb-2 text-slate-900 dark:text-white">
-                      {project.name}
-                    </h4>
-                    <div className="text-primary-600 dark:text-primary-400 text-xs font-bold tracking-wide uppercase mb-5">
-                      {project.subtitle}
-                    </div>
-
-                    <p className="text-slate-600 dark:text-slate-300 font-medium text-sm leading-relaxed mb-8 flex-1">
-                      {project.desc}
-                    </p>
-
-                    <div className="mt-auto">
-                      <div className="flex flex-wrap gap-2">
-                        {project.focus.map((f, i) => (
-                          <span
-                            key={i}
-                            className={`text-[10px] font-bold px-3 py-1.5 border rounded-full transition-colors duration-300 ${
-                              isActive
-                                ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white"
-                                : "bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700"
-                            }`}
-                          >
-                            {f}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                    )}
                   </div>
+
+                  {/* Project Title & Subtitle */}
+                  <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-2 group-hover:text-black dark:group-hover:text-white transition-colors">
+                    {project.name}
+                  </h4>
+                  <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
+                    {project.subtitle}
+                  </div>
+
+                  {/* Project Description */}
+                  <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6 font-medium">
+                    {project.desc}
+                  </p>
+                </div>
+
+                {/* Tech Pills */}
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                  {project.focus.map((t, i) => (
+                    <span
+                      key={i}
+                      className="text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+                    >
+                      {t}
+                    </span>
+                  ))}
                 </div>
               </a>
             );

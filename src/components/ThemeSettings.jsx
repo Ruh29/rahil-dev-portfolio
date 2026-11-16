@@ -81,7 +81,7 @@ export default function ThemeSettings() {
           {/* Color Selection */}
           <div>
             <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Accent Color</h3>
-            <div className="grid grid-cols-5 gap-3">
+            <div className="grid grid-cols-6 gap-2">
               {THEME_COLORS.map((c) => (
                 <button
                   key={c.name}
