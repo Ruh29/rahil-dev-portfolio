@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 
 export const THEME_COLORS = [
   { name: "monochrome", label: "Monochrome", hex: "#0f172a" },
@@ -12,55 +12,37 @@ export const THEME_COLORS = [
 const ThemeContext = createContext(undefined);
 
 export function ThemeProvider({ children }) {
-  const [mode, setMode] = useState("dark");
-  const [color, setColor] = useState("monochrome");
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    const savedMode = localStorage.getItem("theme-mode");
-    const savedColor = localStorage.getItem("theme-color");
-
-    if (savedMode) {
-      setMode(savedMode);
-    } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setMode("dark");
-    } else {
-      setMode("dark");
+    const root = document.documentElement;
+    root.classList.remove("dark");
+    root.setAttribute("data-color", "monochrome");
+    try {
+      localStorage.setItem("theme-mode", "light");
+      localStorage.setItem("theme-color", "monochrome");
+    } catch {
+      // ignore
     }
-
-    if (savedColor) setColor(savedColor);
-
-    setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!mounted) return;
-
-    const root = document.documentElement;
-
-    if (mode === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-
-    root.setAttribute("data-color", color);
-
-    localStorage.setItem("theme-mode", mode);
-    localStorage.setItem("theme-color", color);
-  }, [mode, color, mounted]);
-
-  // Backward compatibility object for legacy theme consumers (e.g. ResumeModal)
-  const activeColorObj = THEME_COLORS.find((c) => c.name === color) || THEME_COLORS[0];
+  const activeColorObj = THEME_COLORS[0];
   const legacyTheme = {
-    id: color,
+    id: "monochrome",
     primary: activeColorObj.hex,
-    secondary: mode === "dark" ? "#ffffff" : "#0f172a",
-    mode: mode,
+    secondary: "#0f172a",
+    mode: "light",
   };
 
   return (
-    <ThemeContext.Provider value={{ mode, setMode, color, setColor, theme: legacyTheme, themeId: color }}>
+    <ThemeContext.Provider
+      value={{
+        mode: "light",
+        setMode: () => {},
+        color: "monochrome",
+        setColor: () => {},
+        theme: legacyTheme,
+        themeId: "monochrome",
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );

@@ -12,7 +12,6 @@ import Experience from "./components/Experience";
 import AIChat from "./components/AIChat";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import ThemeSettings from "./components/ThemeSettings";
 import ResumeModal from "./components/ResumeModal";
 
 export default function App() {
@@ -34,7 +33,6 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
-      <ThemeSettings />
       <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
     </SmoothScroll>
   );
